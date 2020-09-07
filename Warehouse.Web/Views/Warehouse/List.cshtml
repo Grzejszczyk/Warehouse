@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Warehouse.Web.Models.Entity.Item>
+
+@foreach (var item in Model)
+{
+    <p>Id: @item.Id</p>
+    <p>Name: @item.Name</p>
+    <p>Description: @item.Description</p>
+    <p>Where Used (Id): @item.WhereUsed</p>
+}
