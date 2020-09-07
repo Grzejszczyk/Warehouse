@@ -17,14 +17,29 @@ namespace Warehouse.Web.Controllers
         {
             _logger = logger;
         }
-
+        [Route("")]
         public IActionResult Index()
         {
+            ViewBag.Message = "This is message from ViewBag (live only for one HTTP request).";
+            ViewData["Message"] = "This is message from ViewData (live only for one HTTP request).";
+            TempData["Message"] = "This is message from TempData (live as long as sesion).";
             return View();
         }
-
-        public IActionResult Privacy()
+        [Route("{controller=Home}/{action=Redirect}")]
+        public IActionResult Redirect()
         {
+            TempData["FromRedirect"] = "Message From Redirect";
+            return RedirectToAction("Privacy");
+        }
+
+        [Route("{controller=Home}/{action=Privacy}/{s?}")]
+        [Route("Home/Privacy")]
+        public IActionResult Privacy(string s)
+        {
+            ViewBag.S = s;
+            ViewBag.Td = TempData["Message"];
+            ViewBag.Fr = TempData["FromRedirect"];
+            var td = TempData["FromRedirect"];
             return View();
         }
 

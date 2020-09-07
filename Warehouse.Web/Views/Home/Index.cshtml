@@ -5,4 +5,13 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>This is message from ViewBag: @ViewBag.Message</p>
+    <p>This is message from ViewData: @ViewData["Message"]</p>
+    <p>This is message from TempData: @TempData["Message"]</p>
+    <p>If you go to privacy, at lower section you can see TempData (from you sesion).</p>
+    <a href="/home/Privacy/@ViewBag.Message">Go to Privacy using ViewBag</a>
+    <a href="/home/Privacy/@ViewData["Message"]">Go to Privacy using ViewData</a>
+    <a href="/home/Privacy/@TempData["Message"]">Go to Privacy using TempData</a>
+    <a href="/home/Redirect/">Go to Privacy, do not send TempData, but try to read from sesion memory "Message From Redirect".</a>
+    
 </div>
