@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Warehouse.Web.Models.Entity;
+using Warehouse.Domain.Models.Entity;
 
 namespace Warehouse.Web.Data
 {
@@ -16,7 +16,7 @@ namespace Warehouse.Web.Data
                 Name = "Zderzak przedni",
                 Description = "Zderzak przedni stalowy",
                 LowQuantityValue = 2,
-                WhereUsed = 1 },
+                },
             new Item() {
                 Id = 2,
                 CreatedById = 1,
@@ -24,7 +24,7 @@ namespace Warehouse.Web.Data
                 Name = "Zderzak tylny",
                 Description = "Zderzak tylny aluminiowy",
                 LowQuantityValue = 2,
-                WhereUsed = 1 },
+                },
             new Item() {
                 Id = 3,
                 CreatedById = 1,
@@ -32,7 +32,7 @@ namespace Warehouse.Web.Data
                 Name = "Wahacz",
                 Description = "Wahacz poprzeczny dolny",
                 LowQuantityValue = 2,
-                WhereUsed = 2 }
+                }
         }.AsQueryable();
 
         IQueryable<Structure> IItemRepository.Structures => new List<Structure> {

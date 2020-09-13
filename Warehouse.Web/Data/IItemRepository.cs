@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Warehouse.Web.Models.Entity;
+using Warehouse.Domain.Models.Entity;
 
 namespace Warehouse.Web.Data
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Warehouse.Web.Models.Common
+namespace Warehouse.Domain.Models.Common
 {
     public class AuditableModel
     {
