@@ -66,6 +66,7 @@ namespace Warehouse.Infrastructure.Repositories
                 _context.Suppliers.Remove(supplier);
                 _context.SaveChanges();
             }
+            //TODO: Supplier cannot be removed if items exist from this supplier!
         }
     }
 }

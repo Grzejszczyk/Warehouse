@@ -110,22 +110,62 @@ namespace Warehouse.Web.Controllers
             var model = _supplierService.GetAllSuppliersForList(pageSizeStd, pageNo, searchString);
             return View(model);
         }
+        //[HttpGet]
+        //public IActionResult AddSupplier()
+        //{
+        //    return View(new NewSupplierVM());
+        //}
+        //[HttpPost]
+        //public IActionResult AddSupplier(NewSupplierVM model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var id = _supplierService.AddNewSupplier(model);
+        //        return RedirectToAction("SuppliersList");
+        //    }
+        //    return View(model);
+        //}
         [HttpGet]
-        public IActionResult AddSupplier()
+        public IActionResult EditSupplier(int id = 0)
         {
-            return View(new NewSupplierVM());
+            if (id != 0)
+            {
+                var supplier = _supplierService.GetSupplierForEdit(id);
+                return View(supplier);
+            }
+            else
+            {
+                return View(new NewSupplierVM());
+            }
         }
         [HttpPost]
-        public IActionResult AddSupplier(NewSupplierVM model)
+        [ValidateAntiForgeryToken]
+        public IActionResult EditSupplier(NewSupplierVM model)
         {
             if (ModelState.IsValid)
             {
-                var id = _supplierService.AddNewSupplier(model);
+                if (model.Id == 0)
+                {
+                    var id = _supplierService.AddNewSupplier(model);
+                }
+                else
+                {
+                    var id = _supplierService.EditSupplier(model);
+                }
                 return RedirectToAction("SuppliersList");
             }
             return View(model);
         }
-
+        public IActionResult SupplierDetails(int id)
+        {
+            var model = _supplierService.GetSupplierDetails(id);
+            return View(model);
+        }
+        public IActionResult DeleteSupplier(int id)
+        {
+            _supplierService.DeleteSupplier(id);
+            return RedirectToAction("SuppliersList");
+        }
         #endregion
     }
 }

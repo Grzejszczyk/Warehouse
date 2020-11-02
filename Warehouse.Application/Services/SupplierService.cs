@@ -35,6 +35,30 @@ namespace Warehouse.Application.Services
             return s;
         }
 
+        public void DeleteSupplier(int id)
+        {
+            _supplierRepository.DeleteSupplier(id);
+        }
+
+        public int EditSupplier(NewSupplierVM newSupplierVM)
+        {
+            Supplier newSupplier = _supplierRepository.GetSupplierById(newSupplierVM.Id);
+
+            newSupplier.Id = newSupplierVM.Id;
+            newSupplier.Name = newSupplierVM.Name;
+            newSupplier.NIP = newSupplierVM.NIP;
+            newSupplier.City = newSupplierVM.City;
+            newSupplier.ZipCode = newSupplierVM.ZipCode;
+            newSupplier.Street = newSupplierVM.Street;
+            newSupplier.BuildingNo = newSupplierVM.BuildingNo;
+            newSupplier.Email = newSupplierVM.Email;
+            newSupplier.PhoneNo = newSupplierVM.PhoneNo;
+            newSupplier.IsActive = newSupplierVM.IsActive;
+
+            int supplier = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
+            return supplier;
+        }
+
         public SuppliersListForListVM GetAllSuppliersForList(int pageSize, int pageNo, string searchString)
         {
             var suppliers = _supplierRepository.GetAllSuppliers().Where(s => s.Name.StartsWith(searchString));
@@ -82,6 +106,25 @@ namespace Warehouse.Application.Services
             supplierVM.IsActive = supplier.IsActive;
 
             return supplierVM;
+        }
+
+        public NewSupplierVM GetSupplierForEdit(int id)
+        {
+            Supplier editSupplier = _supplierRepository.GetSupplierById(id);
+            var supplier = new NewSupplierVM();
+
+            supplier.Id = editSupplier.Id;
+            supplier.Name = editSupplier.Name;
+            supplier.NIP = editSupplier.NIP;
+            supplier.Email = editSupplier.Email;
+            supplier.PhoneNo = editSupplier.PhoneNo;
+            supplier.City = editSupplier.City;
+            supplier.ZipCode = editSupplier.ZipCode;
+            supplier.Street = editSupplier.Street;
+            supplier.BuildingNo = editSupplier.BuildingNo;
+            supplier.IsActive = editSupplier.IsActive;
+
+            return supplier;
         }
     }
 }
