@@ -1,0 +1,65 @@
+﻿@model Warehouse.Application.ViewModels.Item.ItemsListForListVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="EditItem">Create New</a>
+</p>
+
+<form asp-action="ItemsList" asp-controller="Warehouse" method="post">
+    <div class="row">
+        <input type="text" asp-for="SearchString" name="searchString" />
+        <input type="submit" value="Search" />
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditItem", new {  id=item.Id }) |
+                        @Html.ActionLink("Details", "ItemDetails", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div page-model="@Model.PaggingInfo" page-action="ItemsList"></div>
+    </div>
+</form>

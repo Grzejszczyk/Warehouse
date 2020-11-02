@@ -1,0 +1,4 @@
+2020-11-02T22:30:26.3076504+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-02T22:30:26.3227910+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-02T22:30:26.3370733+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-02T22:30:29.7861048+01:00 800000b1-0002-fb00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)

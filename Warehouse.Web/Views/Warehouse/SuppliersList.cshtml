@@ -1,0 +1,69 @@
+﻿@model Warehouse.Application.ViewModels.Supplier.SuppliersListForListVM
+
+@{
+    ViewData["Title"] = "SuppliersList";
+}
+
+<h1>SuppliersList</h1>
+
+<p>
+    <a asp-action="AddSupplier">Create New</a>
+</p>
+<form asp-action="SuppliersList" asp-controller="Warehouse" method="post">
+    <div class="row">
+        <input type="text" asp-for="SearchString" name="searchString" />
+        <input type="submit" value="Search" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    NIP
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    IsActive
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Suppliers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NIP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div page-model="@Model.PaggingInfo" page-action="SuppliersList"></div>
+    </div>
+</form>

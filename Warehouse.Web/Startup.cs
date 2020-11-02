@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Warehouse.Infrastructure;
+using Warehouse.Infrastructure.Repositories;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Application;
+using Microsoft.Extensions.Logging;
 
 namespace Warehouse.Web
 {
@@ -44,12 +47,15 @@ namespace Warehouse.Web
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddTransient<IItemRepository, Repository>();
+
+            services.AddApplication();
+            services.AddInfrastructure();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile("Logs/myLog-{Date}.txt");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,6 +79,7 @@ namespace Warehouse.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
+                    //pattern: "{controller=Warehouse}/{action=Index}/{pageSize?}/{pageNo?}");
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });

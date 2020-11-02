@@ -9,13 +9,15 @@ namespace Warehouse.Domain.Interfaces
     public interface IItemRepository
     {
         int AddItem(Item item);
-
         IQueryable<Item> GetItemsByStructure(int structureId);
         IQueryable<Item> GetItemsByCategory(int categoryId);
-
+        IQueryable<Item> GetItems();
         Item GetItemById(int id);
 
-        void UpdateItem();
+        int UpdateItem(Item item, int id);
         void DeleteItem(int itemId);
+
+        IQueryable<Category> GetCategories();
+        Category GetCategory(int id);
     }
 }
