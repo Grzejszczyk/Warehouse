@@ -19,7 +19,7 @@ namespace Warehouse.Infrastructure.Repositories
 
         //CRUD:
         public int AddItem(Item item)
-         {
+        {
             _context.Items.Add(item);
             _context.SaveChanges();
             return item.Id;

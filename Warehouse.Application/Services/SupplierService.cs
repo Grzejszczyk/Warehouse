@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +15,17 @@ namespace Warehouse.Application.Services
     public class SupplierService : ISupplierService
     {
         private readonly ISupplierRepository _supplierRepository;
-        public SupplierService(ISupplierRepository repo)
+        private readonly IMapper _mapper;
+        public SupplierService(ISupplierRepository repo, IMapper mapper)
         {
             _supplierRepository = repo;
+            _mapper = mapper;
         }
-        public int AddNewSupplier(NewSupplierVM newSupplierVM)
+        public int AddNewSupplier(SupplierDetailsVM newSupplierVM)
         {
             Supplier nS = new Supplier();
 
+            nS.Id = newSupplierVM.Id;
             nS.Name = newSupplierVM.Name;
             nS.NIP = newSupplierVM.NIP;
             nS.City = newSupplierVM.City;
@@ -40,7 +45,7 @@ namespace Warehouse.Application.Services
             _supplierRepository.DeleteSupplier(id);
         }
 
-        public int EditSupplier(NewSupplierVM newSupplierVM)
+        public int EditSupplier(SupplierDetailsVM newSupplierVM)
         {
             Supplier newSupplier = _supplierRepository.GetSupplierById(newSupplierVM.Id);
 
@@ -61,70 +66,22 @@ namespace Warehouse.Application.Services
 
         public SuppliersListForListVM GetAllSuppliersForList(int pageSize, int pageNo, string searchString)
         {
-            var suppliers = _supplierRepository.GetAllSuppliers().Where(s => s.Name.StartsWith(searchString));
-            SuppliersListForListVM result = new SuppliersListForListVM();
-
-            result.PaggingInfo = new PagingInfo();
-            result.PaggingInfo.ItemsPerPage = pageSize;
-            result.PaggingInfo.CurrentPage = pageNo;
-            result.PaggingInfo.TotalItems = suppliers.Count();
-
-            result.SearchString = searchString;
-
+            var suppliers = _supplierRepository.GetAllSuppliers().Where(s => s.Name.StartsWith(searchString)).ProjectTo<SupplierForListVM>
+                (_mapper.ConfigurationProvider).ToList();
             var suppliersToShow = suppliers.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-
-            result.Suppliers = new List<SupplierForListVM>();
-            foreach (var s in suppliersToShow)
+            var suppliersList = new SuppliersListForListVM()
             {
-                var supplierVM = new SupplierForListVM()
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    NIP = s.NIP,
-                    Email = s.Email,
-                    IsActive = s.IsActive
-                };
-                result.Suppliers.Add(supplierVM);
-            }
-            return result;
+                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = suppliers.Count() },
+                Suppliers = suppliersToShow.ToList()
+            };
+            return suppliersList;
         }
 
         public SupplierDetailsVM GetSupplierDetails(int supplierId)
         {
             var supplier = _supplierRepository.GetSupplierById(supplierId);
-            var supplierVM = new SupplierDetailsVM();
-
-            supplierVM.Id = supplier.Id;
-            supplierVM.Name = supplier.Name;
-            supplierVM.NIP = supplier.NIP;
-            supplierVM.City = supplier.City;
-            supplierVM.ZipCode = supplier.ZipCode;
-            supplierVM.Street = supplier.Street;
-            supplierVM.BuildingNo = supplier.BuildingNo;
-            supplierVM.Email = supplier.Email;
-            supplierVM.PhoneNo = supplier.PhoneNo;
-            supplierVM.IsActive = supplier.IsActive;
-
+            var supplierVM = _mapper.Map<SupplierDetailsVM>(supplier);
             return supplierVM;
-        }
-
-        public NewSupplierVM GetSupplierForEdit(int id)
-        {
-            Supplier editSupplier = _supplierRepository.GetSupplierById(id);
-            var supplier = new NewSupplierVM();
-
-            supplier.Id = editSupplier.Id;
-            supplier.Name = editSupplier.Name;
-            supplier.NIP = editSupplier.NIP;
-            supplier.Email = editSupplier.Email;
-            supplier.PhoneNo = editSupplier.PhoneNo;
-            supplier.City = editSupplier.City;
-            supplier.ZipCode = editSupplier.ZipCode;
-            supplier.Street = editSupplier.Street;
-            supplier.BuildingNo = editSupplier.BuildingNo;
-            supplier.IsActive = editSupplier.IsActive;
-
-            return supplier;
         }
     }
 }

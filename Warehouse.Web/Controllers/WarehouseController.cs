@@ -51,17 +51,17 @@ namespace Warehouse.Web.Controllers
         {
             if (id != 0)
             {
-                var item = _itemService.GetItemForEdit(id);
+                var item = _itemService.GetItemDetails(id);
                 return View(item);
             }
             else
             {
-                return View(new NewItemVM());
+                return View(new ItemDetailsVM());
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditItem(NewItemVM model)
+        public IActionResult EditItem(ItemDetailsVM model)
         {
             if (ModelState.IsValid)
             {
@@ -110,37 +110,23 @@ namespace Warehouse.Web.Controllers
             var model = _supplierService.GetAllSuppliersForList(pageSizeStd, pageNo, searchString);
             return View(model);
         }
-        //[HttpGet]
-        //public IActionResult AddSupplier()
-        //{
-        //    return View(new NewSupplierVM());
-        //}
-        //[HttpPost]
-        //public IActionResult AddSupplier(NewSupplierVM model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var id = _supplierService.AddNewSupplier(model);
-        //        return RedirectToAction("SuppliersList");
-        //    }
-        //    return View(model);
-        //}
+
         [HttpGet]
         public IActionResult EditSupplier(int id = 0)
         {
             if (id != 0)
             {
-                var supplier = _supplierService.GetSupplierForEdit(id);
+                var supplier = _supplierService.GetSupplierDetails(id);
                 return View(supplier);
             }
             else
             {
-                return View(new NewSupplierVM());
+                return View(new SupplierDetailsVM());
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditSupplier(NewSupplierVM model)
+        public IActionResult EditSupplier(SupplierDetailsVM model)
         {
             if (ModelState.IsValid)
             {
@@ -165,6 +151,8 @@ namespace Warehouse.Web.Controllers
         {
             _supplierService.DeleteSupplier(id);
             return RedirectToAction("SuppliersList");
+
+            //TODO: Supplier cannot be deleted if his items are in DB.d
         }
         #endregion
     }

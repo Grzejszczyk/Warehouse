@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using Warehouse.Application.Interfaces;
 using Warehouse.Application.Services;
@@ -14,6 +16,7 @@ namespace Warehouse.Application
         {
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<ISupplierService, SupplierService>();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
     }

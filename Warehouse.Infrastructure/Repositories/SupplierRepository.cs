@@ -33,30 +33,13 @@ namespace Warehouse.Infrastructure.Repositories
         }
         public int UpdateSupplier(Supplier updatedSupplier, int supplierId)
         {
-            //var supplier = _context.Suppliers.FirstOrDefault(s => s.Id == id);
-
-            //supplier.IsActive = updatedSupplier.IsActive;
-
-            //supplier.Name = updatedSupplier.Name;
-            //supplier.NIP = updatedSupplier.NIP;
-            //supplier.PhoneNo = updatedSupplier.PhoneNo;
-            //supplier.Email = updatedSupplier.Email;
-
-            //supplier.City = updatedSupplier.City;
-            //supplier.Street = updatedSupplier.Street;
-            //supplier.BuildingNo = updatedSupplier.BuildingNo;
-            //supplier.ZipCode = updatedSupplier.ZipCode;
-
-            var supplier = _context.Suppliers.Find(supplierId);
-            if (supplier != null)
+            var s = _context.Suppliers.Find(supplierId);
+            if (s != null)
             {
-                _context.Suppliers.Update(supplier);
+                _context.Suppliers.Update(updatedSupplier);
                 _context.SaveChanges();
             }
-            _context.Update(updatedSupplier);
-            _context.SaveChanges();
-
-            return supplier.Id;
+            return s.Id;
         }
         public void DeleteSupplier(int supplierId)
         {

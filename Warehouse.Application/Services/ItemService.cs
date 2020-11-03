@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,64 +15,34 @@ namespace Warehouse.Application.Services
     public class ItemService : IItemService
     {
         private readonly IItemRepository _itemRepository;
-        public ItemService(IItemRepository repo)
+        private readonly IMapper _mapper;
+        public ItemService(IItemRepository repo, IMapper mapper)
         {
             _itemRepository = repo;
+            _mapper = mapper;
         }
 
         public ItemsListForListVM GetAllItemsForList(int pageSize, int pageNo, string searchString)
         {
-            var items = _itemRepository.GetItems().Where(s => s.Name.StartsWith(searchString));
-
-            ItemsListForListVM result = new ItemsListForListVM();
-            result.PaggingInfo = new PagingInfo();
-
-            result.PaggingInfo.ItemsPerPage = pageSize;
-            result.PaggingInfo.CurrentPage = pageNo;
-            result.PaggingInfo.TotalItems = items.Count();
-            result.SearchString = searchString;
+            var items = _itemRepository.GetItems().Where(s => s.Name.StartsWith(searchString)).ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
             var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-
-            result.Items = new List<ItemForListVM>();
-            foreach (var item in itemsToShow)
+            var itemsList = new ItemsListForListVM()
             {
-                var itemVM = new ItemForListVM()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Category = item.Category.CategoryName,
-                    Quantity = item.Quantity
-                };
-                result.Items.Add(itemVM);
-            }
-            return result;
+                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
+                Items = itemsToShow.ToList()
+            };
+
+            return itemsList;
         }
 
         public ItemDetailsVM GetItemDetails(int itemId)
         {
             var item = _itemRepository.GetItemById(itemId);
-            var result = new ItemDetailsVM();
-
-            result.Id = item.Id;
-
-            result.CreatedById = item.CreatedById;
-            result.CreatedDateTime = item.CreatedDateTime;
-            result.ModifiedById = (int)item.ModifiedById;
-            result.ModifiedDateTime = (DateTime)item.ModifiedDateTime;
-
-            result.Name = item.Name;
-            result.Description = item.Description;
-            result.LowQuantityValue = result.LowQuantityValue;
-            result.StructureId = item.Structure.Id;
-            result.StructureName = item.Structure.Subassembly;
-            result.CategoryName = item.Category.CategoryName;
-            result.SupplierName = item.Supplier.Name;
-            result.Quantity = item.Quantity;
-
-            return result;
+            var itemVM = _mapper.Map<ItemDetailsVM>(item);
+            return itemVM;
         }
 
-        public int AddNewItem(NewItemVM newItemVM)
+        public int AddNewItem(ItemDetailsVM newItemVM)
         {
             Item newItem = new Item();
 
@@ -85,34 +57,18 @@ namespace Warehouse.Application.Services
             return item;
         }
 
-        public NewItemVM GetItemForEdit(int id)
+        public int EditItem(ItemDetailsVM ItemVM)
         {
-            Item editItem = _itemRepository.GetItemById(id);
-            var item = new NewItemVM();
+            Item newItem = _itemRepository.GetItemById(ItemVM.Id);
 
-            item.Id = editItem.Id;
-            item.CategoryId = editItem.Category.Id;
-            item.Description = editItem.Description;
-            item.LowQuantityValue = editItem.LowQuantityValue;
-            item.Name = editItem.Name;
-            item.Quantity = editItem.Quantity;
-            item.StructureId = editItem.Structure.Id;
-            
-            return item;
-        }
-
-        public int EditItem(NewItemVM newItemVM)
-        {
-            Item newItem = _itemRepository.GetItemById(newItemVM.Id);
-
-            newItem.Name = newItemVM.Name;
-            newItem.Description = newItemVM.Description;
-            newItem.LowQuantityValue = newItemVM.LowQuantityValue;
-            newItem.Quantity = newItemVM.Quantity;
+            newItem.Name = ItemVM.Name;
+            newItem.Description = ItemVM.Description;
+            newItem.LowQuantityValue = ItemVM.LowQuantityValue;
+            newItem.Quantity = ItemVM.Quantity;
             newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
             newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
 
-            int item = _itemRepository.UpdateItem(newItem, newItemVM.Id);
+            int item = _itemRepository.UpdateItem(newItem, ItemVM.Id);
             return item;
         }
 

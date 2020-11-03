@@ -9,9 +9,8 @@ namespace Warehouse.Application.Interfaces
     {
         ItemsListForListVM GetAllItemsForList(int pageSize, int pageNo, string searchString);
         ItemDetailsVM GetItemDetails(int itemId);
-        int AddNewItem(NewItemVM newItemVM);
-        int EditItem(NewItemVM newItemVM);
-        public NewItemVM GetItemForEdit(int id);
+        int AddNewItem(ItemDetailsVM newItemVM);
+        int EditItem(ItemDetailsVM newItemVM);
         void DeleteItem(int id);
     }
 }

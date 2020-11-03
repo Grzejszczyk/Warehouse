@@ -1,11 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Warehouse.Application.Mapping;
 
 namespace Warehouse.Application.ViewModels.Supplier
 {
-    public class SupplierDetailsVM
+    public class SupplierDetailsVM : IMapFrom<Warehouse.Domain.Models.Entity.Supplier>
     {
         public int Id { get; set; }
         [Required]
@@ -26,5 +28,10 @@ namespace Warehouse.Application.ViewModels.Supplier
         public string BuildingNo { get; set; }
         [Required]
         public bool IsActive { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Warehouse.Domain.Models.Entity.Supplier, SupplierDetailsVM>();
+        }
     }
 }
