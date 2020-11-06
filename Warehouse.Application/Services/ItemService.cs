@@ -44,32 +44,52 @@ namespace Warehouse.Application.Services
 
         public int AddNewItem(ItemDetailsVM newItemVM)
         {
-            Item newItem = new Item();
+            //WITHOUT REVERSE MAPPING:
+            //Item newItem = new Item();
 
-            newItem.Name = newItemVM.Name;
-            newItem.Description = newItemVM.Description;
-            newItem.LowQuantityValue = newItemVM.LowQuantityValue;
-            newItem.Quantity = newItemVM.Quantity;
+            //newItem.Name = newItemVM.Name;
+            //newItem.Description = newItemVM.Description;
+            //newItem.LowQuantityValue = newItemVM.LowQuantityValue;
+            //newItem.Quantity = newItemVM.Quantity;
+            //newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
+            //newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
+
+            //int item = _itemRepository.AddItem(newItem);
+            //return item;
+
+            //REVERCE MAPPING: (issue solved)
+            Item newItem = new Item();
+            _mapper.Map<ItemDetailsVM, Item>(newItemVM, newItem);
+            //TODO: Remove structure and category hacks!
             newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
             newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
-
-            int item = _itemRepository.AddItem(newItem);
-            return item;
+            var supplierMapped = _itemRepository.AddItem(newItem);
+            return supplierMapped;
         }
 
         public int EditItem(ItemDetailsVM ItemVM)
         {
-            Item newItem = _itemRepository.GetItemById(ItemVM.Id);
+            //WITHOUT REVERSE MAPPING:
+            //Item newItem = _itemRepository.GetItemById(ItemVM.Id);
 
-            newItem.Name = ItemVM.Name;
-            newItem.Description = ItemVM.Description;
-            newItem.LowQuantityValue = ItemVM.LowQuantityValue;
-            newItem.Quantity = ItemVM.Quantity;
+            //newItem.Name = ItemVM.Name;
+            //newItem.Description = ItemVM.Description;
+            //newItem.LowQuantityValue = ItemVM.LowQuantityValue;
+            //newItem.Quantity = ItemVM.Quantity;
+            //newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
+            //newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
+
+            //int item = _itemRepository.UpdateItem(newItem, ItemVM.Id);
+            //return item;
+
+            //REVERCE MAPPING: (issue solved)
+            Item newItem = _itemRepository.GetItemById(ItemVM.Id);
+            _mapper.Map<ItemDetailsVM, Item>(ItemVM, newItem);
+            //TODO: Remove structure and category hacks!
             newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
             newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
-
-            int item = _itemRepository.UpdateItem(newItem, ItemVM.Id);
-            return item;
+            var supplierMapped = _itemRepository.UpdateItem(newItem, ItemVM.Id);
+            return supplierMapped;
         }
 
         public void DeleteItem(int id)

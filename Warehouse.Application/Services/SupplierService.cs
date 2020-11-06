@@ -43,7 +43,8 @@ namespace Warehouse.Application.Services
 
             //REVERCE MAPPING:
 
-            var nSrevMapped = _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM);
+            var nSrevMapped = new Supplier();
+            _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM, nSrevMapped);
             var sMapped = _supplierRepository.AddSupplier(nSrevMapped);
             return sMapped;
         }
@@ -72,8 +73,9 @@ namespace Warehouse.Application.Services
             //int supplier = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
             //return supplier;
 
-            //REVERCE MAPPING:
-            Supplier newSupplier = _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM);
+            //REVERCE MAPPING: (issue solved)
+            Supplier newSupplier = _supplierRepository.GetSupplierById(newSupplierVM.Id);
+            _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM, newSupplier);
             var supplierMapped = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
             return supplierMapped;
         }
