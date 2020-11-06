@@ -31,7 +31,7 @@ namespace Warehouse.Application.ViewModels.Supplier
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Supplier, SupplierDetailsVM>();
+            profile.CreateMap<Warehouse.Domain.Models.Entity.Supplier, SupplierDetailsVM>().ReverseMap();
         }
     }
 }

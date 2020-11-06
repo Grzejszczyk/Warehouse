@@ -37,7 +37,7 @@ namespace Warehouse.Application.ViewModels.Item
                 .ForMember(s => s.StructureId, opt => opt.MapFrom(d => d.Structure.Id))
                 .ForMember(s => s.StructureName, opt => opt.MapFrom(d => d.Structure.ProductName))
                 .ForMember(s => s.CategoryName, opt => opt.MapFrom(d => d.Category.CategoryName))
-                .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name));
+                .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name)).ReverseMap();
         }
     }
 }

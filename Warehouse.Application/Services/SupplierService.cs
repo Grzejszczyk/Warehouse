@@ -23,21 +23,29 @@ namespace Warehouse.Application.Services
         }
         public int AddNewSupplier(SupplierDetailsVM newSupplierVM)
         {
-            Supplier nS = new Supplier();
+            //WITHOUT REVERSE MAPPING:
 
-            nS.Id = newSupplierVM.Id;
-            nS.Name = newSupplierVM.Name;
-            nS.NIP = newSupplierVM.NIP;
-            nS.City = newSupplierVM.City;
-            nS.ZipCode = newSupplierVM.ZipCode;
-            nS.Street = newSupplierVM.Street;
-            nS.BuildingNo = newSupplierVM.BuildingNo;
-            nS.Email = newSupplierVM.Email;
-            nS.PhoneNo = newSupplierVM.PhoneNo;
-            nS.IsActive = newSupplierVM.IsActive;
+            //Supplier nS = new Supplier();
 
-            var s = _supplierRepository.AddSupplier(nS);
-            return s;
+            //nS.Id = newSupplierVM.Id;
+            //nS.Name = newSupplierVM.Name;
+            //nS.NIP = newSupplierVM.NIP;
+            //nS.City = newSupplierVM.City;
+            //nS.ZipCode = newSupplierVM.ZipCode;
+            //nS.Street = newSupplierVM.Street;
+            //nS.BuildingNo = newSupplierVM.BuildingNo;
+            //nS.Email = newSupplierVM.Email;
+            //nS.PhoneNo = newSupplierVM.PhoneNo;
+            //nS.IsActive = newSupplierVM.IsActive;
+
+            //var s = _supplierRepository.AddSupplier(nS);
+            //return s;
+
+            //REVERCE MAPPING:
+
+            var nSrevMapped = _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM);
+            var sMapped = _supplierRepository.AddSupplier(nSrevMapped);
+            return sMapped;
         }
 
         public void DeleteSupplier(int id)
@@ -47,21 +55,27 @@ namespace Warehouse.Application.Services
 
         public int EditSupplier(SupplierDetailsVM newSupplierVM)
         {
-            Supplier newSupplier = _supplierRepository.GetSupplierById(newSupplierVM.Id);
+            //WITHOUT REVERSE MAPPING:
+            //Supplier newSupplier = _supplierRepository.GetSupplierById(newSupplierVM.Id);
 
-            newSupplier.Id = newSupplierVM.Id;
-            newSupplier.Name = newSupplierVM.Name;
-            newSupplier.NIP = newSupplierVM.NIP;
-            newSupplier.City = newSupplierVM.City;
-            newSupplier.ZipCode = newSupplierVM.ZipCode;
-            newSupplier.Street = newSupplierVM.Street;
-            newSupplier.BuildingNo = newSupplierVM.BuildingNo;
-            newSupplier.Email = newSupplierVM.Email;
-            newSupplier.PhoneNo = newSupplierVM.PhoneNo;
-            newSupplier.IsActive = newSupplierVM.IsActive;
+            //newSupplier.Id = newSupplierVM.Id;
+            //newSupplier.Name = newSupplierVM.Name;
+            //newSupplier.NIP = newSupplierVM.NIP;
+            //newSupplier.City = newSupplierVM.City;
+            //newSupplier.ZipCode = newSupplierVM.ZipCode;
+            //newSupplier.Street = newSupplierVM.Street;
+            //newSupplier.BuildingNo = newSupplierVM.BuildingNo;
+            //newSupplier.Email = newSupplierVM.Email;
+            //newSupplier.PhoneNo = newSupplierVM.PhoneNo;
+            //newSupplier.IsActive = newSupplierVM.IsActive;
 
-            int supplier = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
-            return supplier;
+            //int supplier = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
+            //return supplier;
+
+            //REVERCE MAPPING:
+            Supplier newSupplier = _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM);
+            var supplierMapped = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
+            return supplierMapped;
         }
 
         public SuppliersListForListVM GetAllSuppliersForList(int pageSize, int pageNo, string searchString)
