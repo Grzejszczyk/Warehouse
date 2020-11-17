@@ -67,9 +67,11 @@ namespace Warehouse.Web.Controllers
             {
                 if (model.Id == 0)
                 {
-                    var id = _itemService.AddNewItem(model);
+                    var id = _itemService.AddItem(model);
                 } else
                 {
+                    model.CreatedById = _itemService.GetItemDetails(model.Id).CreatedById;
+                    model.CreatedDateTime = _itemService.GetItemDetails(model.Id).CreatedDateTime;
                     var id = _itemService.EditItem(model);
                 }
                 return RedirectToAction("ItemsList");
@@ -132,7 +134,7 @@ namespace Warehouse.Web.Controllers
             {
                 if (model.Id == 0)
                 {
-                    var id = _supplierService.AddNewSupplier(model);
+                    var id = _supplierService.AddSupplier(model);
                 }
                 else
                 {

@@ -25,6 +25,7 @@ namespace Warehouse.Application.ViewModels.Item
         public int LowQuantityValue { get; set; }
         public int StructureId { get; set; } //Where Used Id
         public string StructureName { get; set; } //Where Used
+        //TODO: Lista???
         public string CategoryName { get; set; }
         public string SupplierName { get; set; }
         [Required]
@@ -34,8 +35,8 @@ namespace Warehouse.Application.ViewModels.Item
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemDetailsVM>()
-                .ForMember(s => s.StructureId, opt => opt.MapFrom(d => d.Structure.Id))
-                .ForMember(s => s.StructureName, opt => opt.MapFrom(d => d.Structure.ProductName))
+                .ForMember(s => s.StructureId, opt => opt.MapFrom(d => d.ItemStructures))
+                .ForMember(s => s.StructureName, opt => opt.MapFrom(d => "Structure Name"))
                 .ForMember(s => s.CategoryName, opt => opt.MapFrom(d => d.Category.CategoryName))
                 .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name)).ReverseMap();
         }

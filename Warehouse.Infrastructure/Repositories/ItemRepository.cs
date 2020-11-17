@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Warehouse.Domain.Interfaces;
+using Warehouse.Domain.Models.Common;
 using Warehouse.Domain.Models.Entity;
 
 namespace Warehouse.Infrastructure.Repositories
@@ -16,7 +17,7 @@ namespace Warehouse.Infrastructure.Repositories
         {
             _context = context;
         }
-
+        
         //CRUD:
         public int AddItem(Item item)
         {
@@ -27,25 +28,25 @@ namespace Warehouse.Infrastructure.Repositories
 
         public IQueryable<Item> GetItemsByStructure(int structureId)
         {
-            var items = _context.Items.Where(i => i.Structure.Id == structureId);
+            var items = _context.Items
+                .Where(i => i.ItemStructures.Where(s => s.StructureId == structureId).Any()).AsQueryable();
             return items;
         }
         public IQueryable<Item> GetItemsByCategory(int categoryId)
         {
-            var items = _context.Items.Where(i => i.Category.Id == categoryId);
+            var items = _context.Items.Where(i => i.Category.Id == categoryId).AsQueryable();
             return items;
         }
         public IQueryable<Item> GetItems()
         {
-            var items = _context.Items.Include(c => c.Category)
-                .Include(s => s.Structure)
-                .AsQueryable();
+            var items = _context.Items.Include(c => c.Category).AsQueryable();
             return items;
         }
         public Item GetItemById(int id)
         {
-            var item = _context.Items.Include(c => c.Category)
-                .Include(st => st.Structure)
+            var item = _context.Items
+                .Include(c => c.Category)
+                .Include(st => st.ItemStructures.Where(s => s.ItemId == id).Any())
                 .Include(s => s.Supplier)
                 .FirstOrDefault(i => i.Id == id);
             return item;
@@ -68,16 +69,6 @@ namespace Warehouse.Infrastructure.Repositories
                 _context.Items.Remove(item);
                 _context.SaveChanges();
             }
-        }
-        public IQueryable<Category> GetCategories()
-        {
-            var categories = _context.Categories.AsQueryable();
-            return categories;
-        }
-        public Category GetCategory(int id)
-        {
-            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
-            return category;
         }
     }
 }

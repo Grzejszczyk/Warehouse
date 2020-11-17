@@ -17,6 +17,7 @@ namespace Warehouse.Domain.Models.Entity
         public string Street { get; set; }
         public string BuildingNo { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public ICollection<Item> Items { get; set; }
     }
 }

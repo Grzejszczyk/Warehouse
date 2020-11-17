@@ -2,22 +2,22 @@
 
 namespace Warehouse.Infrastructure.Migrations
 {
-    public partial class updateStuctureDb : Migration
+    public partial class AddedQtyItemStructure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "Suppliers",
+            migrationBuilder.AddColumn<int>(
+                name: "ItemQuantity",
+                table: "ItemStructure",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "Suppliers");
+                name: "ItemQuantity",
+                table: "ItemStructure");
         }
     }
 }

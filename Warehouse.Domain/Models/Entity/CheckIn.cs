@@ -5,11 +5,10 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class Category : BaseEntity
+    public class CheckIn : BaseEntity
     {
-        public string CategoryName { get; set; }
-        public string Description { get; set; }
+        public Item Item { get; set; }
+        public int Quantity { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<Item> Items { get; set; }
     }
 }

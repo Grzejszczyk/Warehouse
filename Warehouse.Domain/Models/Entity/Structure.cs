@@ -11,6 +11,7 @@ namespace Warehouse.Domain.Models.Entity
         public string ProductName { get; set; }
         public string Subassembly { get; set; }
         public string Project { get; set; }
-        public ICollection<Item> Items { get; set; }
+        public bool IsDeleted { get; set; }
+        public ICollection<ItemStructure> ItemStructures { get; set; }
     }
 }

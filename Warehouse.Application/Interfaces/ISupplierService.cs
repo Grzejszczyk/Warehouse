@@ -9,7 +9,7 @@ namespace Warehouse.Application.Interfaces
     {
         SuppliersListForListVM GetAllSuppliersForList(int pageSize, int pageNo, string searchString);
         SupplierDetailsVM GetSupplierDetails(int supplierId);
-        int AddNewSupplier(SupplierDetailsVM newSupplierVM);
+        int AddSupplier(SupplierDetailsVM newSupplierVM);
         int EditSupplier(SupplierDetailsVM newItemVM);
         void DeleteSupplier(int id);
     }

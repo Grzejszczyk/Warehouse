@@ -21,7 +21,7 @@ namespace Warehouse.Application.Services
             _supplierRepository = repo;
             _mapper = mapper;
         }
-        public int AddNewSupplier(SupplierDetailsVM newSupplierVM)
+        public int AddSupplier(SupplierDetailsVM newSupplierVM)
         {
             //WITHOUT REVERSE MAPPING:
 

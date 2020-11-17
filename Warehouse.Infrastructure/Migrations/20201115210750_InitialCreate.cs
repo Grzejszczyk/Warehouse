@@ -52,9 +52,9 @@ namespace Warehouse.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: true),
+                    ModifiedById = table.Column<string>(nullable: true),
                     ModifiedDateTime = table.Column<DateTime>(nullable: true),
                     CategoryName = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
@@ -70,9 +70,9 @@ namespace Warehouse.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: true),
+                    ModifiedById = table.Column<string>(nullable: true),
                     ModifiedDateTime = table.Column<DateTime>(nullable: true),
                     ProductName = table.Column<string>(nullable: true),
                     Subassembly = table.Column<string>(nullable: true),
@@ -89,9 +89,9 @@ namespace Warehouse.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: true),
+                    ModifiedById = table.Column<string>(nullable: true),
                     ModifiedDateTime = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     NIP = table.Column<string>(nullable: true),
@@ -100,28 +100,12 @@ namespace Warehouse.Infrastructure.Migrations
                     City = table.Column<string>(nullable: true),
                     ZipCode = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
-                    BuildingNo = table.Column<string>(nullable: true)
+                    BuildingNo = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Suppliers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tags",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<int>(nullable: false),
-                    CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    TagName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,16 +220,16 @@ namespace Warehouse.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<int>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    ModifiedById = table.Column<int>(nullable: true),
+                    ModifiedById = table.Column<string>(nullable: true),
                     ModifiedDateTime = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     LowQuantityValue = table.Column<int>(nullable: false),
-                    StructureId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: true),
-                    SupplierId = table.Column<int>(nullable: true)
+                    SupplierId = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,12 +241,6 @@ namespace Warehouse.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Items_Structures_StructureId",
-                        column: x => x.StructureId,
-                        principalTable: "Structures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Items_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
@@ -271,25 +249,73 @@ namespace Warehouse.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemTag",
+                name: "CheckIns",
                 columns: table => new
                 {
-                    ItemId = table.Column<int>(nullable: false),
-                    TagId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(nullable: false),
+                    ModifiedById = table.Column<string>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ItemId = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemTag", x => new { x.ItemId, x.TagId });
+                    table.PrimaryKey("PK_CheckIns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemTag_Items_ItemId",
+                        name: "FK_CheckIns_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CheckOuts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(nullable: false),
+                    ModifiedById = table.Column<string>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ItemId = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CheckOuts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CheckOuts_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemStructure",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(nullable: false),
+                    StructureId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemStructure", x => new { x.ItemId, x.StructureId });
+                    table.ForeignKey(
+                        name: "FK_ItemStructure_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemTag_Tags_TagId",
-                        column: x => x.TagId,
-                        principalTable: "Tags",
+                        name: "FK_ItemStructure_Structures_StructureId",
+                        column: x => x.StructureId,
+                        principalTable: "Structures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -334,14 +360,19 @@ namespace Warehouse.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CheckIns_ItemId",
+                table: "CheckIns",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckOuts_ItemId",
+                table: "CheckOuts",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Items_CategoryId",
                 table: "Items",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Items_StructureId",
-                table: "Items",
-                column: "StructureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_SupplierId",
@@ -349,9 +380,9 @@ namespace Warehouse.Infrastructure.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemTag_TagId",
-                table: "ItemTag",
-                column: "TagId");
+                name: "IX_ItemStructure_StructureId",
+                table: "ItemStructure",
+                column: "StructureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -372,7 +403,13 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ItemTag");
+                name: "CheckIns");
+
+            migrationBuilder.DropTable(
+                name: "CheckOuts");
+
+            migrationBuilder.DropTable(
+                name: "ItemStructure");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -384,13 +421,10 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "Structures");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Structures");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
