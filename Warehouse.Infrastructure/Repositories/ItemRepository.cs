@@ -46,8 +46,10 @@ namespace Warehouse.Infrastructure.Repositories
         {
             var item = _context.Items
                 .Include(c => c.Category)
-                .Include(st => st.ItemStructures.Where(s => s.ItemId == id).Any())
                 .Include(s => s.Supplier)
+                .Include(st => st.ItemStructures).ThenInclude(s => s.Structure)
+                .Include(c=>c.CheckIns)
+                .Include(c=>c.CheckOuts)
                 .FirstOrDefault(i => i.Id == id);
             return item;
         }

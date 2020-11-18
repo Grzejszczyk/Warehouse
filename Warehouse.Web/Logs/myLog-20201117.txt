@@ -1,0 +1,234 @@
+2020-11-17T21:33:10.8451727+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T21:33:10.8722637+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T21:33:10.8758738+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T21:33:14.5828841+01:00 8000000d-0000-ff00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:34:05.8512269+01:00 80000012-0002-f200-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:35:16.9622037+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T21:35:16.9755992+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T21:35:16.9786481+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T21:35:21.1577677+01:00 80000012-0003-f700-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:37:28.5826806+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T21:37:28.5979381+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T21:37:28.6001676+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T21:38:22.0462195+01:00 8000000e-0001-f700-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:39:05.4412432+01:00 8000001b-0002-f600-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Item -> ItemDetailsVM
+Warehouse.Domain.Models.Entity.Item -> Warehouse.Application.ViewModels.Item.ItemDetailsVM
+
+Type Map configuration:
+Item -> ItemDetailsVM
+Warehouse.Domain.Models.Entity.Item -> Warehouse.Application.ViewModels.Item.ItemDetailsVM
+
+Destination Member:
+StructureId
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ICollection`1 -> Int32
+System.Collections.Generic.ICollection`1[[Warehouse.Domain.Models.Entity.ItemStructure, Warehouse.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Int32
+   at lambda_method(Closure , ICollection`1 , Int32 , ResolutionContext )
+   at lambda_method(Closure , Object , ItemDetailsVM , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , Object , ItemDetailsVM , ResolutionContext )
+   at Warehouse.Application.Services.ItemService.GetItemDetails(Int32 itemId) in C:\Users\grzej\source\repos\Warehouse\Warehouse.Application\Services\ItemService.cs:line 44
+   at Warehouse.Web.Controllers.WarehouseController.ItemDetails(Int32 id) in C:\Users\grzej\source\repos\Warehouse\Warehouse.Web\Controllers\WarehouseController.cs:line 83
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.MigrationsEndPointMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-11-17T21:40:53.9592316+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T21:40:53.9710444+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T21:40:53.9754955+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T21:40:56.6637161+01:00 8000001d-0002-f600-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:46:39.9377729+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T21:46:39.9501178+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T21:46:39.9524110+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T21:46:43.5231047+01:00 80000016-0000-fe00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:46:55.3501445+01:00 8000001c-0002-f400-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:47:04.0309902+01:00 8000001d-0000-fb00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T21:47:06.5960498+01:00 80000022-0001-f900-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T22:40:24.1139769+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T22:40:24.1305384+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T22:40:24.1348432+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T22:40:31.1803048+01:00 8000000e-0003-f400-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T22:41:47.4257012+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T22:41:47.4401679+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T22:41:47.4434979+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T22:41:50.2973241+01:00 8000000c-0000-fd00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T22:47:31.0808906+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T22:47:31.0936264+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T22:47:31.0968209+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T22:47:33.5217647+01:00 80000026-0002-f600-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:05:12.0689238+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:05:12.0847480+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:05:12.0878842+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:05:17.8050895+01:00 80000014-0000-fd00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:08:52.2501886+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:08:52.2725729+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:08:52.2756685+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:08:56.9784129+01:00 8000001d-0001-fa00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:10:31.8127845+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:10:31.8260155+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:10:31.8281210+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:10:34.1285255+01:00 80000028-0002-f500-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:16:12.7080297+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:16:12.7243543+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:16:12.7280285+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:16:15.5897043+01:00 80000014-0003-f400-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:19:14.7242635+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:19:14.7385039+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:19:14.7414098+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:19:17.6211220+01:00 8000002e-0002-f500-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:22:11.7423160+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:22:11.7598542+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:22:11.7633743+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:22:14.3157633+01:00 8000002e-0001-f500-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:44:19.9974652+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:44:20.0397668+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:44:20.0504941+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:44:35.7189098+01:00 8000003e-0000-fb00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:45:31.8861484+01:00 80000030-0000-fe00-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Item -> ItemDetailsVM
+Warehouse.Domain.Models.Entity.Item -> Warehouse.Application.ViewModels.Item.ItemDetailsVM
+
+Type Map configuration:
+Item -> ItemDetailsVM
+Warehouse.Domain.Models.Entity.Item -> Warehouse.Application.ViewModels.Item.ItemDetailsVM
+
+Destination Member:
+StructuresForItemDetails
+
+ ---> AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ItemStructure -> StructuresForItemDetails
+Warehouse.Domain.Models.Entity.ItemStructure -> Warehouse.Application.ViewModels.Item.StructuresForItemDetails
+   at lambda_method(Closure , ItemStructure , StructuresForItemDetails , ResolutionContext )
+   at lambda_method(Closure , Object , ItemDetailsVM , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , Object , ItemDetailsVM , ResolutionContext )
+   at Warehouse.Application.Services.ItemService.GetItemDetails(Int32 itemId) in C:\Users\grzej\source\repos\Warehouse\Warehouse.Application\Services\ItemService.cs:line 44
+   at Warehouse.Web.Controllers.WarehouseController.ItemDetails(Int32 id) in C:\Users\grzej\source\repos\Warehouse\Warehouse.Web\Controllers\WarehouseController.cs:line 83
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.MigrationsEndPointMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2020-11-17T23:47:30.6242468+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:47:30.6396935+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:47:30.6444383+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:47:33.0171769+01:00 80000004-0002-ef00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:49:25.1862106+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:49:25.2014176+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:49:25.2197704+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:49:32.4528173+01:00 80000021-0001-ff00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:55:17.2417440+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:55:17.2591775+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:55:17.2619821+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:55:19.3363118+01:00 80000025-0001-ff00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)
+2020-11-17T23:55:22.5082326+01:00 80000035-0002-f500-b63f-84710c7967bb [ERR] Failed executing DbCommand ("18"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CategoryId], [t].[CreatedById], [t].[CreatedDateTime], [t].[Description], [t].[IsDeleted], [t].[LowQuantityValue], [t].[ModifiedById], [t].[ModifiedDateTime], [t].[Name], [t].[Quantity], [t].[SupplierId], [t].[Id0], [t].[CategoryName], [t].[CreatedById0], [t].[CreatedDateTime0], [t].[Description0], [t].[IsDeleted0], [t].[ModifiedById0], [t].[ModifiedDateTime0], [t].[Id1], [t].[BuildingNo], [t].[City], [t].[CreatedById1], [t].[CreatedDateTime1], [t].[Email], [t].[IsActive], [t].[IsDeleted1], [t].[ModifiedById1], [t].[ModifiedDateTime1], [t].[NIP], [t].[Name0], [t].[PhoneNo], [t].[Street], [t].[ZipCode], [t0].[ItemId], [t0].[StructureId], [t0].[ItemQuantity], [t0].[Id], [t0].[CreatedById], [t0].[CreatedDateTime], [t0].[IsDeleted], [t0].[ModifiedById], [t0].[ModifiedDateTime], [t0].[Name], [t0].[ProductName], [t0].[Project]
+FROM (
+    SELECT TOP(1) [i].[Id], [i].[CategoryId], [i].[CreatedById], [i].[CreatedDateTime], [i].[Description], [i].[IsDeleted], [i].[LowQuantityValue], [i].[ModifiedById], [i].[ModifiedDateTime], [i].[Name], [i].[Quantity], [i].[SupplierId], [c].[Id] AS [Id0], [c].[CategoryName], [c].[CreatedById] AS [CreatedById0], [c].[CreatedDateTime] AS [CreatedDateTime0], [c].[Description] AS [Description0], [c].[IsDeleted] AS [IsDeleted0], [c].[ModifiedById] AS [ModifiedById0], [c].[ModifiedDateTime] AS [ModifiedDateTime0], [s].[Id] AS [Id1], [s].[BuildingNo], [s].[City], [s].[CreatedById] AS [CreatedById1], [s].[CreatedDateTime] AS [CreatedDateTime1], [s].[Email], [s].[IsActive], [s].[IsDeleted] AS [IsDeleted1], [s].[ModifiedById] AS [ModifiedById1], [s].[ModifiedDateTime] AS [ModifiedDateTime1], [s].[NIP], [s].[Name] AS [Name0], [s].[PhoneNo], [s].[Street], [s].[ZipCode]
+    FROM [Items] AS [i]
+    LEFT JOIN [Categories] AS [c] ON [i].[CategoryId] = [c].[Id]
+    LEFT JOIN [Suppliers] AS [s] ON [i].[SupplierId] = [s].[Id]
+    WHERE [i].[Id] = @__id_0
+) AS [t]
+LEFT JOIN (
+    SELECT [i0].[ItemId], [i0].[StructureId], [i0].[ItemQuantity], [s0].[Id], [s0].[CreatedById], [s0].[CreatedDateTime], [s0].[IsDeleted], [s0].[ModifiedById], [s0].[ModifiedDateTime], [s0].[Name], [s0].[ProductName], [s0].[Project]
+    FROM [ItemStructure] AS [i0]
+    INNER JOIN [Structures] AS [s0] ON [i0].[StructureId] = [s0].[Id]
+) AS [t0] ON [t].[Id] = [t0].[ItemId]
+ORDER BY [t].[Id], [t0].[ItemId], [t0].[StructureId], [t0].[Id]" (627a98df)
+2020-11-17T23:55:22.5862643+01:00 80000035-0002-f500-b63f-84710c7967bb [ERR] An exception occurred while iterating over the results of a query for context type '"Warehouse.Infrastructure.Context"'."
+""Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Name'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.InitializeReader(DbContext _, Boolean result)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+ClientConnectionId:9762a41e-c7fa-4d4b-bfc3-78a560a5f1f7
+Error Number:207,State:1,Class:16" (f5c7ac34)
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'Name'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.InitializeReader(DbContext _, Boolean result)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+ClientConnectionId:9762a41e-c7fa-4d4b-bfc3-78a560a5f1f7
+Error Number:207,State:1,Class:16
+2020-11-17T23:58:13.4372351+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-17T23:58:13.4522408+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-17T23:58:13.4546894+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-17T23:58:18.1059878+01:00 80000032-0001-fa00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller - to logger. (1aa74c93)

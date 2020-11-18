@@ -16,29 +16,35 @@ namespace Warehouse.Application.ViewModels.Item
         public DateTime CreatedDateTime { get; set; }
         public int ModifiedById { get; set; }
         public DateTime ModifiedDateTime { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Description { get; set; }
+
         [Required]
         [Range(0, Int32.MaxValue)]
         public int LowQuantityValue { get; set; }
-        public int StructureId { get; set; } //Where Used Id
-        public string StructureName { get; set; } //Where Used
-        //TODO: Lista???
         public string CategoryName { get; set; }
         public string SupplierName { get; set; }
+
         [Required]
         [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
 
+        public List<StructuresForItemDetails> StructuresForItemDetails { get; set; }
+        public List<CheckInsOutsForItemDetails> CheckIns { get; set; }
+        public List<CheckInsOutsForItemDetails> CheckOuts { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemDetailsVM>()
-                .ForMember(s => s.StructureId, opt => opt.MapFrom(d => d.ItemStructures))
-                .ForMember(s => s.StructureName, opt => opt.MapFrom(d => "Structure Name"))
                 .ForMember(s => s.CategoryName, opt => opt.MapFrom(d => d.Category.CategoryName))
-                .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name)).ReverseMap();
+                .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name))
+                .ForMember(s=>s.CheckOuts, opt=>opt.Ignore())
+                .ForMember(s=>s.CheckIns, opt=>opt.Ignore())
+                .ReverseMap();
         }
     }
 }

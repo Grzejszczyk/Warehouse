@@ -37,11 +37,43 @@ namespace Warehouse.Application.Services
 
         public ItemDetailsVM GetItemDetails(int itemId)
         {
-            //structures List
-            //checkIn List
-            //checkOut List
             var item = _itemRepository.GetItemById(itemId);
             var itemVM = _mapper.Map<ItemDetailsVM>(item);
+
+            itemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
+            itemVM.CheckIns = new List<CheckInsOutsForItemDetails>();
+            itemVM.CheckOuts = new List<CheckInsOutsForItemDetails>();
+
+            foreach (var s in item.ItemStructures)
+            {
+                itemVM.StructuresForItemDetails.Add(
+                    new StructuresForItemDetails
+                    {
+                        StructureId = s.StructureId,
+                        StructureName = s.Structure.Name,
+                        QuantityForStructure = s.ItemQuantity
+                    });
+            }
+            foreach (var cin in item.CheckIns)
+            {
+                itemVM.CheckIns.Add(
+                    new CheckInsOutsForItemDetails
+                    {
+                        CheckInOutId = cin.Id,
+                        ActionDateTime = cin.ModifiedDateTime,
+                        Quantity = cin.Quantity
+                    });
+            }
+            foreach (var cou in item.CheckOuts)
+            {
+                itemVM.CheckOuts.Add(
+                    new CheckInsOutsForItemDetails
+                    {
+                        CheckInOutId = cou.Id,
+                        ActionDateTime = cou.ModifiedDateTime,
+                        Quantity = cou.Quantity
+                    });
+            }
             return itemVM;
         }
 
