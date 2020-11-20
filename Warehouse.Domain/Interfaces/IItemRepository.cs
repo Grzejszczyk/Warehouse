@@ -16,5 +16,7 @@ namespace Warehouse.Domain.Interfaces
 
         int UpdateItem(Item item, int id);
         void DeleteItem(int itemId);
+
+        public Category GetCategoryById(int id);
     }
 }

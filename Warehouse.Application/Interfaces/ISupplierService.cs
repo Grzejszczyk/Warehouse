@@ -11,6 +11,7 @@ namespace Warehouse.Application.Interfaces
         SupplierDetailsVM GetSupplierDetails(int supplierId);
         int AddSupplier(SupplierDetailsVM newSupplierVM);
         int EditSupplier(SupplierDetailsVM newItemVM);
-        void DeleteSupplier(int id);
+        int SetIsDeleted(int supplierId);
+        void DeleteSupplier(int supplierid);
     }
 }

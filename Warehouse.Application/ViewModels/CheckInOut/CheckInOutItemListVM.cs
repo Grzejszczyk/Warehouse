@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Warehouse.Application.ViewModels.CheckInOut
 {
-    public class CheckInOutListVM
+    public class CheckInOutItemListVM
     {
         public int IdemId { get; set; }
         public List<CheckInForListVM> CheckIns { get; set; }

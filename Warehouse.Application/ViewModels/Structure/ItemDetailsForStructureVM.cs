@@ -6,7 +6,7 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Application.ViewModels.Structure
 {
-    public class ItemForStructureListVM
+    public class ItemDetailsForStructureVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -17,7 +17,7 @@ namespace Warehouse.Application.ViewModels.Item
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemForListVM>()
-                .ForMember(d=>d.Category, opt=>opt.MapFrom(s=>s.Category.CategoryName)).ReverseMap();
+                .ForMember(d=>d.Category, opt=>opt.MapFrom(s=>s.Category.CategoryName));
         }
     }
 }

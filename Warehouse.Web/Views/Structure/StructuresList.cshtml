@@ -1,0 +1,62 @@
+﻿@model Warehouse.Application.ViewModels.Structure.StructuresListForListVM
+
+@{
+    ViewData["Title"] = "StructuresList";
+}
+
+<h1>StructuresList</h1>
+
+<p>
+    <a asp-action="EditStructure">Create New</a>
+</p>
+
+<form asp-action="StructuresList" asp-controller="Structure" method="post">
+    <div class="row">
+        <input type="text" asp-for="SearchString" name="searchString" />
+        <input type="submit" value="Search" />
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Structure Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Project
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model.Structures)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.StructureId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.StructureName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.Project)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditStructure", new { id=s.StructureId }) |
+                        @Html.ActionLink("Details", "StructureDetails", new { id = s.StructureId }) |
+                        @Html.ActionLink("Delete", "SetIsDeletedStructure", new { id = s.StructureId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

@@ -11,6 +11,7 @@ namespace Warehouse.Application.Interfaces
         ItemDetailsVM GetItemDetails(int itemId);
         int AddItem(ItemDetailsVM newItemVM);
         int EditItem(ItemDetailsVM newItemVM);
+        int SetIsDeleted(int itemId);
         void DeleteItem(int id);
     }
 }

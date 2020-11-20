@@ -9,7 +9,7 @@
 <p>
     <a asp-action="EditSupplier">Create New</a>
 </p>
-<form asp-action="SuppliersList" asp-controller="Warehouse" method="post">
+<form asp-action="SuppliersList" asp-controller="Supplier" method="post">
     <div class="row">
         <input type="text" asp-for="SearchString" name="searchString" />
         <input type="submit" value="Search" />
@@ -57,7 +57,7 @@
                     <td>
                         @Html.ActionLink("Edit", "EditSupplier", new { id=item.Id }) |
                         @Html.ActionLink("Details", "SupplierDetails", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "DeleteSupplier", new { id=item.Id })
+                        @Html.ActionLink("Delete", "SetIsDeletedSupplier", new { id=item.Id })
                     </td>
                 </tr>
             }

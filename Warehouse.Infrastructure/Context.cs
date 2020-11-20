@@ -25,14 +25,6 @@ namespace Warehouse.Infrastructure
         {
             base.OnModelCreating(builder);
 
-            //builder.Entity<Item>()
-            //    .HasOne(a => a.Category).WithMany(b => b.Items);
-
-            //builder.Entity<CheckIn>()
-            //    .HasMany(i => i.Items).WithOne();
-            //builder.Entity<CheckOut>()
-            //    .HasMany(i => i.Items).WithOne();
-
             builder.Entity<ItemStructure>()
                 .HasKey(t => new { t.ItemId, t.StructureId });
             builder.Entity<ItemStructure>()
@@ -44,8 +36,7 @@ namespace Warehouse.Infrastructure
                 .WithMany(s => s.ItemStructures)
                 .HasForeignKey(itS => itS.StructureId);
         }
-        //NEW SaveChanges:
-        //TODO: Sprawdzić tę metodę step by step
+
         public int SaveChanges(string userId)
         {
             var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));

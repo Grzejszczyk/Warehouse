@@ -15,10 +15,14 @@ namespace Warehouse.Application.Services
     public class ItemService : IItemService
     {
         private readonly IItemRepository _itemRepository;
+        private readonly ISupplierRepository _supplierRepository;
+        private readonly IStructureRepository _structureRepository;
         private readonly IMapper _mapper;
-        public ItemService(IItemRepository repo, IMapper mapper)
+        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IStructureRepository structureRepo, IMapper mapper)
         {
-            _itemRepository = repo;
+            _itemRepository = itemRepo;
+            _supplierRepository = supplierRepo;
+            _structureRepository = structureRepo;
             _mapper = mapper;
         }
 
@@ -38,6 +42,7 @@ namespace Warehouse.Application.Services
         public ItemDetailsVM GetItemDetails(int itemId)
         {
             var item = _itemRepository.GetItemById(itemId);
+
             var itemVM = _mapper.Map<ItemDetailsVM>(item);
 
             itemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
@@ -79,13 +84,37 @@ namespace Warehouse.Application.Services
 
         public int AddItem(ItemDetailsVM newItemVM)
         {
-            //TODO: Assign to structure
-            //TODO: Assign to supplier or add new supplier
             Item newItem = new Item();
-            _mapper.Map<ItemDetailsVM, Item>(newItemVM, newItem);
-            //TODO: Remove structure and category hacks!
-            //////!!!!!!newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
-            newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
+            //TODO: Automapper Issue. Manual mapping...
+            //newItem = _mapper.Map<Item>(newItemVM);
+
+            //hacks area:
+            //TODO: Continue implements and remove hacks
+            newItemVM.CategoryId = 1;
+            newItemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
+            newItemVM.StructuresForItemDetails.Add(new StructuresForItemDetails() { StructureId = 1, QuantityForStructure = 99 });
+            newItemVM.SupplierId = 1;
+            //end
+
+            newItem.Category = _itemRepository.GetCategoryById(newItemVM.CategoryId);
+            newItem.Description = newItemVM.Description;
+            newItem.IsDeleted = false;
+
+            newItem.ItemStructures = new List<ItemStructure>();
+            foreach (var structure in newItemVM.StructuresForItemDetails)
+            {
+                ItemStructure itemStructure = new ItemStructure();
+                itemStructure.Item = newItem;
+                itemStructure.Structure = _structureRepository.GetStructure(structure.StructureId);
+                itemStructure.ItemQuantity = structure.QuantityForStructure;
+                newItem.ItemStructures.Add(itemStructure);
+            }
+
+            newItem.LowQuantityValue = newItemVM.LowQuantityValue;
+            newItem.Name = newItemVM.Name;
+            newItem.Quantity = newItemVM.Quantity;
+            newItem.Supplier = _supplierRepository.GetSupplierById(newItemVM.SupplierId);
+            newItem.Id = 0;
             var supplierMapped = _itemRepository.AddItem(newItem);
             return supplierMapped;
         }
@@ -93,13 +122,47 @@ namespace Warehouse.Application.Services
         public int EditItem(ItemDetailsVM ItemVM)
         {
             //Assign to structure
-            Item newItem = _itemRepository.GetItemById(ItemVM.Id);
-            _mapper.Map<ItemDetailsVM, Item>(ItemVM, newItem);
-            //TODO: Remove structure and category hacks!
-            ///////!!!!!!newItem.Structure = _itemRepository.GetItems().FirstOrDefault(s => s.Structure.Id == 1).Structure;
-            newItem.Category = _itemRepository.GetItems().FirstOrDefault(c => c.Category.Id == 1).Category;
-            var supplierMapped = _itemRepository.UpdateItem(newItem, ItemVM.Id);
+            Item itemEntity = _itemRepository.GetItemById(ItemVM.Id);
+            //TODO: Automapper Issue. Manual mapping...
+            //_mapper.Map<ItemDetailsVM, Item>(ItemVM, itemEntity);
+
+            //hacks area:
+            //TODO: Continue implements and remove hacks
+            ItemVM.CategoryId = 1;
+            ItemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
+            ItemVM.StructuresForItemDetails.Add(new StructuresForItemDetails() { StructureId = 1, QuantityForStructure = 99 });
+            ItemVM.SupplierId = 1;
+            //end
+
+            itemEntity.Category = _itemRepository.GetCategoryById(ItemVM.CategoryId);
+            itemEntity.Description = ItemVM.Description;
+            itemEntity.IsDeleted = false;
+
+            itemEntity.ItemStructures = new List<ItemStructure>();
+            foreach (var structure in ItemVM.StructuresForItemDetails)
+            {
+                ItemStructure itemStructure = new ItemStructure();
+                itemStructure.Item = itemEntity;
+                itemStructure.Structure = _structureRepository.GetStructure(structure.StructureId);
+                itemStructure.ItemQuantity = structure.QuantityForStructure;
+                itemEntity.ItemStructures.Add(itemStructure);
+            }
+
+            itemEntity.LowQuantityValue = ItemVM.LowQuantityValue;
+            itemEntity.Name = ItemVM.Name;
+            itemEntity.Quantity = ItemVM.Quantity;
+            itemEntity.Supplier = _supplierRepository.GetSupplierById(ItemVM.SupplierId);
+
+            var supplierMapped = _itemRepository.UpdateItem(itemEntity, ItemVM.Id);
             return supplierMapped;
+        }
+
+        public int SetIsDeleted(int itemId)
+        {
+            Item itemEntity = _itemRepository.GetItemById(itemId);
+            itemEntity.IsDeleted = true;
+            _itemRepository.UpdateItem(itemEntity, itemEntity.Id);
+            return itemEntity.Id;
         }
 
         public void DeleteItem(int id)

@@ -10,7 +10,7 @@
     <a asp-action="EditItem">Create New</a>
 </p>
 
-<form asp-action="ItemsList" asp-controller="Warehouse" method="post">
+<form asp-action="ItemsList" asp-controller="Item" method="post">
     <div class="row">
         <input type="text" asp-for="SearchString" name="searchString" />
         <input type="submit" value="Search" />
@@ -39,9 +39,6 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
@@ -53,7 +50,7 @@
                     <td>
                         @Html.ActionLink("Edit", "EditItem", new {  id=item.Id }) |
                         @Html.ActionLink("Details", "ItemDetails", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id })
+                        @Html.ActionLink("Delete", "SetIsDeletedItem", new { id = item.Id })
                     </td>
                 </tr>
             }

@@ -17,6 +17,11 @@ namespace Warehouse.Infrastructure.Repositories
         //CRUD:
         public int AddSupplier(Supplier supplier)
         {
+            supplier.CreatedById = "hackUser";
+            supplier.CreatedDateTime = DateTime.Now;
+            supplier.ModifiedById = "hackUserMod";
+            supplier.ModifiedDateTime = DateTime.Now;
+
             _context.Suppliers.Add(supplier);
             _context.SaveChanges();
             return supplier.Id;
@@ -33,6 +38,9 @@ namespace Warehouse.Infrastructure.Repositories
         }
         public int UpdateSupplier(Supplier updatedSupplier, int supplierId)
         {
+            updatedSupplier.ModifiedById = "hackUserMod";
+            updatedSupplier.ModifiedDateTime = DateTime.Now;
+
             var s = _context.Suppliers.Find(supplierId);
             if (s != null)
             {
@@ -43,6 +51,7 @@ namespace Warehouse.Infrastructure.Repositories
         }
         public void DeleteSupplier(int supplierId)
         {
+            //TODO: change status IsDeleted!
             var supplier = _context.Suppliers.Find(supplierId);
             if (supplier != null)
             {

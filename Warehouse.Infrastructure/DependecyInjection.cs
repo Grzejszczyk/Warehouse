@@ -13,6 +13,7 @@ namespace Warehouse.Application
         {
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<ISupplierRepository, SupplierRepository>();
+            services.AddTransient<IStructureRepository, StructureRepository>();
             return services;
         }
     }
