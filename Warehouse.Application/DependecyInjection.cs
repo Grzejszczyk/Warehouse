@@ -19,6 +19,7 @@ namespace Warehouse.Application
             services.AddTransient<IStructureService, StructureService>();
             services.AddTransient<ICheckInOutService, CheckInOutService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             return services;
         }
     }

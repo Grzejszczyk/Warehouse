@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Warehouse.Domain.Interfaces;
 using Warehouse.Infrastructure.Repositories;
 
-namespace Warehouse.Application
+
+namespace Warehouse.Infrastructure
 {
     public static class DependecyInjection
     {
@@ -14,6 +16,7 @@ namespace Warehouse.Application
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<ISupplierRepository, SupplierRepository>();
             services.AddTransient<IStructureRepository, StructureRepository>();
+
             return services;
         }
     }

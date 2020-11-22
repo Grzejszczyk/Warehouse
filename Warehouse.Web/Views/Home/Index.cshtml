@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Authorization;
+@inject IAuthorizationService AuthorizationService
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -22,6 +25,63 @@
             <p class="col">Items checkIn</p>
             <p class="col">Items checkOut</p>
             <p class="col">Items checkOut by Structure set</p>
+        </div>
+    </div>
+    <div class="row">
+        <h2 class="col-12">Policy, roles, claims Tests</h2>
+        <h4 class="col-12">Let's play....</h4>
+        <div class="col-12">
+            <a>This text can everybody see...:</a>
+            <a>Text for everybody.</a>
+        </div>
+        <div class="col-12">
+            <a>This text can only Admin (role):</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a>Text for admin.</a>
+            }
+        </div>
+        <div class="col-12">
+            <a>This text can only SuperUser (role):</a>
+            @if (User.IsInRole("SuperUser"))
+            {
+                <a>Text for superUser.</a>
+            }
+        </div>
+        <div class="col-12">
+            <a>This text can only User (role):</a>
+            @if (User.IsInRole("User"))
+            {
+                <a>Text for user.</a>
+            }
+        </div>
+        <div class="col-12">
+            <a>This text can only Operator (role):</a>
+            @if (User.IsInRole("Operator"))
+            {
+                <a>Text for operator.</a>
+            }
+        </div>
+        <div class="col-12">
+            <a>This text can only Viewer (role):</a>
+            @if (User.IsInRole("Viewer"))
+            {
+                <a>Text for viewer.</a>
+            }
+        </div>
+        <div class="col-12">
+            <a>This text can only someone with claim ReadItems (claim):</a>
+            @if (User.HasClaim(c => c.Type == "ReadItems"))
+            {
+                <a>Text for owner of Claim ReadItems.</a>
+            }
+        </div>
+        <div class="col-12">
+            <a>This text can only someone with policy SuperUser (policy):</a>
+            @if ((await AuthorizationService.AuthorizeAsync(User, "SuperUser")).Succeeded)
+            {
+                <a>Text for policy SuperUser.</a>
+            }
         </div>
     </div>
 </div>
