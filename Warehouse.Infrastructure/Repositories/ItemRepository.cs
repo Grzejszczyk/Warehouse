@@ -7,6 +7,7 @@ using System.Text;
 using Warehouse.Domain.Interfaces;
 using Warehouse.Domain.Models.Common;
 using Warehouse.Domain.Models.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Warehouse.Infrastructure.Repositories
 {
@@ -18,52 +19,28 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
 
-        private Item PutAuditableData(Item item)
+        public int AddItem(Item item, string userId)
         {
-            if (item.Id == 0)
-            {
-                item.CreatedById = "new";
-                item.CreatedDateTime = DateTime.Now;
-                item.ModifiedById = "new";
-                item.ModifiedDateTime = DateTime.Now;
-            }
-            else
-            {
-                item.ModifiedById = "mod";
-                item.ModifiedDateTime = DateTime.Now;
-            }
-            return item;
-        }
-
-        //CRUD:
-        public int AddItem(Item item)
-        {
-            PutAuditableData(item);
             _context.Items.Add(item);
-            _context.SaveChanges();
+            _context.SaveChanges(userId);
             return item.Id;
         }
 
         public IQueryable<Item> GetItemsByStructure(int structureId)
         {
             var items = _context.Items
+                .Where(i => i.IsDeleted == false)
                 .Where(i => i.ItemStructures.Where(s => s.StructureId == structureId).Any()).AsQueryable();
-            return items;
-        }
-        public IQueryable<Item> GetItemsByCategory(int categoryId)
-        {
-            var items = _context.Items.Where(i => i.Category.Id == categoryId).AsQueryable();
             return items;
         }
         public IQueryable<Item> GetItems()
         {
-            var items = _context.Items.Include(c => c.Category).AsQueryable();
+            var items = _context.Items.Where(i => i.IsDeleted == false).AsQueryable();
             return items;
         }
         public Item GetItemById(int id)
         {
             var item = _context.Items
-                .Include(c => c.Category)
                 .Include(s => s.Supplier)
                 .Include(st => st.ItemStructures).ThenInclude(s => s.Structure)
                 .Include(c => c.CheckIns)
@@ -71,14 +48,13 @@ namespace Warehouse.Infrastructure.Repositories
                 .FirstOrDefault(i => i.Id == id);
             return item;
         }
-        public int UpdateItem(Item item, int itemId)
+        public int UpdateItem(Item item, int itemId, string userId)
         {
-            PutAuditableData(item);
             var i = _context.Items.Find(itemId);
             if (i != null)
             {
                 _context.Items.Update(item);
-                _context.SaveChanges();
+                _context.SaveChanges(userId);
             }
             return i.Id;
         }
@@ -91,11 +67,6 @@ namespace Warehouse.Infrastructure.Repositories
                 _context.Items.Remove(item);
                 _context.SaveChanges();
             }
-        }
-        public Category GetCategoryById(int id)
-        {
-            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
-            return category;
         }
     }
 }

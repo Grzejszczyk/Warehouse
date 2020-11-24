@@ -1,4 +1,4 @@
-﻿@model Warehouse.Application.ViewModels.Item.ItemDetailsVM
+﻿@model Warehouse.Application.ViewModels.Item.EditItemVM
 
 @{
     ViewData["Title"] = "AddItem";
@@ -36,16 +36,6 @@
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <input asp-for="CategoryName" class="form-control" />
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupplierName" class="control-label"></label>
-                <input asp-for="SupplierName" class="form-control" />
-                <span asp-validation-for="SupplierName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -53,7 +43,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ItemsList">Back to List</a>
 </div>
 
 @section Scripts {

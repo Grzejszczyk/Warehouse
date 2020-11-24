@@ -15,7 +15,7 @@ namespace Warehouse.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -219,39 +219,6 @@ namespace Warehouse.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Warehouse.Domain.Models.Entity.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("Warehouse.Domain.Models.Entity.CheckIn", b =>
                 {
                     b.Property<int>("Id")
@@ -274,7 +241,7 @@ namespace Warehouse.Infrastructure.Migrations
                     b.Property<string>("ModifiedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDateTime")
+                    b.Property<DateTime>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Quantity")
@@ -309,7 +276,7 @@ namespace Warehouse.Infrastructure.Migrations
                     b.Property<string>("ModifiedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDateTime")
+                    b.Property<DateTime>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Quantity")
@@ -329,9 +296,6 @@ namespace Warehouse.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(max)");
 
@@ -350,7 +314,7 @@ namespace Warehouse.Infrastructure.Migrations
                     b.Property<string>("ModifiedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDateTime")
+                    b.Property<DateTime>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -363,8 +327,6 @@ namespace Warehouse.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.HasIndex("SupplierId");
 
@@ -408,7 +370,7 @@ namespace Warehouse.Infrastructure.Migrations
                     b.Property<string>("ModifiedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDateTime")
+                    b.Property<DateTime>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -456,7 +418,7 @@ namespace Warehouse.Infrastructure.Migrations
                     b.Property<string>("ModifiedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDateTime")
+                    b.Property<DateTime>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NIP")
@@ -546,10 +508,6 @@ namespace Warehouse.Infrastructure.Migrations
 
             modelBuilder.Entity("Warehouse.Domain.Models.Entity.Item", b =>
                 {
-                    b.HasOne("Warehouse.Domain.Models.Entity.Category", "Category")
-                        .WithMany("Items")
-                        .HasForeignKey("CategoryId");
-
                     b.HasOne("Warehouse.Domain.Models.Entity.Supplier", "Supplier")
                         .WithMany("Items")
                         .HasForeignKey("SupplierId");

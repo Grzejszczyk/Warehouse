@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Warehouse.Application.Interfaces;
@@ -25,7 +27,7 @@ namespace Warehouse.Web.Controllers
             _itemService = itemRepo;
             _supplierService = supplierRepo;
         }
-        [Authorize(Policy = "CanView")]
+
         [HttpGet]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1)
         {
@@ -34,7 +36,7 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, "");
             return View(model);
         }
-        [Authorize(Policy = "CanView")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -48,61 +50,54 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanManageItems")]
         [HttpGet]
         public IActionResult EditItem(int id = 0)
         {
             if (id != 0)
             {
-                var item = _itemService.GetItemDetails(id);
+                var item = _itemService.GetItemDetailsForEdit(id);
                 return View(item);
             }
             else
             {
-                return View(new ItemDetailsVM());
+                return View(new EditItemVM());
             }
         }
 
-        [Authorize(Policy = "CanManageItems")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditItem(ItemDetailsVM model)
+        public IActionResult EditItem(EditItemVM model)
         {
+            int newItemId = 0;
             if (ModelState.IsValid)
             {
                 if (model.Id == 0)
                 {
-                    var id = _itemService.AddItem(model);
-                } else
-                {
-                    //model.CreatedById = _itemService.GetItemDetails(model.Id).CreatedById;
-                    //model.CreatedDateTime = _itemService.GetItemDetails(model.Id).CreatedDateTime;
-                    var id = _itemService.EditItem(model);
+                    newItemId = _itemService.AddItem(model, "testUserId");
                 }
-                return RedirectToAction("ItemsList");
+                else
+                {
+                    newItemId = _itemService.EditItem(model, "testUserId");
+                }
+            return RedirectToAction("ItemDetails", new { id = newItemId });
             }
             return View(model);
         }
 
-        [Authorize(Policy = "Viewer")]
-        [CheckPermissions("ViewDetails")]
+        public IActionResult AssignItemToCategory()
+        {
+            return View();
+        }
+
         public IActionResult ItemDetails(int id)
         {
             var model = _itemService.GetItemDetails(id);
             return View(model);
         }
 
-        [Authorize(Policy = "SuperUser")]
         public IActionResult SetIsDeletedItem(int id)
         {
-            _itemService.SetIsDeleted(id);
-            return RedirectToAction("ItemsList");
-        }
-
-        [Authorize(Policy = "Admin")]
-        public IActionResult DeleteItem(int id)
-        {
-            _itemService.DeleteItem(id);
+            _itemService.SetIsDeleted(id, "testUserId");
             return RedirectToAction("ItemsList");
         }
     }

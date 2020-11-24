@@ -11,7 +11,6 @@ namespace Warehouse.Domain.Models.Entity
         public string Name { get; set; }
         public string Description { get; set; }
         public int LowQuantityValue { get; set; }
-        public Category Category { get; set; }
         public Supplier Supplier { get; set; }
         public int Quantity { get; set; }
         public bool IsDeleted { get; set; }

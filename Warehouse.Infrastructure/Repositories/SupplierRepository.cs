@@ -15,20 +15,15 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
         //CRUD:
-        public int AddSupplier(Supplier supplier)
+        public int AddSupplier(Supplier supplier, string userId)
         {
-            supplier.CreatedById = "hackUser";
-            supplier.CreatedDateTime = DateTime.Now;
-            supplier.ModifiedById = "hackUserMod";
-            supplier.ModifiedDateTime = DateTime.Now;
-
             _context.Suppliers.Add(supplier);
-            _context.SaveChanges();
+            _context.SaveChanges(userId);
             return supplier.Id;
         }
         public IQueryable<Supplier> GetAllSuppliers()
         {
-            var suppliers = _context.Suppliers.AsQueryable();
+            var suppliers = _context.Suppliers.Where(i => i.IsDeleted == false).AsQueryable();
             return suppliers;
         }
         public Supplier GetSupplierById(int id)
@@ -36,19 +31,17 @@ namespace Warehouse.Infrastructure.Repositories
             var supplier = _context.Suppliers.FirstOrDefault(s => s.Id == id);
             return supplier;
         }
-        public int UpdateSupplier(Supplier updatedSupplier, int supplierId)
+        public int UpdateSupplier(Supplier updatedSupplier, int supplierId, string userId)
         {
-            updatedSupplier.ModifiedById = "hackUserMod";
-            updatedSupplier.ModifiedDateTime = DateTime.Now;
-
             var s = _context.Suppliers.Find(supplierId);
             if (s != null)
             {
                 _context.Suppliers.Update(updatedSupplier);
-                _context.SaveChanges();
+                _context.SaveChanges(userId);
             }
             return s.Id;
         }
+
         public void DeleteSupplier(int supplierId)
         {
             //TODO: change status IsDeleted!

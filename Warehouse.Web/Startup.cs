@@ -54,33 +54,61 @@ namespace Warehouse.Web
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("AdminPolicy", policy =>
+                {
+                    policy.RequireRole("Admin");
+                    policy.RequireClaim("ViewItems");
+                    policy.RequireClaim("EditItems");
+                    policy.RequireClaim("ViewStrucures");
+                    policy.RequireClaim("EditStrucures");
+                    policy.RequireClaim("ViewSuppliers");
+                    policy.RequireClaim("EditSuppliers");
+                    policy.RequireClaim("ViewCheckInOuts");
+                    policy.RequireClaim("RealizeCheckInOuts");
+                    policy.RequireClaim("EditCheckInOuts");
+                });
 
-                options.AddPolicy("SuperUser", policy => policy.RequireRole("SuperUser")); //All, without AdminActivity
+                options.AddPolicy("SuperUserPolicy", policy =>
+                {
+                    policy.RequireClaim("ViewItems");
+                    policy.RequireClaim("EditItems");
+                    policy.RequireClaim("ViewStrucures");
+                    policy.RequireClaim("EditStrucures");
+                    policy.RequireClaim("ViewSuppliers");
+                    policy.RequireClaim("EditSuppliers");
+                    policy.RequireClaim("ViewCheckInOuts");
+                    policy.RequireClaim("RealizeCheckInOuts");
+                    policy.RequireClaim("EditCheckInOuts");
+                });
 
                 options.AddPolicy("CanManageItems", policy =>
                 {
-                    policy.RequireRole("User");
+                    policy.RequireClaim("ViewItems");
+                    policy.RequireClaim("EditItems");
                 });
                 options.AddPolicy("CanManageSuppliers", policy =>
                 {
-                    policy.RequireRole("User");
+                    policy.RequireClaim("ViewSuppliers");
+                    policy.RequireClaim("EditSuppliers");
                 });
                 options.AddPolicy("CanManageStructures", policy =>
                 {
-                    policy.RequireRole("User");
+                    policy.RequireClaim("ViewStrucures");
+                    policy.RequireClaim("EditStrucures");
                 });
 
                 options.AddPolicy("CanCheckInOut", policy =>
                 {
-                    policy.RequireRole("Operator");
-                    policy.RequireClaim("ReadItems");
-                    policy.RequireClaim("ReadStructures");
-                    policy.RequireClaim("CheckOut");
-                    policy.RequireClaim("CheckIn");
+                    policy.RequireClaim("ViewCheckInOuts");
+                    policy.RequireClaim("RealizeCheckInOuts");
+                    policy.RequireClaim("EditCheckInOuts");
                 });
 
-                options.AddPolicy("CanView", policy => policy.RequireRole("Viewer"));
+                options.AddPolicy("CanView", policy =>
+                {
+                    policy.RequireClaim("ViewItems");
+                    policy.RequireClaim("ViewStrucures");
+                });
             });
         }
 

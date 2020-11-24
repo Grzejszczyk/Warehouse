@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Warehouse.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,24 +47,6 @@ namespace Warehouse.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<string>(nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    ModifiedById = table.Column<string>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    CategoryName = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Structures",
                 columns: table => new
                 {
@@ -73,10 +55,11 @@ namespace Warehouse.Infrastructure.Migrations
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
                     ModifiedById = table.Column<string>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: false),
                     ProductName = table.Column<string>(nullable: true),
-                    Subassembly = table.Column<string>(nullable: true),
-                    Project = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Project = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,7 +75,7 @@ namespace Warehouse.Infrastructure.Migrations
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
                     ModifiedById = table.Column<string>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     NIP = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -101,7 +84,8 @@ namespace Warehouse.Infrastructure.Migrations
                     ZipCode = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     BuildingNo = table.Column<string>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,23 +207,17 @@ namespace Warehouse.Infrastructure.Migrations
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
                     ModifiedById = table.Column<string>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     LowQuantityValue = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: true),
                     SupplierId = table.Column<int>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Items_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Items_Suppliers_SupplierId",
                         column: x => x.SupplierId,
@@ -257,9 +235,10 @@ namespace Warehouse.Infrastructure.Migrations
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
                     ModifiedById = table.Column<string>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: false),
                     ItemId = table.Column<int>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,9 +260,10 @@ namespace Warehouse.Infrastructure.Migrations
                     CreatedById = table.Column<string>(nullable: true),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
                     ModifiedById = table.Column<string>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: false),
                     ItemId = table.Column<int>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -301,7 +281,8 @@ namespace Warehouse.Infrastructure.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<int>(nullable: false),
-                    StructureId = table.Column<int>(nullable: false)
+                    StructureId = table.Column<int>(nullable: false),
+                    ItemQuantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -370,11 +351,6 @@ namespace Warehouse.Infrastructure.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_CategoryId",
-                table: "Items",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Items_SupplierId",
                 table: "Items",
                 column: "SupplierId");
@@ -422,9 +398,6 @@ namespace Warehouse.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Structures");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");

@@ -11,13 +11,11 @@ namespace Warehouse.Application.ViewModels.Item
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
         public int Quantity { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemForListVM>()
-                .ForMember(d=>d.Category, opt=>opt.MapFrom(s=>s.Category.CategoryName));
+            profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemForListVM>();
         }
     }
 }

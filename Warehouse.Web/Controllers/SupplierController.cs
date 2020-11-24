@@ -58,17 +58,18 @@ namespace Warehouse.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditSupplier(SupplierDetailsVM model)
         {
+            int supplierId = 0;
             if (ModelState.IsValid)
             {
                 if (model.Id == 0)
                 {
-                    var id = _supplierService.AddSupplier(model);
+                    supplierId = _supplierService.AddSupplier(model, "testUserId");
                 }
                 else
                 {
-                    var id = _supplierService.EditSupplier(model);
+                    supplierId = _supplierService.EditSupplier(model, "testUserId");
                 }
-                return RedirectToAction("SuppliersList");
+                return RedirectToAction("SupplierDetails", new { id = supplierId });
             }
             return View(model);
         }
@@ -80,15 +81,8 @@ namespace Warehouse.Web.Controllers
 
         public IActionResult SetIsDeletedSupplier(int id)
         {
-            _supplierService.SetIsDeleted(id);
+            _supplierService.SetIsDeleted(id, "testUserId");
             return RedirectToAction("SuppliersList");
-        }
-        public IActionResult DeleteSupplier(int id)
-        {
-            _supplierService.DeleteSupplier(id);
-            return RedirectToAction("SuppliersList");
-
-            //TODO: Supplier cannot be deleted if his items are in DB.d
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Warehouse.Application.ViewModels.Item
         [Required]
         [Range(0, Int32.MaxValue)]
         public int LowQuantityValue { get; set; }
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        //public int CategoryId { get; set; }
+        //public string CategoryName { get; set; }
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
 
@@ -44,7 +44,7 @@ namespace Warehouse.Application.ViewModels.Item
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemDetailsVM>()
-                .ForMember(s => s.CategoryName, opt => opt.MapFrom(d => d.Category.CategoryName))
+                //.ForMember(s => s.CategoryName, opt => opt.MapFrom(d => d.Category.CategoryName))
                 .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name))
                 .ForMember(s => s.StructuresForItemDetails, opt => opt.Ignore())
                 .ForMember(s => s.CheckOuts, opt => opt.Ignore())

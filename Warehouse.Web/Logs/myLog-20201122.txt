@@ -71,3 +71,7 @@ System.InvalidOperationException: The AuthorizationPolicy named: 'Viewer' was no
 2020-11-22T22:41:13.3584046+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
 2020-11-22T22:41:13.3783129+01:00  [INF] Hosting environment: "Development" (c3307c92)
 2020-11-22T22:41:13.3812271+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-22T23:11:20.4306174+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-22T23:11:20.4836606+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-22T23:11:20.4920830+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-22T23:11:31.7182554+01:00 8000010d-0003-f700-b63f-84710c7967bb [INF] User logged in. (fdce0db4)

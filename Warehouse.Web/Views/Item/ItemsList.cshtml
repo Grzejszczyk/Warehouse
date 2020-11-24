@@ -5,9 +5,9 @@
 }
 
 <h1>Index</h1>
-    <p>
-        <a asp-action="EditItem">Create New</a>
-    </p>
+<p>
+    <a asp-action="EditItem">Create New</a>
+</p>
 <form asp-action="ItemsList" asp-controller="Item" method="post">
     <div class="row">
         <input type="text" asp-for="SearchString" name="searchString" />
@@ -24,9 +24,6 @@
                     Name
                 </th>
                 <th>
-                    Category
-                </th>
-                <th>
                     Quantity
                 </th>
                 <th></th>
@@ -37,10 +34,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Quantity)

@@ -56,17 +56,18 @@ namespace Warehouse.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditStructure(StructureDetailsVM model)
         {
+            int structureId = 0;
             if (ModelState.IsValid)
             {
                 if (model.StructureId == 0)
                 {
-                    var id = _structureService.AddStructure(model);
+                    structureId = _structureService.AddStructure(model);
                 }
                 else
                 {
-                    var id = _structureService.EditStructure(model);
+                    structureId = _structureService.EditStructure(model);
                 }
-                return RedirectToAction("StructureList");
+                return RedirectToAction("StructureDetails", new { id = structureId });
             }
             return View(model);
         }
@@ -79,14 +80,7 @@ namespace Warehouse.Web.Controllers
         public IActionResult SetIsDeletedStructure(int id)
         {
             _structureService.SetIsDeleted(id);
-            return RedirectToAction("StructureList");
-        }
-        public IActionResult DeleteSupplier(int id)
-        {
-            _structureService.DeleteStructure(id);
-            return RedirectToAction("StructureList");
-
-            //TODO: Structure cannot be deleted if his items are in DB.
+            return RedirectToAction("StructuresList");
         }
     }
 }

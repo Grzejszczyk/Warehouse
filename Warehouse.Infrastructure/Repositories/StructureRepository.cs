@@ -40,7 +40,7 @@ namespace Warehouse.Infrastructure.Repositories
 
         public IQueryable<Structure> GetStructures()
         {
-            var structures = _context.Structures.AsQueryable();
+            var structures = _context.Structures.Where(i => i.IsDeleted == false).AsQueryable();
             return structures;
         }
 

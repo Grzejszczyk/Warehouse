@@ -8,10 +8,10 @@ namespace Warehouse.Domain.Interfaces
 {
     public interface ISupplierRepository
     {
-        public int AddSupplier(Supplier supplier);
+        public int AddSupplier(Supplier supplier, string userId);
         public IQueryable<Supplier> GetAllSuppliers();
         public Supplier GetSupplierById(int id);
-        public int UpdateSupplier(Supplier updatedSupplier, int supplierId);
+        public int UpdateSupplier(Supplier updatedSupplier, int supplierId, string userId);
         public void DeleteSupplier(int supplierId);
     }
 }

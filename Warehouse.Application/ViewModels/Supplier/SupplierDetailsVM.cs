@@ -10,6 +10,12 @@ namespace Warehouse.Application.ViewModels.Supplier
     public class SupplierDetailsVM : IMapFrom<Warehouse.Domain.Models.Entity.Supplier>
     {
         public int Id { get; set; }
+
+        public string CreatedById { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public string ModifiedById { get; set; }
+        public DateTime? ModifiedDateTime { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]

@@ -82,92 +82,79 @@ namespace Warehouse.Application.Services
             return itemVM;
         }
 
-        public int AddItem(ItemDetailsVM newItemVM)
+        public EditItemVM GetItemDetailsForEdit(int itemId)
         {
-            Item newItem = new Item();
-            //TODO: Automapper Issue. Manual mapping...
-            //newItem = _mapper.Map<Item>(newItemVM);
+            var item = _itemRepository.GetItemById(itemId);
+            var itemVM = new EditItemVM();
+            itemVM = _mapper.Map<EditItemVM>(item);
+            itemVM.SupplierForForEditDetails = new List<SupplierForEditItem>();
+            var suppliers = _supplierRepository.GetAllSuppliers();
 
-            //hacks area:
-            //TODO: Continue implements and remove hacks
-            newItemVM.CategoryId = 1;
-            newItemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
-            newItemVM.StructuresForItemDetails.Add(new StructuresForItemDetails() { StructureId = 1, QuantityForStructure = 99 });
-            newItemVM.SupplierId = 1;
-            //end
-
-            newItem.Category = _itemRepository.GetCategoryById(newItemVM.CategoryId);
-            newItem.Description = newItemVM.Description;
-            newItem.IsDeleted = false;
-
-            newItem.ItemStructures = new List<ItemStructure>();
-            foreach (var structure in newItemVM.StructuresForItemDetails)
+            foreach (var s in suppliers)
             {
-                ItemStructure itemStructure = new ItemStructure();
-                itemStructure.Item = newItem;
-                itemStructure.Structure = _structureRepository.GetStructure(structure.StructureId);
-                itemStructure.ItemQuantity = structure.QuantityForStructure;
-                newItem.ItemStructures.Add(itemStructure);
+                itemVM.SupplierForForEditDetails.Add(new SupplierForEditItem() { SupplierId = s.Id, SupplierName = s.Name, SupplierNIP = s.NIP });
             }
 
-            newItem.LowQuantityValue = newItemVM.LowQuantityValue;
-            newItem.Name = newItemVM.Name;
-            newItem.Quantity = newItemVM.Quantity;
-            newItem.Supplier = _supplierRepository.GetSupplierById(newItemVM.SupplierId);
-            newItem.Id = 0;
-            var supplierMapped = _itemRepository.AddItem(newItem);
+            return itemVM;
+        }
+
+        public int AddItem(EditItemVM ItemVM, string userId)
+        {
+            Item newItem = new Item();
+
+            newItem = _mapper.Map<Item>(ItemVM);
+
+            var supplierMapped = _itemRepository.AddItem(newItem, userId);
             return supplierMapped;
         }
 
-        public int EditItem(ItemDetailsVM ItemVM)
+        public int EditItem(EditItemVM ItemVM, string userId)
         {
-            //Assign to structure
             Item itemEntity = _itemRepository.GetItemById(ItemVM.Id);
-            //TODO: Automapper Issue. Manual mapping...
-            //_mapper.Map<ItemDetailsVM, Item>(ItemVM, itemEntity);
 
-            //hacks area:
-            //TODO: Continue implements and remove hacks
-            ItemVM.CategoryId = 1;
-            ItemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
-            ItemVM.StructuresForItemDetails.Add(new StructuresForItemDetails() { StructureId = 1, QuantityForStructure = 99 });
-            ItemVM.SupplierId = 1;
-            //end
-
-            itemEntity.Category = _itemRepository.GetCategoryById(ItemVM.CategoryId);
+            itemEntity.LowQuantityValue = ItemVM.LowQuantityValue;
+            itemEntity.Quantity = ItemVM.Quantity;
+            itemEntity.Name = ItemVM.Name;
             itemEntity.Description = ItemVM.Description;
             itemEntity.IsDeleted = false;
 
-            itemEntity.ItemStructures = new List<ItemStructure>();
-            foreach (var structure in ItemVM.StructuresForItemDetails)
-            {
-                ItemStructure itemStructure = new ItemStructure();
-                itemStructure.Item = itemEntity;
-                itemStructure.Structure = _structureRepository.GetStructure(structure.StructureId);
-                itemStructure.ItemQuantity = structure.QuantityForStructure;
-                itemEntity.ItemStructures.Add(itemStructure);
-            }
-
-            itemEntity.LowQuantityValue = ItemVM.LowQuantityValue;
-            itemEntity.Name = ItemVM.Name;
-            itemEntity.Quantity = ItemVM.Quantity;
-            itemEntity.Supplier = _supplierRepository.GetSupplierById(ItemVM.SupplierId);
-
-            var supplierMapped = _itemRepository.UpdateItem(itemEntity, ItemVM.Id);
+            var supplierMapped = _itemRepository.UpdateItem(itemEntity, ItemVM.Id, userId);
             return supplierMapped;
         }
 
-        public int SetIsDeleted(int itemId)
+        //TODO: Implementation.
+        //TODO: Put below methods ad Item Details.
+        public int AssignItemToCategory(EditItemVM editItemVM)
+        {
+            //model: Caterories list,
+            //assigned category (RadioButton)
+            throw new NotImplementedException();
+        }
+        public int AssignItemToSupplier(EditItemVM editItemVM)
+        {
+            //model: Suppliers List, Create new Supplier,
+            //assign supplier (new or existing)
+            throw new NotImplementedException();
+        }
+        public int AssignItemToStructures(EditItemVM editItemVM)
+        {
+            //model: Structures List
+            //assign to structures (List)
+            throw new NotImplementedException();
+        }
+
+        public int SetIsDeleted(int itemId, string userId)
         {
             Item itemEntity = _itemRepository.GetItemById(itemId);
             itemEntity.IsDeleted = true;
-            _itemRepository.UpdateItem(itemEntity, itemEntity.Id);
+            _itemRepository.UpdateItem(itemEntity, itemEntity.Id, userId);
             return itemEntity.Id;
         }
 
-        public void DeleteItem(int id)
-        {
-            _itemRepository.DeleteItem(id);
-        }
+        //TODO: DeleteItem only for admin.
+        //public void DeleteItem(int id)
+        //{
+        //    _itemRepository.DeleteItem(id);
+        //}
     }
 }

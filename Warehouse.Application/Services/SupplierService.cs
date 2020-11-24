@@ -21,19 +21,19 @@ namespace Warehouse.Application.Services
             _supplierRepository = repo;
             _mapper = mapper;
         }
-        public int AddSupplier(SupplierDetailsVM newSupplierVM)
+        public int AddSupplier(SupplierDetailsVM newSupplierVM, string userId)
         {
             var nSrevMapped = new Supplier();
             _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM, nSrevMapped);
-            var sMapped = _supplierRepository.AddSupplier(nSrevMapped);
+            var sMapped = _supplierRepository.AddSupplier(nSrevMapped, userId);
             return sMapped;
         }
 
-        public int EditSupplier(SupplierDetailsVM newSupplierVM)
+        public int EditSupplier(SupplierDetailsVM newSupplierVM, string userId)
         {
             Supplier newSupplier = _supplierRepository.GetSupplierById(newSupplierVM.Id);
             _mapper.Map<SupplierDetailsVM, Supplier>(newSupplierVM, newSupplier);
-            var supplierMapped = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id);
+            var supplierMapped = _supplierRepository.UpdateSupplier(newSupplier, newSupplierVM.Id, userId);
             return supplierMapped;
         }
 
@@ -57,11 +57,11 @@ namespace Warehouse.Application.Services
             return supplierVM;
         }
 
-        public int SetIsDeleted(int supplierId)
+        public int SetIsDeleted(int supplierId, string userId)
         {
             Supplier supplierEntity = _supplierRepository.GetSupplierById(supplierId);
             supplierEntity.IsDeleted = true;
-            _supplierRepository.UpdateSupplier(supplierEntity, supplierEntity.Id);
+            _supplierRepository.UpdateSupplier(supplierEntity, supplierEntity.Id, userId);
             return supplierEntity.Id;
         }
         public void DeleteSupplier(int id)

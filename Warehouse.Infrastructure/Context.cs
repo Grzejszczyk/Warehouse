@@ -14,7 +14,6 @@ namespace Warehouse.Infrastructure
         public Context(DbContextOptions options) : base(options) { }
 
         public DbSet<Item> Items { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Structure> Structures { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ItemStructure> ItemStructure { get; set; }
@@ -43,12 +42,12 @@ namespace Warehouse.Infrastructure
 
             foreach (var entityEntry in entries)
             {
-                ((BaseEntity)entityEntry.Entity).ModifiedById = Users.FirstOrDefault(u => u.Id == userId).Id;
+                ((BaseEntity)entityEntry.Entity).ModifiedById = userId;
                 ((BaseEntity)entityEntry.Entity).ModifiedDateTime = DateTime.Now;
 
                 if (entityEntry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entityEntry.Entity).ModifiedById = Users.FirstOrDefault(u => u.Id == userId).Id;
+                    ((BaseEntity)entityEntry.Entity).CreatedById = userId;
                     ((BaseEntity)entityEntry.Entity).CreatedDateTime = DateTime.Now;
                 }
             }

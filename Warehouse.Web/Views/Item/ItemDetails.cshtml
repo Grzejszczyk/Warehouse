@@ -59,12 +59,6 @@
             @Html.DisplayFor(model => model.LowQuantityValue)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.SupplierName)
         </dt>
         <dd class="col-sm-10">
@@ -179,5 +173,5 @@
 </div>
 <div>
     @Html.ActionLink("Edit", "EditItem", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ItemsList">Back to List</a>
 </div>
