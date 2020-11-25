@@ -31,7 +31,8 @@ namespace Warehouse.Web.Controllers
         [HttpGet]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1)
         {
-            _logger.LogInformation("Jestem w Warehousecontroller - to logger.");
+            //TODO: Implement Logger.
+            _logger.LogInformation("Jestem w Warehousecontroller ItemsList - to logger.");
             pageSizeStd = pageSize;
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, "");
             return View(model);
@@ -50,6 +51,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
+
         [HttpGet]
         public IActionResult EditItem(int id = 0)
         {
@@ -58,10 +60,7 @@ namespace Warehouse.Web.Controllers
                 var item = _itemService.GetItemDetailsForEdit(id);
                 return View(item);
             }
-            else
-            {
-                return View(new EditItemVM());
-            }
+            else { return View(new EditItemVM());}
         }
 
         [HttpPost]
@@ -79,14 +78,28 @@ namespace Warehouse.Web.Controllers
                 {
                     newItemId = _itemService.EditItem(model, "testUserId");
                 }
-            return RedirectToAction("ItemDetails", new { id = newItemId });
+                return RedirectToAction("ItemDetails", new { id = newItemId });
             }
             return View(model);
         }
 
-        public IActionResult AssignItemToCategory()
+        [HttpGet]
+        public IActionResult AssignItemToSupplier(int itemId)
         {
-            return View();
+            var itemSuppliers = _itemService.GetItemForSuppliersList(itemId);
+            
+            return View(itemSuppliers); 
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AssignItemToSupplier(int itemId, int supplierId)
+        {
+            var assignedItem = _itemService.AssignItemToSupplier(
+                itemId,
+                supplierId,
+                "testUserId");
+
+            return RedirectToAction("ItemDetails", new { id = assignedItem });
         }
 
         public IActionResult ItemDetails(int id)

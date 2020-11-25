@@ -7,6 +7,7 @@ using System.Text;
 using Warehouse.Application.Interfaces;
 using Warehouse.Application.ViewModels.Item;
 using Warehouse.Application.ViewModels.Pagination;
+using Warehouse.Application.ViewModels.Supplier;
 using Warehouse.Domain.Interfaces;
 using Warehouse.Domain.Models.Entity;
 
@@ -122,20 +123,31 @@ namespace Warehouse.Application.Services
             return supplierMapped;
         }
 
+        public ItemToSupplierVM GetItemForSuppliersList(int itemId)
+        {
+            var suppliers = _supplierRepository.GetAllSuppliers()
+                .ProjectTo<SupplierForListVM>(_mapper.ConfigurationProvider).ToList();
+
+            var assignItemToSupplier = new ItemToSupplierVM();
+            assignItemToSupplier.SuppliersList = suppliers;
+
+            var item = _itemRepository.GetItemById(itemId);
+            assignItemToSupplier.ItemDetails = _mapper.Map<ItemDetailsVM>(item);
+
+            return assignItemToSupplier;
+        }
+
+        public int AssignItemToSupplier(int itemId, int supplierId, string userId)
+        {
+            var item = _itemRepository.GetItemById(itemId);
+            var supplier = _supplierRepository.GetSupplierById(supplierId);
+            item.Supplier = supplier;
+            itemId = _itemRepository.UpdateItem(item, itemId, userId);
+            return itemId;
+        }
+
         //TODO: Implementation.
-        //TODO: Put below methods ad Item Details.
-        public int AssignItemToCategory(EditItemVM editItemVM)
-        {
-            //model: Caterories list,
-            //assigned category (RadioButton)
-            throw new NotImplementedException();
-        }
-        public int AssignItemToSupplier(EditItemVM editItemVM)
-        {
-            //model: Suppliers List, Create new Supplier,
-            //assign supplier (new or existing)
-            throw new NotImplementedException();
-        }
+        //TODO: Put below method ad Item Details.
         public int AssignItemToStructures(EditItemVM editItemVM)
         {
             //model: Structures List
@@ -150,11 +162,5 @@ namespace Warehouse.Application.Services
             _itemRepository.UpdateItem(itemEntity, itemEntity.Id, userId);
             return itemEntity.Id;
         }
-
-        //TODO: DeleteItem only for admin.
-        //public void DeleteItem(int id)
-        //{
-        //    _itemRepository.DeleteItem(id);
-        //}
     }
 }

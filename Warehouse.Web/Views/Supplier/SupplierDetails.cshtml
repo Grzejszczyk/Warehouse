@@ -97,6 +97,7 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "EditSupplier", new { id = Model.Id }) |
-    <a asp-action="SuppliersList">Back to List</a>
+    @Html.ActionLink("Edit", "EditSupplier", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+    <a class="btn btn-secondary" asp-action="SuppliersList">Back to List</a> |
+    <a class="btn btn-primary">Show items from this Supplier</a>
 </div>

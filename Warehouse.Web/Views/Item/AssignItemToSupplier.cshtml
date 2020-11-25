@@ -1,0 +1,73 @@
+﻿@model Warehouse.Application.ViewModels.Item.ItemToSupplierVM
+
+@{
+    ViewData["Title"] = "AssignItemToSupplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Assign Item To Supplier</h1>
+
+<h4>Suppliers:</h4>
+<hr />
+<div class="row justify-content-between">
+    <div class="col-md-5">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ItemDetails.Name)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ItemDetails.Name)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ItemDetails.Description)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ItemDetails.Description)
+            </dd>
+        </dl>
+        <div>
+            <a class="btn btn-secondary" asp-action="Index">Back to Item Details</a>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Supplier Id
+                    </th>
+                    <th>
+                        Supplier Name
+                    </th>
+                    <th>
+                        NIP
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var supplier in Model.SuppliersList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelSupplier => supplier.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelSupplier => supplier.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => supplier.NIP)
+                        </td>
+                        <td>
+                            <form asp-action="AssignItemToSupplier" method="post">
+                                <input type="hidden" value="@Model.ItemDetails.Id" id="itemId" name="itemId" />
+                                <input type="hidden" value="@supplier.Id" id="supplierId" name="supplierId" />
+                                <input type="submit" value="Assign" class="btn btn-primary" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
