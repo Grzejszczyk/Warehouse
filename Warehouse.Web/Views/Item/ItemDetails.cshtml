@@ -9,68 +9,81 @@
 <div>
     <h4>ItemDetailsVM</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedById)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedById)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDateTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDateTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedById)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedById)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedDateTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedDateTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LowQuantityValue)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LowQuantityValue)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SupplierName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SupplierName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-6">
+            <dl class="row">
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.CreatedById)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.CreatedById)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.CreatedDateTime)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.CreatedDateTime)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.ModifiedById)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.ModifiedById)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.ModifiedDateTime)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.ModifiedDateTime)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.LowQuantityValue)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.LowQuantityValue)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.SupplierName)
+                </dt>
+                @if (Model.SupplierName == null)
+                {
+                    <dd class="col-7 badge badge-warning text-wrap">
+                        dostawca nie przypisany
+                    </dd>
+                }
+                else
+                {
+                    <dd class="col-7">
+                        @Html.DisplayFor(model => model.SupplierName)
+                    </dd>
+                }
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </dt>
+                <dd class="col-7">
+                    @Html.DisplayFor(model => model.Quantity)
+                </dd>
+            </dl>
+        </div>
+    </div>
     <h4>Structures</h4>
     <table class="table">
         <thead>
