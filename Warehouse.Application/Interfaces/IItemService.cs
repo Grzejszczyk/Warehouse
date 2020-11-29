@@ -13,10 +13,12 @@ namespace Warehouse.Application.Interfaces
         int EditItem(EditItemVM newItemVM, string userId);
         EditItemVM GetItemDetailsForEdit(int itemId);
         ItemToSupplierVM GetItemForSuppliersList(int itemId);
-        public int AssignItemToSupplier(int itemId, int supplierId, string userId);
-        int AssignItemToStructures(EditItemVM editItemVM);
 
         int SetIsDeleted(int itemId, string userId);
-        //void DeleteItem(int id); //This will be for admin.
+
+        int AssignItemToSupplier(int itemId, int supplierId, string userId);
+
+        ItemsStructuresListVM GetItemStructuresForAssign(int itemId);
+        int AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, string userId);
     }
 }

@@ -8,9 +8,8 @@ namespace Warehouse.Domain.Interfaces
 {
     public interface IStructureRepository
     {
-        int AddStructure(Structure structure);
-        int UpdateStructure(Structure structure, int structureId);
-        void DeleteStructure(int structureId);
+        int AddStructure(Structure structure, string userId);
+        int UpdateStructure(Structure structure, int structureId, string userId);
         Structure GetStructure(int idStructure);
         IQueryable<Structure> GetStructures();
     }

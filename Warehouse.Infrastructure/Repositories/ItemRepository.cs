@@ -26,16 +26,9 @@ namespace Warehouse.Infrastructure.Repositories
             return item.Id;
         }
 
-        public IQueryable<Item> GetItemsByStructure(int structureId)
-        {
-            var items = _context.Items
-                .Where(i => i.IsDeleted == false)
-                .Where(i => i.ItemStructures.Where(s => s.StructureId == structureId).Any()).AsQueryable();
-            return items;
-        }
         public IQueryable<Item> GetItems()
         {
-            var items = _context.Items.Where(i => i.IsDeleted == false).AsQueryable();
+            var items = _context.Items.Where(i => i.IsDeleted == false)/*.AsQueryable()*/;
             return items;
         }
         public Item GetItemById(int id)
@@ -57,16 +50,6 @@ namespace Warehouse.Infrastructure.Repositories
                 _context.SaveChanges(userId);
             }
             return i.Id;
-        }
-        public void DeleteItem(int itemId)
-        {
-            //TODO: change status IsDeleted! Repository void DeteleItem for admin.
-            var item = _context.Items.Find(itemId);
-            if (item != null)
-            {
-                _context.Items.Remove(item);
-                _context.SaveChanges();
-            }
         }
     }
 }

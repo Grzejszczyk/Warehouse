@@ -9,9 +9,8 @@ namespace Warehouse.Application.Interfaces
     {
         StructuresListForListVM StructuresList(int pageSize, int pageNo, string searchString);
         StructureDetailsVM GetStructureDetails(int structureId);
-        int AddStructure(StructureDetailsVM newStructureVM);
-        int EditStructure(StructureDetailsVM newStructureVM);
-        int SetIsDeleted(int structureId);
-        void DeleteStructure(int structureId);
+        int AddStructure(StructureDetailsVM newStructureVM, string userId);
+        int EditStructure(StructureDetailsVM structureVM, string userId);
+        int SetIsDeleted(int structureId, string userId);
     }
 }

@@ -8,6 +8,7 @@ namespace Warehouse.Application.ViewModels.Item
 {
     public class StructuresForItemDetails : IMapFrom<Warehouse.Domain.Models.Entity.ItemStructure>
     {
+        //TODO: If possible use ItemStructuresVM
         public int StructureId { get; set; }
         public string StructureName { get; set; }
         public int QuantityForStructure { get; set; }

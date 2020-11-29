@@ -83,6 +83,19 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
+
+        public IActionResult ItemDetails(int id)
+        {
+            var model = _itemService.GetItemDetails(id);
+            return View(model);
+        }
+
+        public IActionResult SetIsDeletedItem(int id)
+        {
+            _itemService.SetIsDeleted(id, "testUserId");
+            return RedirectToAction("ItemsList");
+        }
+
         [HttpGet]
         public IActionResult AssignItemToSupplier(int itemId)
         {
@@ -102,16 +115,17 @@ namespace Warehouse.Web.Controllers
             return RedirectToAction("ItemDetails", new { id = assignedItem });
         }
 
-        public IActionResult ItemDetails(int id)
+        [HttpGet]
+        public IActionResult AssignItemToStructures(int itemId)
         {
-            var model = _itemService.GetItemDetails(id);
-            return View(model);
+            var itemsStructuresListVM = _itemService.GetItemStructuresForAssign(itemId);
+            return View(itemsStructuresListVM);
         }
-
-        public IActionResult SetIsDeletedItem(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AssignItemToStructures(int itemId, int supplierId)
         {
-            _itemService.SetIsDeleted(id, "testUserId");
-            return RedirectToAction("ItemsList");
+            return RedirectToAction("ItemDetails", new { id = itemId });
         }
     }
 }

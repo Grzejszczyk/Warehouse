@@ -190,6 +190,6 @@
         @Html.ActionLink("Edit", "EditItem", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
         <a class="btn btn-secondary" asp-action="ItemsList">Back to List</a> |
         @Html.ActionLink("Assign Supplier", "AssignItemToSupplier", new { itemId = Model.Id }, new { @class = "btn btn-primary" }) |
-        <a class="btn btn-primary">Assign to Structure</a>
+        @Html.ActionLink("Assign to Structures", "AssignItemToStructures", new { itemId = Model.Id }, new { @class = "btn btn-primary" })
     </div>
 </form>

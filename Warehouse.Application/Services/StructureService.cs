@@ -22,30 +22,6 @@ namespace Warehouse.Application.Services
             _structureRepository = structureRepo;
             _mapper = mapper;
         }
-        public int AddStructure(StructureDetailsVM newStructureVM)
-        {
-            Structure structure = new Structure();
-            structure.Id = 0;
-            structure.IsDeleted = false;
-            structure.Name = newStructureVM.StructureName;
-            structure.ProductName = newStructureVM.ProductName;
-            structure.Project = newStructureVM.Project;
-
-            var s = _structureRepository.AddStructure(structure);
-            return s;
-        }
-
-        public int EditStructure(StructureDetailsVM newStrucuteVM)
-        {
-            Structure structure = _structureRepository.GetStructure(newStrucuteVM.StructureId);
-            structure.Name = newStrucuteVM.StructureName;
-            structure.ProductName = newStrucuteVM.ProductName;
-            structure.Project = newStrucuteVM.Project;
-            
-            var s = _structureRepository.UpdateStructure(structure, newStrucuteVM.StructureId);
-            return s;
-            throw new NotImplementedException();
-        }
         public StructuresListForListVM StructuresList(int pageSize, int pageNo, string searchString)
         {
             var suppliers = _structureRepository.GetStructures().Where(s => s.Name.StartsWith(searchString)).ProjectTo<StructureForListVM>(_mapper.ConfigurationProvider).ToList();
@@ -58,25 +34,50 @@ namespace Warehouse.Application.Services
             };
             return suppliersList;
         }
-
-        public int SetIsDeleted(int structureId)
-        {
-            Structure structureEntity = _structureRepository.GetStructure(structureId);
-            structureEntity.IsDeleted = true;
-            _structureRepository.UpdateStructure(structureEntity, structureEntity.Id);
-            return structureEntity.Id;
-        }
-        public void DeleteStructure(int structureId)
-        {
-            _structureRepository.DeleteStructure(structureId);
-        }
-
         public StructureDetailsVM GetStructureDetails(int strucureId)
         {
             var structure = _structureRepository.GetStructure(strucureId);
             var supplierVM = _mapper.Map<StructureDetailsVM>(structure);
             return supplierVM;
         }
+        public int AddStructure(StructureDetailsVM newStructureVM, string userId)
+        {
+            Structure structure = new Structure();
+            structure.Id = 0;
+            structure.IsDeleted = false;
+            structure.Name = newStructureVM.StructureName;
+            structure.ProductName = newStructureVM.ProductName;
+            structure.Project = newStructureVM.Project;
 
+            var s = _structureRepository.AddStructure(structure, userId);
+            return s;
+        }
+
+        public EditStructureVM GetStructureDetailsForEdit(int structureId)
+        {
+            var structure = _structureRepository.GetStructure(structureId);
+            var structureVM = new EditStructureVM();
+            structureVM = _mapper.Map<EditStructureVM>(structure);
+            return structureVM;
+        }
+
+        public int EditStructure(StructureDetailsVM strucuteVM, string userId)
+        {
+            Structure structure = _structureRepository.GetStructure(strucuteVM.StructureId);
+            structure.Name = strucuteVM.StructureName;
+            structure.ProductName = strucuteVM.ProductName;
+            structure.Project = strucuteVM.Project;
+            
+            var s = _structureRepository.UpdateStructure(structure, strucuteVM.StructureId, userId);
+            return s;
+        }
+
+        public int SetIsDeleted(int structureId, string userId)
+        {
+            Structure structureEntity = _structureRepository.GetStructure(structureId);
+            structureEntity.IsDeleted = true;
+            _structureRepository.UpdateStructure(structureEntity, structureId, userId);
+            return structureEntity.Id;
+        }
     }
 }

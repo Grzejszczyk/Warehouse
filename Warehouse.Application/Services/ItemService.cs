@@ -7,6 +7,7 @@ using System.Text;
 using Warehouse.Application.Interfaces;
 using Warehouse.Application.ViewModels.Item;
 using Warehouse.Application.ViewModels.Pagination;
+using Warehouse.Application.ViewModels.Structure;
 using Warehouse.Application.ViewModels.Supplier;
 using Warehouse.Domain.Interfaces;
 using Warehouse.Domain.Models.Entity;
@@ -18,12 +19,14 @@ namespace Warehouse.Application.Services
         private readonly IItemRepository _itemRepository;
         private readonly ISupplierRepository _supplierRepository;
         private readonly IStructureRepository _structureRepository;
+        private readonly IItemStructureRepository _itemStructureRepository;
         private readonly IMapper _mapper;
-        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IStructureRepository structureRepo, IMapper mapper)
+        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IStructureRepository structureRepo, IItemStructureRepository itemStructureRepo, IMapper mapper)
         {
             _itemRepository = itemRepo;
             _supplierRepository = supplierRepo;
             _structureRepository = structureRepo;
+            _itemStructureRepository = itemStructureRepo;
             _mapper = mapper;
         }
 
@@ -83,22 +86,6 @@ namespace Warehouse.Application.Services
             return itemVM;
         }
 
-        public EditItemVM GetItemDetailsForEdit(int itemId)
-        {
-            var item = _itemRepository.GetItemById(itemId);
-            var itemVM = new EditItemVM();
-            itemVM = _mapper.Map<EditItemVM>(item);
-            itemVM.SupplierForForEditDetails = new List<SupplierForEditItem>();
-            var suppliers = _supplierRepository.GetAllSuppliers();
-
-            foreach (var s in suppliers)
-            {
-                itemVM.SupplierForForEditDetails.Add(new SupplierForEditItem() { SupplierId = s.Id, SupplierName = s.Name, SupplierNIP = s.NIP });
-            }
-
-            return itemVM;
-        }
-
         public int AddItem(EditItemVM ItemVM, string userId)
         {
             Item newItem = new Item();
@@ -107,6 +94,15 @@ namespace Warehouse.Application.Services
 
             var supplierMapped = _itemRepository.AddItem(newItem, userId);
             return supplierMapped;
+        }
+
+        public EditItemVM GetItemDetailsForEdit(int itemId)
+        {
+            var item = _itemRepository.GetItemById(itemId);
+            var itemVM = new EditItemVM();
+            itemVM = _mapper.Map<EditItemVM>(item);
+
+            return itemVM;
         }
 
         public int EditItem(EditItemVM ItemVM, string userId)
@@ -148,11 +144,56 @@ namespace Warehouse.Application.Services
 
         //TODO: Implementation.
         //TODO: Put below method ad Item Details.
-        public int AssignItemToStructures(EditItemVM editItemVM)
+        public ItemsStructuresListVM GetItemStructuresForAssign(int itemId)
         {
-            //model: Structures List
-            //assign to structures (List)
-            throw new NotImplementedException();
+            var itemStructuresListVM = new ItemsStructuresListVM();
+            itemStructuresListVM.ItemId = itemId;
+            itemStructuresListVM.ItemStructures = new List<ItemStructureVM>();
+
+            //Join collection for many-tomany:
+            var allStructures = _itemStructureRepository.GetAllStructures();
+            var itemStustureForItem = _itemStructureRepository.GetAllItemStructuresForItem(itemId);
+
+            foreach (var s in allStructures)
+            {
+                itemStructuresListVM.ItemStructures.Add(new ItemStructureVM()
+                {
+                    StructureId = s.Id,
+                    StructureName = s.Name,
+                    ProductName = s.ProductName,
+                    ProjectName = s.Project,
+                    IsAssigned = false,
+                    ItemId = itemId,
+                    //ItemQty = new ItemStructure() { ItemId = itemId, StructureId = s.Id }.ItemQuantity
+                    //{
+                    //    ItemId = itemId,
+                    //    StructureId= s.Id,
+                    //    ItemQuantity = itemStustureForItem.Where(i=>i.ItemId==itemId && i.StructureId==s.Id).Select(x=>x.ItemQuantity).FirstOrDefault(),
+                    //}.ItemQuantity
+                }
+                );
+            };
+            foreach (var istr in itemStustureForItem)
+            {
+                if (istr.ItemQuantity > 0)
+                {
+                    itemStructuresListVM.ItemStructures
+                        .FirstOrDefault(x => x.StructureId == istr.StructureId && x.ItemId == istr.ItemId)
+                        .ItemQty = istr.ItemQuantity;
+                }
+            }
+            return itemStructuresListVM;
+        }
+        public int AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, string userId)
+        {
+            var itemStructures = new List<ItemStructure>();
+            foreach (var i in itemsStructuresListVM.ItemStructures)
+            {
+                itemStructures.Add(new ItemStructure() { ItemId = i.ItemId, StructureId = i.StructureId, ItemQuantity = i.ItemQty });
+            }
+
+            var itemStructure = _itemStructureRepository.AddItemToManyStructures(itemStructures, userId);
+            return itemStructure;
         }
 
         public int SetIsDeleted(int itemId, string userId)

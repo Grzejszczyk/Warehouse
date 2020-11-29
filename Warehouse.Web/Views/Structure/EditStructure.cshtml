@@ -14,30 +14,9 @@
         <form asp-action="EditStructure">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StructureId" class="control-label"></label>
-                <input asp-for="StructureId" class="form-control" />
-                <span asp-validation-for="StructureId" class="text-danger"></span>
+                <input type="hidden" asp-for="StructureId" class="form-control" />
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedById" class="control-label"></label>
-                <input asp-for="CreatedById" class="form-control" />
-                <span asp-validation-for="CreatedById" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDateTime" class="control-label"></label>
-                <input asp-for="CreatedDateTime" class="form-control" />
-                <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedById" class="control-label"></label>
-                <input asp-for="ModifiedById" class="form-control" />
-                <span asp-validation-for="ModifiedById" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDateTime" class="control-label"></label>
-                <input asp-for="ModifiedDateTime" class="form-control" />
-                <span asp-validation-for="ModifiedDateTime" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label"></label>
                 <input asp-for="ProductName" class="form-control" />

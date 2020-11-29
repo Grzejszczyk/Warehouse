@@ -47,8 +47,7 @@ namespace Warehouse.Application.ViewModels.Item
                 .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name))
                 .ForMember(s => s.StructuresForItemDetails, opt => opt.Ignore())
                 .ForMember(s => s.CheckOuts, opt => opt.Ignore())
-                .ForMember(s => s.CheckIns, opt => opt.Ignore())
-                .ReverseMap();
+                .ForMember(s => s.CheckIns, opt => opt.Ignore());
         }
     }
 }

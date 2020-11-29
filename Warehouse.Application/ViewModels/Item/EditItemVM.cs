@@ -31,9 +31,6 @@ namespace Warehouse.Application.ViewModels.Item
         [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
 
-        public List<SupplierForEditItem> SupplierForForEditDetails { get; set; }
-        public List<StructuresForItemDetails> StructuresForItemDetails { get; set; }
-
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, EditItemVM>().ReverseMap();

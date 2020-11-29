@@ -61,11 +61,11 @@ namespace Warehouse.Web.Controllers
             {
                 if (model.StructureId == 0)
                 {
-                    structureId = _structureService.AddStructure(model);
+                    structureId = _structureService.AddStructure(model, "testUserId");
                 }
                 else
                 {
-                    structureId = _structureService.EditStructure(model);
+                    structureId = _structureService.EditStructure(model, "testUserId");
                 }
                 return RedirectToAction("StructureDetails", new { id = structureId });
             }
@@ -79,7 +79,7 @@ namespace Warehouse.Web.Controllers
 
         public IActionResult SetIsDeletedStructure(int id)
         {
-            _structureService.SetIsDeleted(id);
+            _structureService.SetIsDeleted(id, "testUserId");
             return RedirectToAction("StructuresList");
         }
     }

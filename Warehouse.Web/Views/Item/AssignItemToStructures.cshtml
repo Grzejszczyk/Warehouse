@@ -1,0 +1,53 @@
+﻿@model Warehouse.Application.ViewModels.Item.ItemsStructuresListVM
+
+@{
+    ViewData["Title"] = "AssignItemToStructures";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Assign Item To Structure</h1>
+
+<form asp-action="AssignItemToStructures" method="post">
+    <input type="hidden" asp-for="@Model.ItemId" />
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    Items quantity for Structure
+                </th>
+                <th>
+                    Structure id
+                </th>
+                <th>
+                    Structure name
+                </th>
+                <th>
+                    Project
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.ItemStructures)
+            {
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(modelItem=>i.ItemQty, new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem=>i.StructureId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem=>i.StructureName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem=>i.ProjectName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="submit" value="Assign" class="btn btn-primary" />
+</form>
