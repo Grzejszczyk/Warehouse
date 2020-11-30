@@ -10,9 +10,7 @@ namespace Warehouse.Domain.Interfaces
     {
         int AddItemToStructure(int itemId, int structureId, int itemsQty, string userId);
         int RemoveItemFromStructure(int itemId, int structureId, string userId);
-        //int AddManyItemsToStructure(int[] itemIds, int structureId, int itemsQty, string userId);
-        int AddItemToManyStructures(List<ItemStructure> itemStructures, string userId);
-        IQueryable<ItemStructure> GetStructuresForItem(int itemId);
+        int AddItemToManyStructures(List<ItemStructure> itemStructures, int itemId, string userId);
         IQueryable<Structure> GetAllStructures();
         IQueryable<ItemStructure> GetAllItemStructuresForItem(int itemId);
     }

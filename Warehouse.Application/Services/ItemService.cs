@@ -121,7 +121,7 @@ namespace Warehouse.Application.Services
 
         public ItemToSupplierVM GetItemForSuppliersList(int itemId)
         {
-            var suppliers = _supplierRepository.GetAllSuppliers()
+            var suppliers = _supplierRepository.GetAllSuppliers().Where(s=>s.IsActive==true)
                 .ProjectTo<SupplierForListVM>(_mapper.ConfigurationProvider).ToList();
 
             var assignItemToSupplier = new ItemToSupplierVM();
@@ -142,15 +142,13 @@ namespace Warehouse.Application.Services
             return itemId;
         }
 
-        //TODO: Implementation.
-        //TODO: Put below method ad Item Details.
         public ItemsStructuresListVM GetItemStructuresForAssign(int itemId)
         {
             var itemStructuresListVM = new ItemsStructuresListVM();
             itemStructuresListVM.ItemId = itemId;
             itemStructuresListVM.ItemStructures = new List<ItemStructureVM>();
 
-            //Join collection for many-tomany:
+            //Join values collections for many-to-many:
             var allStructures = _itemStructureRepository.GetAllStructures();
             var itemStustureForItem = _itemStructureRepository.GetAllItemStructuresForItem(itemId);
 
@@ -162,16 +160,8 @@ namespace Warehouse.Application.Services
                     StructureName = s.Name,
                     ProductName = s.ProductName,
                     ProjectName = s.Project,
-                    IsAssigned = false,
-                    ItemId = itemId,
-                    //ItemQty = new ItemStructure() { ItemId = itemId, StructureId = s.Id }.ItemQuantity
-                    //{
-                    //    ItemId = itemId,
-                    //    StructureId= s.Id,
-                    //    ItemQuantity = itemStustureForItem.Where(i=>i.ItemId==itemId && i.StructureId==s.Id).Select(x=>x.ItemQuantity).FirstOrDefault(),
-                    //}.ItemQuantity
-                }
-                );
+                    ItemId = itemId
+                });
             };
             foreach (var istr in itemStustureForItem)
             {
@@ -187,12 +177,13 @@ namespace Warehouse.Application.Services
         public int AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, string userId)
         {
             var itemStructures = new List<ItemStructure>();
+
             foreach (var i in itemsStructuresListVM.ItemStructures)
             {
                 itemStructures.Add(new ItemStructure() { ItemId = i.ItemId, StructureId = i.StructureId, ItemQuantity = i.ItemQty });
             }
 
-            var itemStructure = _itemStructureRepository.AddItemToManyStructures(itemStructures, userId);
+            var itemStructure = _itemStructureRepository.AddItemToManyStructures(itemStructures, itemsStructuresListVM.ItemId, userId);
             return itemStructure;
         }
 

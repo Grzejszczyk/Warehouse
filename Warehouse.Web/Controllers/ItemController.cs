@@ -119,13 +119,16 @@ namespace Warehouse.Web.Controllers
         public IActionResult AssignItemToStructures(int itemId)
         {
             var itemsStructuresListVM = _itemService.GetItemStructuresForAssign(itemId);
+            //TempData["islvm"] = itemsStructuresListVM;
             return View(itemsStructuresListVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AssignItemToStructures(int itemId, int supplierId)
+        public IActionResult AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, int itemId)
         {
-            return RedirectToAction("ItemDetails", new { id = itemId });
+            var assignToStructures = _itemService.AssignItemToStructures(itemsStructuresListVM, "testUserId");
+
+            return RedirectToAction("ItemDetails", new { id = assignToStructures });
         }
     }
 }
