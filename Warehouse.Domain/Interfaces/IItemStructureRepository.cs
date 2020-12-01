@@ -8,8 +8,6 @@ namespace Warehouse.Domain.Interfaces
 {
     public interface IItemStructureRepository
     {
-        int AddItemToStructure(int itemId, int structureId, int itemsQty, string userId);
-        int RemoveItemFromStructure(int itemId, int structureId, string userId);
         int AddItemToManyStructures(List<ItemStructure> itemStructures, int itemId, string userId);
         IQueryable<Structure> GetAllStructures();
         IQueryable<ItemStructure> GetAllItemStructuresForItem(int itemId);

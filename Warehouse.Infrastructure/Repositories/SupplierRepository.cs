@@ -14,7 +14,7 @@ namespace Warehouse.Infrastructure.Repositories
         {
             _context = context;
         }
-        //CRUD:
+
         public int AddSupplier(Supplier supplier, string userId)
         {
             _context.Suppliers.Add(supplier);
@@ -44,14 +44,13 @@ namespace Warehouse.Infrastructure.Repositories
 
         public void DeleteSupplier(int supplierId)
         {
-            //TODO: change status IsDeleted!
             var supplier = _context.Suppliers.Find(supplierId);
             if (supplier != null)
             {
                 _context.Suppliers.Remove(supplier);
                 _context.SaveChanges();
             }
-            //TODO: Supplier cannot be removed if items exist from this supplier!
+            //Supplier cannot be removed if items exist from this supplier. In use IsDeleted.
         }
     }
 }

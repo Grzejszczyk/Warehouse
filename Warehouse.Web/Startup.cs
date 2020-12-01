@@ -139,7 +139,6 @@ namespace Warehouse.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    //pattern: "{controller=Warehouse}/{action=Index}/{pageSize?}/{pageNo?}");
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });

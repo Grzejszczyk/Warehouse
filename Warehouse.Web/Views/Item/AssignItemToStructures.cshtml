@@ -15,7 +15,6 @@
 
                 <th>
                     Items quantity for Structure
-                    @*<input asp-for="@Model.ItemStructures[0].ItemQty" class="form-control" />*@
                 </th>
                 <th>
                     Structure id
@@ -38,11 +37,9 @@
                         <input asp-for="@Model.ItemStructures[i].ItemQty" class="form-control" />
                         <input type="hidden" asp-for="@Model.ItemStructures[i].ItemId" value="@Model.ItemId" class="form-control" />
                         <input type="hidden" asp-for="@Model.ItemStructures[i].StructureId" value="@Model.ItemStructures[i].StructureId" class="form-control" />
-                        @*@Html.TextBoxFor(Model.ItemStructures[i].ItemQty, new { @class = "form-control" })*@
                     </td>
                     <td>
                         @Html.DisplayFor(m => m.ItemStructures[i].StructureId)
-                        @*@Html.DisplayFor(modelItem => i.StructureId)*@
                     </td>
                     <td>
                         @Html.DisplayFor(m => m.ItemStructures[i].StructureName)

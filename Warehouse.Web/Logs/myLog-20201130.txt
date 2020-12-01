@@ -884,3 +884,7 @@ System.InvalidOperationException: The instance of entity type 'ItemStructure' ca
 2020-11-30T18:26:34.5450866+01:00 800002b8-0001-fa00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
 2020-11-30T18:26:37.6120844+01:00 80000305-0001-f500-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
 2020-11-30T18:26:40.5742796+01:00 8000021c-0000-f800-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2020-11-30T23:20:23.6575988+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-11-30T23:20:23.6722086+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-11-30T23:20:23.6743223+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-11-30T23:20:34.2797077+01:00 80000004-0000-f900-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)

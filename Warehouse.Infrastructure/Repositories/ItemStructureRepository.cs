@@ -17,21 +17,10 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
 
-        //TODO: Implement methods.
-        public int AddItemToStructure(int itemId, int structureId, int itemsQty, string userId)
-        {
-            //not used.
-            var itemStructure = new ItemStructure();
-            itemStructure.ItemId = itemId;
-            itemStructure.StructureId = structureId;
-            _context.ItemStructure.Add(itemStructure);
-            return itemStructure.ItemId;
-        }
         public IQueryable<Structure> GetAllStructures()
         {
             var itemStructures = _context.ItemStructure.Where(i => i.ItemId == 1);
             var structures = _context.Structures;
-
             return structures;
         }
 
@@ -85,17 +74,5 @@ namespace Warehouse.Infrastructure.Repositories
             _context.SaveChanges();
             return item.Id;
         }
-
-
-        public int AddManyItemsToStructure(int[] itemIds, int structureId, int itemsQty, string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int RemoveItemFromStructure(int itemId, int structureId, string userId)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
