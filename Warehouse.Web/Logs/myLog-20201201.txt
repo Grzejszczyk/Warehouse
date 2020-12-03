@@ -1,0 +1,6 @@
+2020-12-01T21:41:28.0035785+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-12-01T21:41:28.0622463+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-12-01T21:41:28.0672316+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2020-12-01T22:41:42.5989576+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-12-01T22:41:42.6188006+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-12-01T22:41:42.6229183+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)

@@ -11,6 +11,9 @@ namespace Warehouse.Domain.Interfaces
         int AddItem(Item item, string userId);
 
         IQueryable<Item> GetItems();
+        IQueryable<Item> GetItemsBySupplier(int supplierId);
+        IQueryable<Item> GetItemsByStructure(int structureId);
+
         Item GetItemById(int id);
 
         int UpdateItem(Item item, int id, string userId);

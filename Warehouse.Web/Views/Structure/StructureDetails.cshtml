@@ -64,5 +64,5 @@
 <div>
     @Html.ActionLink("Edit", "EditStructure", new { id = Model.StructureId }, new { @class = "btn btn-primary" }) |
     <a class="btn btn-secondary" asp-action="StructuresList">Back to List</a> |
-    <a class="btn btn-primary">Show items for this structure</a>
+    @Html.ActionLink("Items from structure", "ItemsListFromStructure", "Item", new { structureId = Model.StructureId }, new { @class = "btn btn-primary" })
 </div>

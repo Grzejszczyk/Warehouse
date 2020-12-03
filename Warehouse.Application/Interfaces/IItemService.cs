@@ -8,6 +8,9 @@ namespace Warehouse.Application.Interfaces
     public interface IItemService
     {
         ItemsListForListVM GetAllItemsForList(int pageSize, int pageNo, string searchString);
+        ItemsListForListVM GetItemsBySupplier(int supplierId, int pageSize, int pageNo, string searchString);
+        ItemsListForListVM GetItemsByStructure(int structureId, int pageSize, int pageNo, string searchString);
+
         ItemDetailsVM GetItemDetails(int itemId);
         int AddItem(EditItemVM newItemVM, string userId);
         int EditItem(EditItemVM newItemVM, string userId);

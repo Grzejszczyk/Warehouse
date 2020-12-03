@@ -37,18 +37,48 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, "");
             return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1, string searchString = "")
         {
             pageSizeStd = pageSize;
-            if (searchString is null)
-            {
-                searchString = String.Empty;
-            }
+            if (searchString is null) { searchString = String.Empty; }
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, searchString);
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ItemsListFromSupplier(int supplierId, int pageSize = 7, int pageNo = 1)
+        {
+            pageSizeStd = pageSize;
+            var model = _itemService.GetItemsBySupplier(supplierId, pageSizeStd, pageNo, "");
+            return View("ItemsList", model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ItemsListFromSupplier(int supplierId, int pageSize = 7, int pageNo = 1, string searchString = "")
+        {
+            pageSizeStd = pageSize;
+            if (searchString is null) { searchString = String.Empty; }
+            var model = _itemService.GetItemsBySupplier(supplierId, pageSizeStd, pageNo, searchString);
+            return View("ItemsList", model);
+        }
+
+        [HttpGet]
+        public IActionResult ItemsListFromStructure(int structureId, int pageSize = 7, int pageNo = 1)
+        {
+            pageSizeStd = pageSize;
+            var model = _itemService.GetItemsByStructure(structureId, pageSizeStd, pageNo, "");
+            return View("ItemsList", model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ItemsListFromStructure(int structureId, int pageSize = 7, int pageNo = 1, string searchString = "")
+        {
+            pageSizeStd = pageSize;
+            if (searchString is null) { searchString = String.Empty; }
+            var model = _itemService.GetItemsByStructure(structureId, pageSizeStd, pageNo, searchString);
+            return View("ItemsList", model);
         }
 
 
@@ -60,7 +90,7 @@ namespace Warehouse.Web.Controllers
                 var item = _itemService.GetItemDetailsForEdit(id);
                 return View(item);
             }
-            else { return View(new EditItemVM());}
+            else { return View(new EditItemVM()); }
         }
 
         [HttpPost]
@@ -100,8 +130,8 @@ namespace Warehouse.Web.Controllers
         public IActionResult AssignItemToSupplier(int itemId)
         {
             var itemSuppliers = _itemService.GetItemForSuppliersList(itemId);
-            
-            return View(itemSuppliers); 
+
+            return View(itemSuppliers);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -119,7 +149,6 @@ namespace Warehouse.Web.Controllers
         public IActionResult AssignItemToStructures(int itemId)
         {
             var itemsStructuresListVM = _itemService.GetItemStructuresForAssign(itemId);
-            //TempData["islvm"] = itemsStructuresListVM;
             return View(itemsStructuresListVM);
         }
         [HttpPost]

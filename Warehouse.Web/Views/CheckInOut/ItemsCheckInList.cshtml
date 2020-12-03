@@ -1,0 +1,48 @@
+﻿@model Warehouse.Application.ViewModels.CheckInOut.ItemsListForCheckInOutListVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Item List</h1>
+
+
+<div class="container">
+    <form asp-action="ItemsCheckInList" asp-controller="CheckInOut" method="post">
+        <div class="row align-items-center p-3">
+            <input class="col-4 m-1 form-control" type="text" asp-for="SearchString" name="searchString" />
+            <input class="col-2 m-1 btn btn-primary" type="submit" value="Search" />
+        </div>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Total Quantity
+            </th>
+            <th>
+                Check Out Quantity
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            @Html.Partial("ItemCheckInPartial", item)
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div page-model="@Model.PaggingInfo" page-action="ItemsList"></div>
+</div>

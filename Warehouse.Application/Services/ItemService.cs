@@ -32,7 +32,40 @@ namespace Warehouse.Application.Services
 
         public ItemsListForListVM GetAllItemsForList(int pageSize, int pageNo, string searchString)
         {
-            var items = _itemRepository.GetItems().Where(s => s.Name.StartsWith(searchString)).ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+            var items = _itemRepository.GetItems()
+                .Where(s => s.Name.Contains(searchString))
+                .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+
+            var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
+            var itemsList = new ItemsListForListVM()
+            {
+                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
+                Items = itemsToShow.ToList()
+            };
+
+            return itemsList;
+        }
+        public ItemsListForListVM GetItemsBySupplier(int supplierId, int pageSize, int pageNo, string searchString)
+        {
+            var items = _itemRepository.GetItemsBySupplier(supplierId)
+                .Where(s => s.Name.Contains(searchString))
+                .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+
+            var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
+            var itemsList = new ItemsListForListVM()
+            {
+                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
+                Items = itemsToShow.ToList()
+            };
+
+            return itemsList;
+        }
+        public ItemsListForListVM GetItemsByStructure(int structureId, int pageSize, int pageNo, string searchString)
+        {
+            var items = _itemRepository.GetItemsByStructure(structureId)
+                .Where(s => s.Name.Contains(searchString))
+                .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+
             var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
             var itemsList = new ItemsListForListVM()
             {
@@ -148,7 +181,6 @@ namespace Warehouse.Application.Services
             itemStructuresListVM.ItemId = itemId;
             itemStructuresListVM.ItemStructures = new List<ItemStructureVM>();
 
-            //Join values collections for many-to-many:
             var allStructures = _itemStructureRepository.GetAllStructures();
             var itemStustureForItem = _itemStructureRepository.GetAllItemStructuresForItem(itemId);
 

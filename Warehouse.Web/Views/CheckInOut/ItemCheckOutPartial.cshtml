@@ -1,0 +1,25 @@
+﻿@model Warehouse.Application.ViewModels.CheckInOut.ItemForCheckInOutListVM
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Quantity)
+    </td>
+    <td>
+        <form asp-action="CheckOutItem" asp-controller="CheckInOut" method="post">
+            <div class="row align-items-center">
+                <input type="number" class="col-4 form-control" asp-for="@Model.CheckInOutQty" />
+                <input type="hidden" class="form-control" asp-for="@Model.Id" />
+                <input type="submit" value="CheckOut" class="btn btn-info ml-1" />
+            </div>
+        </form>
+    </td>
+</tr>

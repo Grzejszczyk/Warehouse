@@ -17,6 +17,7 @@ namespace Warehouse.Infrastructure
             services.AddTransient<ISupplierRepository, SupplierRepository>();
             services.AddTransient<IStructureRepository, StructureRepository>();
             services.AddTransient<IItemStructureRepository, ItemStructureRepository>();
+            services.AddTransient<ICheckInOutRepository, CheckInOutRepository>();
             return services;
         }
     }

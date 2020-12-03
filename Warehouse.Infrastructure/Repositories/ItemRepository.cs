@@ -28,9 +28,24 @@ namespace Warehouse.Infrastructure.Repositories
 
         public IQueryable<Item> GetItems()
         {
-            var items = _context.Items.Where(i => i.IsDeleted == false)/*.AsQueryable()*/;
+            var items = _context.Items.Where(i => i.IsDeleted == false);
             return items;
         }
+        public IQueryable<Item> GetItemsBySupplier(int supplierId)
+        {
+            var items = _context.Items
+                .Where(i => i.IsDeleted == false)
+                .Where(s => s.Supplier.Id == supplierId);
+            return items;
+        }
+        public IQueryable<Item> GetItemsByStructure(int structureId)
+        {
+            var items = _context.ItemStructure
+                .Where(s => s.StructureId == structureId)
+                .Select(i => i.Item);
+            return items;
+        }
+
         public Item GetItemById(int id)
         {
             var item = _context.Items

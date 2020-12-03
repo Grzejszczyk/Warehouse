@@ -9,9 +9,11 @@
     <a asp-action="EditItem">Create New</a>
 </p>
 <form asp-action="ItemsList" asp-controller="Item" method="post">
-    <div class="row">
-        <input type="text" asp-for="SearchString" name="searchString" />
-        <input type="submit" value="Search" />
+    <div class="container">
+        <div class="row align-items-center p-3">
+            <input class="col-4 m-1 form-control" type="text" asp-for="SearchString" name="searchString" />
+            <input class="col-2 m-1 btn btn-primary" type="submit" value="Search" />
+        </div>
     </div>
 
     <table class="table">

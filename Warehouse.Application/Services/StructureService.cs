@@ -14,7 +14,6 @@ namespace Warehouse.Application.Services
 {
     public class StructureService : IStructureService
     {
-        //TODO: Implement structure service
         private readonly IStructureRepository _structureRepository;
         private readonly IMapper _mapper;
         public StructureService(IStructureRepository structureRepo, IMapper mapper)

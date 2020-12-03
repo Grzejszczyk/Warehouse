@@ -7,7 +7,7 @@ namespace Warehouse.Application.ViewModels.CheckInOut
     public class CheckInOutItemListVM
     {
         public int IdemId { get; set; }
-        public List<CheckInForListVM> CheckIns { get; set; }
-        public List<CheckOutForListVM> CheckOuts { get; set; }
+        public List<CheckInOutForListVM> CheckIns { get; set; }
+        public List<CheckInOutForListVM> CheckOuts { get; set; }
     }
 }

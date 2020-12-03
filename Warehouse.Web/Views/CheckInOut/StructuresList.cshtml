@@ -1,0 +1,73 @@
+﻿@model Warehouse.Application.ViewModels.CheckInOut.StrusturesListForCheckOutVM
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Structure List</h1>
+<form asp-action="StructuresList" asp-controller="CheckInOut" method="post">
+    <div class="container">
+        <div class="row align-items-center p-3">
+            <input class="col-4 m-1 form-control" type="text" asp-for="SearchString" name="searchString" />
+            <input class="col-2 m-1 btn btn-primary" type="submit" value="Search" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Structure Name
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                Project
+            </th>
+            <th>
+                Items
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Structures)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => s.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => s.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => s.Project)
+            </td>
+            <td>
+                <ul class="list-group">
+                    @foreach (var i in s.Items)
+                    {
+                        <li class="list-group-item">
+                            @Html.DisplayFor(modelItem => i.Name):
+                            <strong>
+                                @Html.DisplayFor(modelItem => i.CheckInOutQty) for structure
+                            </strong>
+                            | Total:
+                            @Html.DisplayFor(modelItem => i.Quantity)
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td>
+                <form asp-action="CheckOutStructureItems" asp-controller="CheckInOut" method="post">
+                    <input type="hidden" name="structureId" value="@s.StructureId"/>
+                    <input type="submit" value="Check-Out Structure Items" class="btn btn-primary" />
+                </form>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
