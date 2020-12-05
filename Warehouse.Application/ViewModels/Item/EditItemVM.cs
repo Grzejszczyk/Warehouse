@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,23 +18,27 @@ namespace Warehouse.Application.ViewModels.Item
         public string ModifiedById { get; set; }
         public DateTime ModifiedDateTime { get; set; }
 
-        [Required]
         public string Name { get; set; }
-
-        [Required]
         public string Description { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
         public int LowQuantityValue { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, EditItemVM>().ReverseMap();
+        }
+    }
+
+    public class EditItemValidator : AbstractValidator<EditItemVM>
+    {
+        public EditItemValidator()
+        {
+            RuleFor(x => x.Name).Length(3,100);
+            RuleFor(x => x.Description).Length(3,255);
+            RuleFor(x => x.LowQuantityValue).NotEmpty();
+            RuleFor(x => x.LowQuantityValue).GreaterThanOrEqualTo(1);
+            RuleFor(x => x.Quantity).NotEmpty();
+            RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
         }
     }
 }
