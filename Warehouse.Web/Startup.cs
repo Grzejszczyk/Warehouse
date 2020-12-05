@@ -16,6 +16,7 @@ using Warehouse.Application;
 using Warehouse.Infrastructure.Repositories;
 using Warehouse.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
+using FluentValidation.AspNetCore;
 
 namespace Warehouse.Web
 {
@@ -39,12 +40,13 @@ namespace Warehouse.Web
                 .AddRoles<IdentityRole>() //this must be first.
                 .AddEntityFrameworkStores<Context>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.ValidatorOptions.LanguageManager.Enabled = false)
+                .AddFluentValidation(fv => fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false);
             services.AddRazorPages();
 
             services.AddApplication();
             services.AddInfrastructure();
-
 
             services.Configure<IdentityOptions>(options =>
             {

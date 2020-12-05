@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,28 +17,33 @@ namespace Warehouse.Application.ViewModels.Supplier
         public string ModifiedById { get; set; }
         public DateTime? ModifiedDateTime { get; set; }
 
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string NIP { get; set; }
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string PhoneNo { get; set; }
-        [Required]
         public string City { get; set; }
-        [Required]
         public string ZipCode { get; set; }
-        [Required]
         public string Street { get; set; }
-        [Required]
         public string BuildingNo { get; set; }
-        [Required]
         public bool IsActive { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Supplier, SupplierDetailsVM>().ReverseMap();
+        }
+    }
+    public class SupplierDetailsValidator : AbstractValidator<SupplierDetailsVM>
+    {
+        public SupplierDetailsValidator()
+        {
+            RuleFor(x => x.Name).Length(3, 100);
+            RuleFor(x => x.NIP).Length(10);
+            RuleFor(x => x.Email).EmailAddress();
+            RuleFor(x => x.PhoneNo).Length(7, 13);
+            RuleFor(x => x.City).Length(3, 50);
+            RuleFor(x => x.ZipCode).Matches("^(([0-9]{2})*-([0-9]{3}))$");
+            RuleFor(x => x.Street).Length(3, 100);
+            RuleFor(x => x.BuildingNo).Length(1, 100);
         }
     }
 }
