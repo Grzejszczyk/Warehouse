@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,5 +27,16 @@ namespace Warehouse.Application.ViewModels.Structure
                 .ForMember(s => s.StructureName, opt => opt.MapFrom(s => s.Name))
                 .ReverseMap();
         }
+
+        public class EditStructureValidator : AbstractValidator<EditStructureVM>
+        {
+            public EditStructureValidator()
+            {
+                RuleFor(x => x.StructureName).Length(3, 100);
+                RuleFor(x => x.ProductName).Length(3, 100);
+                RuleFor(x => x.Project).Length(3, 100);
+            }
+        }
+
     }
 }
