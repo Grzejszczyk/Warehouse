@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Warehouse.Application.ViewModels.Supplier;
 
 namespace Warehouse.Web.Controllers
 {
+    [Authorize]
     public class SupplierController : Controller
     {
         private readonly ILogger<ItemController> _logger;

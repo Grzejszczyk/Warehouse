@@ -20,7 +20,7 @@ namespace Warehouse.Web.Filters
             bool isAuthorized = CheckUserPermisionByClaim(context.HttpContext.User, _permission);
             if (!isAuthorized)
             {
-                context.Result = new RedirectResult("~/Identity/Account/AccessDenied"); //new UnauthorizedResult();
+                context.Result = new RedirectResult("~/Identity/Account/AccessDenied");
             }
         }
 

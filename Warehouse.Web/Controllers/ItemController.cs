@@ -14,6 +14,7 @@ using Warehouse.Web.Filters;
 
 namespace Warehouse.Web.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private readonly ILogger<ItemController> _logger;

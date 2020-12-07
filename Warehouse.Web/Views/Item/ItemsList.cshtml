@@ -5,9 +5,13 @@
 }
 
 <h1>Item List</h1>
-<p>
-    <a asp-action="EditItem">Create New</a>
-</p>
+@if (User.HasClaim(c=>c.Value == "EditItems"))
+{
+    <p>
+        <a asp-action="EditItem">Create New</a>
+    </p>
+}
+
 <form asp-action="ItemsList" asp-controller="Item" method="post">
     <div class="container">
         <div class="row align-items-center p-3">
