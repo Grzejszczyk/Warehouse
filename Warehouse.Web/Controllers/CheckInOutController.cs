@@ -26,6 +26,7 @@ namespace Warehouse.Web.Controllers
             return View();
         }
 
+        [Authorize(Policy = "CanView")]
         [HttpGet]
         public IActionResult ItemsCheckOutList(int pageSize = 8, int pageNo = 1)
         {
@@ -33,6 +34,8 @@ namespace Warehouse.Web.Controllers
             var model = _checkInOutService.GetAllItemsForCheckInOutList(pageSizeStd, pageNo, "");
             return View(model);
         }
+
+        [Authorize(Policy = "CanView")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsCheckOutList(int pageSize = 8, int pageNo = 1, string searchString = "")
@@ -46,6 +49,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Policy = "CanView")]
         [HttpGet]
         public IActionResult ItemsCheckInList(int pageSize = 8, int pageNo = 1)
         {
@@ -53,6 +57,7 @@ namespace Warehouse.Web.Controllers
             var model = _checkInOutService.GetAllItemsForCheckInOutList(pageSizeStd, pageNo, "");
             return View(model);
         }
+        [Authorize(Policy = "CanView")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsCheckInList(int pageSize = 8, int pageNo = 1, string searchString = "")
@@ -66,6 +71,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Policy = "CanCheckInOut")]
         [HttpPost]
         public IActionResult CheckOutItem(ItemForCheckInOutListVM itm)
         {
@@ -73,6 +79,7 @@ namespace Warehouse.Web.Controllers
             return RedirectToAction("ItemsCheckOutList");
         }
 
+        [Authorize(Policy = "CanCheckInOut")]
         [HttpPost]
         public IActionResult CheckInItem(ItemForCheckInOutListVM itm)
         {
@@ -80,6 +87,7 @@ namespace Warehouse.Web.Controllers
             return RedirectToAction("ItemsCheckInList");
         }
 
+        [Authorize(Policy = "CanView")]
         [HttpGet]
         public IActionResult StructuresList(int pageSize = 8, int pageNo = 1)
         {
@@ -87,6 +95,8 @@ namespace Warehouse.Web.Controllers
             var model = _checkInOutService.GetStructures(pageSizeStd, pageNo, "");
             return View(model);
         }
+
+        [Authorize(Policy = "CanView")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult StructuresList(int pageSize = 8, int pageNo = 1, string searchString = "")
@@ -99,6 +109,8 @@ namespace Warehouse.Web.Controllers
             var model = _checkInOutService.GetStructures(pageSizeStd, pageNo, searchString);
             return View(model);
         }
+
+        [Authorize(Policy = "CanCheckInOut")]
         [HttpPost]
         public IActionResult CheckOutStructureItems(int structureId)
         {

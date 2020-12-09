@@ -29,6 +29,7 @@ namespace Warehouse.Web.Controllers
             _supplierService = supplierRepo;
         }
 
+        [CheckPermissions("ViewItems")] //Or policy = CanView
         [HttpGet]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1)
         {
@@ -38,6 +39,7 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, "");
             return View(model);
         }
+        [CheckPermissions("ViewItems")] //Or policy = CanView
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -47,7 +49,7 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, searchString);
             return View(model);
         }
-
+        [CheckPermissions("ViewItems")]  //Or policy = CanView
         [HttpGet]
         public IActionResult ItemsListFromSupplier(int supplierId, int pageSize = 7, int pageNo = 1)
         {
@@ -55,6 +57,7 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetItemsBySupplier(supplierId, pageSizeStd, pageNo, "");
             return View("ItemsList", model);
         }
+        [CheckPermissions("ViewItems")]  //Or policy = CanView
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsListFromSupplier(int supplierId, int pageSize = 7, int pageNo = 1, string searchString = "")
@@ -64,7 +67,7 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetItemsBySupplier(supplierId, pageSizeStd, pageNo, searchString);
             return View("ItemsList", model);
         }
-
+        [CheckPermissions("ViewItems")]  //Or policy = CanView
         [HttpGet]
         public IActionResult ItemsListFromStructure(int structureId, int pageSize = 7, int pageNo = 1)
         {
@@ -72,6 +75,7 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetItemsByStructure(structureId, pageSizeStd, pageNo, "");
             return View("ItemsList", model);
         }
+        [CheckPermissions("ViewItems")]  //Or policy = CanView
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsListFromStructure(int structureId, int pageSize = 7, int pageNo = 1, string searchString = "")
@@ -82,7 +86,7 @@ namespace Warehouse.Web.Controllers
             return View("ItemsList", model);
         }
 
-
+        [Authorize(Policy = "CanManageItems")]
         [HttpGet]
         public IActionResult EditItem(int id = 0)
         {
@@ -93,7 +97,7 @@ namespace Warehouse.Web.Controllers
             }
             else { return View(new EditItemVM()); }
         }
-
+        [Authorize(Policy = "CanManageItems")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditItem(EditItemVM model)
@@ -114,19 +118,21 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-
+        [CheckPermissions("ViewItems")]  //Or policy = CanView
         public IActionResult ItemDetails(int id)
         {
             var model = _itemService.GetItemDetails(id);
             return View(model);
         }
 
+        [Authorize(Policy = "CanManageItems")]
         public IActionResult SetIsDeletedItem(int id)
         {
             _itemService.SetIsDeleted(id, "testUserId");
             return RedirectToAction("ItemsList");
         }
 
+        [Authorize(Policy = "CanManageItems")]
         [HttpGet]
         public IActionResult AssignItemToSupplier(int itemId)
         {
@@ -134,6 +140,8 @@ namespace Warehouse.Web.Controllers
 
             return View(itemSuppliers);
         }
+
+        [Authorize(Policy = "CanManageItems")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AssignItemToSupplier(int itemId, int supplierId)
@@ -146,12 +154,15 @@ namespace Warehouse.Web.Controllers
             return RedirectToAction("ItemDetails", new { id = assignedItem });
         }
 
+        [Authorize(Policy = "CanManageItems")]
         [HttpGet]
         public IActionResult AssignItemToStructures(int itemId)
         {
             var itemsStructuresListVM = _itemService.GetItemStructuresForAssign(itemId);
             return View(itemsStructuresListVM);
         }
+
+        [Authorize(Policy = "CanManageItems")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, int itemId)

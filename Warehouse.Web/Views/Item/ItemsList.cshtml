@@ -49,9 +49,12 @@
                         @Html.DisplayFor(modelItem => item.Quantity)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "EditItem", new { id = item.Id }) |
+                        @if (User.HasClaim(c => c.Value == "EditItems"))
+                            @Html.ActionLink("Edit", "EditItem", new { id = item.Id }) |
+
                         @Html.ActionLink("Details", "ItemDetails", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "SetIsDeletedItem", new { id = item.Id })
+                        @if (User.HasClaim(c => c.Value == "EditItems"))
+                            @Html.ActionLink("Delete", "SetIsDeletedItem", new { id = item.Id })
                     </td>
                 </tr>
             }

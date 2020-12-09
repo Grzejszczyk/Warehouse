@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Warehouse.Application.Interfaces;
 using Warehouse.Application.ViewModels.Structure;
+using Warehouse.Web.Filters;
 
 namespace Warehouse.Web.Controllers
 {
@@ -22,6 +23,7 @@ namespace Warehouse.Web.Controllers
             _structureService = structureRepo;
         }
 
+        [CheckPermissions("ViewStructures")]
         [HttpGet]
         public IActionResult StructuresList(int pageSize = 5, int pageNo = 1)
         {
@@ -29,6 +31,8 @@ namespace Warehouse.Web.Controllers
             var model = _structureService.StructuresList(pageSizeStd, pageNo, "");
             return View(model);
         }
+
+        [CheckPermissions("ViewStructures")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult StructuresList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -41,6 +45,8 @@ namespace Warehouse.Web.Controllers
             var model = _structureService.StructuresList(pageSizeStd, pageNo, searchString);
             return View(model);
         }
+
+        [Authorize(Policy = "CanManageStructures")]
         [HttpGet]
         public IActionResult EditStructure(int id = 0)
         {
@@ -54,6 +60,8 @@ namespace Warehouse.Web.Controllers
                 return View(new StructureDetailsVM());
             }
         }
+
+        [Authorize(Policy = "CanManageStructures")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditStructure(StructureDetailsVM model)
@@ -73,12 +81,15 @@ namespace Warehouse.Web.Controllers
             }
             return View(model);
         }
+
+        [CheckPermissions("ViewStructures")]
         public IActionResult StructureDetails(int id)
         {
             var model = _structureService.GetStructureDetails(id);
             return View(model);
         }
 
+        [Authorize(Policy = "CanManageStructures")]
         public IActionResult SetIsDeletedStructure(int id)
         {
             _structureService.SetIsDeleted(id, "testUserId");

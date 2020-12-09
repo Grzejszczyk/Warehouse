@@ -26,7 +26,6 @@ namespace Warehouse.Web.Filters
 
         private bool CheckUserPermisionByClaim(ClaimsPrincipal user, string permission)
         {
-            //TODO: Check in db if (authenticated) user has authorization to this action.
             return user.Claims.Where(c => c.Value == permission).Select(c=>c.Value).Any();
         }
     }

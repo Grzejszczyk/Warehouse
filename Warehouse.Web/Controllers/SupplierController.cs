@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Warehouse.Application.Interfaces;
 using Warehouse.Application.ViewModels.Supplier;
+using Warehouse.Web.Filters;
 
 namespace Warehouse.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace Warehouse.Web.Controllers
             _supplierService = supplierRepo;
         }
 
+        [CheckPermissions("ViewSuppliers")]
         [HttpGet]
         public IActionResult SuppliersList(int pageSize = 5, int pageNo = 1)
         {
@@ -30,6 +32,8 @@ namespace Warehouse.Web.Controllers
             var model = _supplierService.GetAllSuppliersForList(pageSizeStd, pageNo, "");
             return View(model);
         }
+
+        [CheckPermissions("ViewSuppliers")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuppliersList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -43,6 +47,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Policy = "CanManageSuppliers")]
         [HttpGet]
         public IActionResult EditSupplier(int id = 0)
         {
@@ -56,6 +61,8 @@ namespace Warehouse.Web.Controllers
                 return View(new SupplierDetailsVM());
             }
         }
+
+        [Authorize(Policy = "CanManageSuppliers")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditSupplier(SupplierDetailsVM model)
@@ -75,12 +82,15 @@ namespace Warehouse.Web.Controllers
             }
             return View(model);
         }
+
+        [CheckPermissions("ViewSuppliers")]
         public IActionResult SupplierDetails(int id)
         {
             var model = _supplierService.GetSupplierDetails(id);
             return View(model);
         }
 
+        [Authorize(Policy = "CanManageSuppliers")]
         public IActionResult SetIsDeletedSupplier(int id)
         {
             _supplierService.SetIsDeleted(id, "testUserId");

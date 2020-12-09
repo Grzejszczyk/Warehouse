@@ -58,29 +58,13 @@ namespace Warehouse.Web
             {
                 options.AddPolicy("AdminPolicy", policy =>
                 {
+                    //TODO: Admin managent: assigning: roles, claims to users.
                     policy.RequireRole("Admin");
-                    policy.RequireClaim("ViewItems");
-                    policy.RequireClaim("EditItems");
-                    policy.RequireClaim("ViewStrucures");
-                    policy.RequireClaim("EditStrucures");
-                    policy.RequireClaim("ViewSuppliers");
-                    policy.RequireClaim("EditSuppliers");
-                    policy.RequireClaim("ViewCheckInOuts");
-                    policy.RequireClaim("RealizeCheckInOuts");
-                    policy.RequireClaim("EditCheckInOuts");
                 });
 
                 options.AddPolicy("SuperUserPolicy", policy =>
                 {
-                    policy.RequireClaim("ViewItems");
-                    policy.RequireClaim("EditItems");
-                    policy.RequireClaim("ViewStrucures");
-                    policy.RequireClaim("EditStrucures");
-                    policy.RequireClaim("ViewSuppliers");
-                    policy.RequireClaim("EditSuppliers");
-                    policy.RequireClaim("ViewCheckInOuts");
-                    policy.RequireClaim("RealizeCheckInOuts");
-                    policy.RequireClaim("EditCheckInOuts");
+                    policy.RequireRole("SuperUser");
                 });
 
                 options.AddPolicy("CanManageItems", policy =>
@@ -101,14 +85,13 @@ namespace Warehouse.Web
 
                 options.AddPolicy("CanCheckInOut", policy =>
                 {
-                    policy.RequireClaim("ViewCheckInOuts");
                     policy.RequireClaim("RealizeCheckInOuts");
-                    policy.RequireClaim("EditCheckInOuts");
                 });
 
                 options.AddPolicy("CanView", policy =>
                 {
                     policy.RequireClaim("ViewItems");
+                    policy.RequireClaim("ViewSuppliers");
                     policy.RequireClaim("ViewStrucures");
                 });
             });

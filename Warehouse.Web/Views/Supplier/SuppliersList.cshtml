@@ -5,65 +5,67 @@
 }
 
 <h1>SuppliersList</h1>
-
-<p>
-    <a asp-action="EditSupplier">Create New</a>
-</p>
-<form asp-action="SuppliersList" asp-controller="Supplier" method="post">
-    <div class="row">
-        <input type="text" asp-for="SearchString" name="searchString" />
-        <input type="submit" value="Search" />
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    NIP
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    IsActive
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Suppliers)
-            {
+@if (User.HasClaim(c => c.Value == "EditSupplier"))
+{
+    <p>
+        <a asp-action="EditSupplier">Create New</a>
+    </p>
+}
+    <form asp-action="SuppliersList" asp-controller="Supplier" method="post">
+        <div class="row">
+            <input type="text" asp-for="SearchString" name="searchString" />
+            <input type="submit" value="Search" />
+        </div>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NIP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "EditSupplier", new { id=item.Id }) |
-                        @Html.ActionLink("Details", "SupplierDetails", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "SetIsDeletedSupplier", new { id=item.Id })
-                    </td>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        NIP
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        IsActive
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div class="row">
-        <div page-model="@Model.PaggingInfo" page-action="SuppliersList"></div>
-    </div>
-</form>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Suppliers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NIP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditSupplier", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "SupplierDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "SetIsDeletedSupplier", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row">
+            <div page-model="@Model.PaggingInfo" page-action="SuppliersList"></div>
+        </div>
+    </form>
