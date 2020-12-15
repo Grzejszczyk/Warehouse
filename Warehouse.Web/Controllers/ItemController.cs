@@ -22,11 +22,11 @@ namespace Warehouse.Web.Controllers
         private readonly ISupplierService _supplierService;
         private int pageSizeStd;
 
-        public ItemController(ILogger<ItemController> logger, IItemService itemRepo, ISupplierService supplierRepo)
+        public ItemController(ILogger<ItemController> logger, IItemService itemService, ISupplierService supplierService)
         {
             _logger = logger;
-            _itemService = itemRepo;
-            _supplierService = supplierRepo;
+            _itemService = itemService;
+            _supplierService = supplierService;
         }
 
         [CheckPermissions("ViewItems")] //Or policy = CanView

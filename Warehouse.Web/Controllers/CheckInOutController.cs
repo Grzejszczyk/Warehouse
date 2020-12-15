@@ -16,10 +16,10 @@ namespace Warehouse.Web.Controllers
         private readonly ILogger<ItemController> _logger;
         private readonly ICheckInOutService _checkInOutService;
         private int pageSizeStd;
-        public CheckInOutController(ILogger<ItemController> logger, ICheckInOutService checkInOutRepo)
+        public CheckInOutController(ILogger<ItemController> logger, ICheckInOutService checkInOutService)
         {
             _logger = logger;
-            _checkInOutService = checkInOutRepo;
+            _checkInOutService = checkInOutService;
         }
         public IActionResult Index()
         {

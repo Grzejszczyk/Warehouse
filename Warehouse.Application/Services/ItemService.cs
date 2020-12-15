@@ -18,14 +18,12 @@ namespace Warehouse.Application.Services
     {
         private readonly IItemRepository _itemRepository;
         private readonly ISupplierRepository _supplierRepository;
-        private readonly IStructureRepository _structureRepository;
         private readonly IItemStructureRepository _itemStructureRepository;
         private readonly IMapper _mapper;
-        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IStructureRepository structureRepo, IItemStructureRepository itemStructureRepo, IMapper mapper)
+        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IItemStructureRepository itemStructureRepo, IMapper mapper)
         {
             _itemRepository = itemRepo;
             _supplierRepository = supplierRepo;
-            _structureRepository = structureRepo;
             _itemStructureRepository = itemStructureRepo;
             _mapper = mapper;
         }

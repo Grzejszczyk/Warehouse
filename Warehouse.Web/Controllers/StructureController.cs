@@ -17,10 +17,10 @@ namespace Warehouse.Web.Controllers
         private readonly ILogger<ItemController> _logger;
         private readonly IStructureService _structureService;
         private int pageSizeStd;
-        public StructureController(ILogger<ItemController> logger, IStructureService structureRepo)
+        public StructureController(ILogger<ItemController> logger, IStructureService structureService)
         {
             _logger = logger;
-            _structureService = structureRepo;
+            _structureService = structureService;
         }
 
         [CheckPermissions("ViewStructures")]

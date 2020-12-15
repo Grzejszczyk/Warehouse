@@ -18,10 +18,10 @@ namespace Warehouse.Web.Controllers
         private readonly ISupplierService _supplierService;
         private int pageSizeStd;
 
-        public SupplierController(ILogger<ItemController> logger, ISupplierService supplierRepo)
+        public SupplierController(ILogger<ItemController> logger, ISupplierService supplierService)
         {
             _logger = logger;
-            _supplierService = supplierRepo;
+            _supplierService = supplierService;
         }
 
         [CheckPermissions("ViewSuppliers")]
