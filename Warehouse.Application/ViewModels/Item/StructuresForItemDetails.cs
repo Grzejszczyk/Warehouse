@@ -8,12 +8,10 @@ namespace Warehouse.Application.ViewModels.Item
 {
     public class StructuresForItemDetails : IMapFrom<Warehouse.Domain.Models.Entity.ItemStructure>
     {
-        //TODO: If possible use ItemStructuresVM
         public int StructureId { get; set; }
         public string StructureName { get; set; }
         public int QuantityForStructure { get; set; }
 
-        //Issue: Mapping doesn't work.
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.ItemStructure, StructuresForItemDetails>()

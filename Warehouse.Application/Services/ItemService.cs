@@ -81,38 +81,20 @@ namespace Warehouse.Application.Services
             var itemVM = _mapper.Map<ItemDetailsVM>(item);
 
             itemVM.StructuresForItemDetails = new List<StructuresForItemDetails>();
-            itemVM.CheckIns = new List<CheckInsOutsForItemDetails>();
-            itemVM.CheckOuts = new List<CheckInsOutsForItemDetails>();
+            itemVM.CheckIns = new List<CheckInsForItemDetails>();
+            itemVM.CheckOuts = new List<CheckOutsForItemDetails>();
 
             foreach (var s in item.ItemStructures)
             {
-                itemVM.StructuresForItemDetails.Add(
-                    new StructuresForItemDetails
-                    {
-                        StructureId = s.StructureId,
-                        StructureName = s.Structure.Name,
-                        QuantityForStructure = s.ItemQuantity
-                    });
+                itemVM.StructuresForItemDetails.Add(_mapper.Map<StructuresForItemDetails>(s));
             }
             foreach (var cin in item.CheckIns)
             {
-                itemVM.CheckIns.Add(
-                    new CheckInsOutsForItemDetails
-                    {
-                        CheckInOutId = cin.Id,
-                        ActionDateTime = cin.ModifiedDateTime,
-                        Quantity = cin.Quantity
-                    });
+                itemVM.CheckIns.Add(_mapper.Map<CheckInsForItemDetails>(cin));
             }
             foreach (var cou in item.CheckOuts)
             {
-                itemVM.CheckOuts.Add(
-                    new CheckInsOutsForItemDetails
-                    {
-                        CheckInOutId = cou.Id,
-                        ActionDateTime = cou.ModifiedDateTime,
-                        Quantity = cou.Quantity
-                    });
+                itemVM.CheckOuts.Add(_mapper.Map<CheckOutsForItemDetails>(cou));
             }
             return itemVM;
         }

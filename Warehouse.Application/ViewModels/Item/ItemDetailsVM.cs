@@ -37,8 +37,8 @@ namespace Warehouse.Application.ViewModels.Item
 
 
         public List<StructuresForItemDetails> StructuresForItemDetails { get; set; }
-        public List<CheckInsOutsForItemDetails> CheckIns { get; set; }
-        public List<CheckInsOutsForItemDetails> CheckOuts { get; set; }
+        public List<CheckInsForItemDetails> CheckIns { get; set; }
+        public List<CheckOutsForItemDetails> CheckOuts { get; set; }
 
         public void Mapping(Profile profile)
         {
