@@ -17,5 +17,12 @@ namespace Warehouse.Domain.Models.Entity
         public ICollection<ItemStructure> ItemStructures { get; set; }
         public ICollection<CheckIn> CheckIns { get; set; }
         public ICollection<CheckOut> CheckOuts { get; set; }
+
+        //miniatura
+        //zdjęcie
+        //numer katalogowy
+        //numer rysunku
+        //miejsce położenia przedmiotu
+
     }
 }

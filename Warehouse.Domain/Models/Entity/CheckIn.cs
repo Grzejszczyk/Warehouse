@@ -9,5 +9,7 @@ namespace Warehouse.Domain.Models.Entity
     {
         public Item Item { get; set; }
         public int Quantity { get; set; }
+
+        //wyewidencjonowanie na magazyn handlowy
     }
 }

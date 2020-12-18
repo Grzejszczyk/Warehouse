@@ -19,5 +19,8 @@ namespace Warehouse.Domain.Models.Entity
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public ICollection<Item> Items { get; set; }
+
+        //osoba kontaktowa z danymi kontaktowymi personalnymi (tel., email)
+        //ocena dostawcy
     }
 }
