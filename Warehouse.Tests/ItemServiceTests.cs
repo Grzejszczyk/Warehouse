@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Warehouse.Application.Interfaces;
 using Moq;
 using Warehouse.Infrastructure.Repositories;
-
+using Warehouse.Application.Mapping;
 
 namespace Warehouse.Tests
 {
@@ -21,16 +21,27 @@ namespace Warehouse.Tests
         public void GetItemDetails_Test1()
         {
             //Arrange:
+            var item = new Item()
+            {
+                Id = 1,
+                Name = "TestItem1"
+            };
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
 
+            var mapper = config.CreateMapper();
+
+            var _itemRepositoryMock = new Mock<IItemRepository>();
+            _itemRepositoryMock.Setup(s => s.GetItemById(1))
+                .Returns(item);
+
+            var _itemService = new ItemService(_itemRepositoryMock.Object, null, null, mapper);
             //Act:
-
+            var result = _itemService.GetItemDetails(1);
             //Assert:
-        }
-
-        private Supplier GetTestItem()
-        {
-            var supplier = new Supplier() { Id = 1, Name = "TestSupplier1" };
-            return supplier;
+            Assert.Equal(result.Id, item.Id);
         }
     }
 }
