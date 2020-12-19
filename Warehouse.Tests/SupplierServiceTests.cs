@@ -3,6 +3,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Warehouse.Application.Mapping;
 using Warehouse.Application.Services;
 using Warehouse.Application.ViewModels.Supplier;
 using Warehouse.Domain.Interfaces;
@@ -13,17 +14,6 @@ namespace Warehouse.Tests
 {
     public class SupplierServiceTests
     {
-        private readonly SupplierService _supplierService;
-        private readonly Mock<ISupplierRepository> _supplierRepositoryMock = new Mock<ISupplierRepository>();
-        private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
-
-        //TODO: Solve Test for Mapping.
-
-        public SupplierServiceTests()
-        {
-            _supplierService = new SupplierService(_supplierRepositoryMock.Object, _mapperMock.Object);
-        }
-
         [Fact]
         public void GetSupplierDetails_Test()
         {
@@ -34,8 +24,18 @@ namespace Warehouse.Tests
                 Name = "TestSupplier1"
             };
 
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
+
+            var mapper = config.CreateMapper();
+
+            var _supplierRepositoryMock = new Mock<ISupplierRepository>();
             _supplierRepositoryMock.Setup(s => s.GetSupplierById(1))
                 .Returns(supplier);
+
+            var _supplierService = new SupplierService(_supplierRepositoryMock.Object, mapper);
 
             //Act:
             var result = _supplierService.GetSupplierDetails(1);
