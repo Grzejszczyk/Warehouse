@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Warehouse.Application.Interfaces;
 using Moq;
 using Warehouse.Infrastructure.Repositories;
+using Warehouse.Application.Mapping;
 
 namespace Warehouse.Tests
 {
@@ -20,30 +21,27 @@ namespace Warehouse.Tests
         public void GetItemDetails_Test1()
         {
             //Arrange:
+            var item = new Item()
+            {
+                Id = 1,
+                Name = "TestItem1"
+            };
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
 
-            var mockRepo = new Mock<IItemRepository>();
-            mockRepo.Setup(s => s.GetItemById(1))
-                .Returns(GetTestItem());
+            var mapper = config.CreateMapper();
 
-            var item = mockRepo.Object.GetItemById(1);
+            var _itemRepositoryMock = new Mock<IItemRepository>();
+            _itemRepositoryMock.Setup(s => s.GetItemById(1))
+                .Returns(item);
 
-            var mockMapperItemVM = new Mock<IMapper>();
-            mockMapperItemVM.Setup(s => s.Map<ItemDetailsVM>(item));
-            //issue: itemVM is null in ItemService.
-
-            var itemService = new ItemService(mockRepo.Object, null, null, mockMapperItemVM.Object);
-
+            var _itemService = new ItemService(_itemRepositoryMock.Object, null, null, mapper);
             //Act:
-            var result = itemService.GetItemDetails(1);
-
+            var result = _itemService.GetItemDetails(1);
             //Assert:
-            Assert.Equal(result.Id, mockRepo.Object.GetItemById(1).Id);
-        }
-
-        private Item GetTestItem()
-        {
-            var item = new Item() { Id = 1, Name = "TestItem1" };
-            return item;
+            Assert.Equal(result.Id, item.Id);
         }
     }
 }
