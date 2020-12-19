@@ -10,6 +10,11 @@ namespace Warehouse.Domain.Models.Entity
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CatalogNumber { get; set; }
+        public string DrawingNumber { get; set; }
+        public MagazineZone MagazineZone { get; set; }
+        public byte[] Thumbnail { get; set; }
+        public ItemImage ItemImage { get; set; }
         public int LowQuantityValue { get; set; }
         public Supplier Supplier { get; set; }
         public int Quantity { get; set; }
@@ -17,12 +22,5 @@ namespace Warehouse.Domain.Models.Entity
         public ICollection<ItemStructure> ItemStructures { get; set; }
         public ICollection<CheckIn> CheckIns { get; set; }
         public ICollection<CheckOut> CheckOuts { get; set; }
-
-        //miniatura
-        //zdjęcie
-        //numer katalogowy
-        //numer rysunku
-        //miejsce położenia przedmiotu
-
     }
 }
