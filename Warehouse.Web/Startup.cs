@@ -74,8 +74,8 @@ namespace Warehouse.Web
                 });
                 options.AddPolicy("CanManageSuppliers", policy =>
                 {
-                    policy.RequireClaim("ViewSuppliers");
-                    policy.RequireClaim("EditSuppliers");
+                    policy.RequireClaim("ViewSuppliers", "EditSuppliers");
+                    //policy.RequireClaim("EditSuppliers");
                 });
                 options.AddPolicy("CanManageStructures", policy =>
                 {

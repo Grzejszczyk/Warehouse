@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -19,17 +20,15 @@ namespace Warehouse.Web.Controllers
     {
         private readonly ILogger<ItemController> _logger;
         private readonly IItemService _itemService;
-        private readonly ISupplierService _supplierService;
         private int pageSizeStd;
 
         public ItemController(ILogger<ItemController> logger, IItemService itemService, ISupplierService supplierService)
         {
             _logger = logger;
             _itemService = itemService;
-            _supplierService = supplierService;
         }
 
-        [CheckPermissions("ViewItems")] //Or policy = CanView
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1)
         {
@@ -39,7 +38,8 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, "");
             return View(model);
         }
-        [CheckPermissions("ViewItems")] //Or policy = CanView
+
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -49,7 +49,8 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetAllItemsForList(pageSizeStd, pageNo, searchString);
             return View(model);
         }
-        [CheckPermissions("ViewItems")]  //Or policy = CanView
+
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult ItemsListFromSupplier(int supplierId, int pageSize = 7, int pageNo = 1)
         {
@@ -57,7 +58,8 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetItemsBySupplier(supplierId, pageSizeStd, pageNo, "");
             return View("ItemsList", model);
         }
-        [CheckPermissions("ViewItems")]  //Or policy = CanView
+
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsListFromSupplier(int supplierId, int pageSize = 7, int pageNo = 1, string searchString = "")
@@ -67,7 +69,8 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetItemsBySupplier(supplierId, pageSizeStd, pageNo, searchString);
             return View("ItemsList", model);
         }
-        [CheckPermissions("ViewItems")]  //Or policy = CanView
+
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult ItemsListFromStructure(int structureId, int pageSize = 7, int pageNo = 1)
         {
@@ -75,7 +78,8 @@ namespace Warehouse.Web.Controllers
             var model = _itemService.GetItemsByStructure(structureId, pageSizeStd, pageNo, "");
             return View("ItemsList", model);
         }
-        [CheckPermissions("ViewItems")]  //Or policy = CanView
+
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsListFromStructure(int structureId, int pageSize = 7, int pageNo = 1, string searchString = "")
@@ -86,7 +90,7 @@ namespace Warehouse.Web.Controllers
             return View("ItemsList", model);
         }
 
-        [Authorize(Policy = "CanManageItems")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult EditItem(int id = 0)
         {
@@ -97,42 +101,75 @@ namespace Warehouse.Web.Controllers
             }
             else { return View(new EditItemVM()); }
         }
-        [Authorize(Policy = "CanManageItems")]
+
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditItem(EditItemVM model)
         {
+            if (model.ImageFormFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    model.ImageFormFile.CopyTo(memoryStream);
+
+                    // Upload the file if less than 2 MB
+                    if (memoryStream.Length < 2097152)
+                    {
+                        var content = memoryStream.ToArray();
+                        model.ImageFile = content;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                }
+            }
+
             int newItemId = 0;
             if (ModelState.IsValid)
             {
                 if (model.Id == 0)
                 {
-                    newItemId = _itemService.AddItem(model, "testUserId");
+                    newItemId = _itemService.AddItem(model, User.Identity.Name);
                 }
                 else
                 {
-                    newItemId = _itemService.EditItem(model, "testUserId");
+                    newItemId = _itemService.EditItem(model, User.Identity.Name);
                 }
                 return RedirectToAction("ItemDetails", new { id = newItemId });
             }
             return View(model);
         }
 
-        [CheckPermissions("ViewItems")]  //Or policy = CanView
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
+        [HttpGet]
         public IActionResult ItemDetails(int id)
         {
             var model = _itemService.GetItemDetails(id);
+            if (model.ImageFile.Length > 0)
+            {
+                string imreBase64Data = Convert.ToBase64String(model.ImageFile);
+                string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+                ViewBag.ImageData = imgDataURL;
+            }
+            else
+            {
+                ViewBag.ImageData = "noImage";
+            }
+
             return View(model);
         }
 
-        [Authorize(Policy = "CanManageItems")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         public IActionResult SetIsDeletedItem(int id)
         {
-            _itemService.SetIsDeleted(id, "testUserId");
+
+            _itemService.SetIsDeleted(id, User.Identity.Name);
             return RedirectToAction("ItemsList");
         }
 
-        [Authorize(Policy = "CanManageItems")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult AssignItemToSupplier(int itemId)
         {
@@ -141,7 +178,7 @@ namespace Warehouse.Web.Controllers
             return View(itemSuppliers);
         }
 
-        [Authorize(Policy = "CanManageItems")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AssignItemToSupplier(int itemId, int supplierId)
@@ -149,12 +186,12 @@ namespace Warehouse.Web.Controllers
             var assignedItem = _itemService.AssignItemToSupplier(
                 itemId,
                 supplierId,
-                "testUserId");
+                User.Identity.Name);
 
             return RedirectToAction("ItemDetails", new { id = assignedItem });
         }
 
-        [Authorize(Policy = "CanManageItems")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult AssignItemToStructures(int itemId)
         {
@@ -162,12 +199,12 @@ namespace Warehouse.Web.Controllers
             return View(itemsStructuresListVM);
         }
 
-        [Authorize(Policy = "CanManageItems")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, int itemId)
         {
-            var assignToStructures = _itemService.AssignItemToStructures(itemsStructuresListVM, "testUserId");
+            var assignToStructures = _itemService.AssignItemToStructures(itemsStructuresListVM, User.Identity.Name);
 
             return RedirectToAction("ItemDetails", new { id = assignToStructures });
         }

@@ -26,7 +26,7 @@ namespace Warehouse.Web.Controllers
             return View();
         }
 
-        [Authorize(Policy = "CanView")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult ItemsCheckOutList(int pageSize = 8, int pageNo = 1)
         {
@@ -35,7 +35,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanView")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsCheckOutList(int pageSize = 8, int pageNo = 1, string searchString = "")
@@ -49,7 +49,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanView")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult ItemsCheckInList(int pageSize = 8, int pageNo = 1)
         {
@@ -57,7 +57,7 @@ namespace Warehouse.Web.Controllers
             var model = _checkInOutService.GetAllItemsForCheckInOutList(pageSizeStd, pageNo, "");
             return View(model);
         }
-        [Authorize(Policy = "CanView")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ItemsCheckInList(int pageSize = 8, int pageNo = 1, string searchString = "")
@@ -71,23 +71,23 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanCheckInOut")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         public IActionResult CheckOutItem(ItemForCheckInOutListVM itm)
         {
-            _checkInOutService.CheckOut(itm.Id, itm.CheckInOutQty, "testCheckIOUser");
+            _checkInOutService.CheckOut(itm.Id, itm.CheckInOutQty, User.Identity.Name);
             return RedirectToAction("ItemsCheckOutList");
         }
 
-        [Authorize(Policy = "CanCheckInOut")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         public IActionResult CheckInItem(ItemForCheckInOutListVM itm)
         {
-            _checkInOutService.CheckIn(itm.Id, itm.CheckInOutQty, "testCheckIOUser");
+            _checkInOutService.CheckIn(itm.Id, itm.CheckInOutQty, User.Identity.Name);
             return RedirectToAction("ItemsCheckInList");
         }
 
-        [Authorize(Policy = "CanView")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult StructuresList(int pageSize = 8, int pageNo = 1)
         {
@@ -96,7 +96,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanView")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult StructuresList(int pageSize = 8, int pageNo = 1, string searchString = "")
@@ -110,11 +110,11 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanCheckInOut")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         public IActionResult CheckOutStructureItems(int structureId)
         {
-            _checkInOutService.CheckOutByStructure(structureId, "testUser");
+            _checkInOutService.CheckOutByStructure(structureId, User.Identity.Name);
             return RedirectToAction("StructuresList");
         }
     }

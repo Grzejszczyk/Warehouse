@@ -10,180 +10,212 @@
     <h4>ItemDetailsVM</h4>
     <hr />
     <div class="row">
-        <div class="col-6">
+        <div class="col-sm-7">
             <dl class="row">
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.Id)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.Id)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.CreatedById)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.CreatedById)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.CreatedDateTime)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.CreatedDateTime)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.ModifiedById)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.ModifiedById)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.ModifiedDateTime)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.ModifiedDateTime)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.Name)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.Name)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.Description)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.Description)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.LowQuantityValue)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.LowQuantityValue)
                 </dd>
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.SupplierName)
                 </dt>
                 @if (Model.SupplierName == null)
                 {
-                    <dd class="col-7 badge badge-warning text-wrap">
+                    <dd class="col-sm-6 badge badge-warning text-wrap">
                         dostawca nie przypisany
                     </dd>
                 }
                 else
                 {
-                    <dd class="col-7">
+                    <dd class="col-sm-6">
                         @Html.DisplayFor(model => model.SupplierName)
                     </dd>
                 }
-                <dt class="col-5">
+                <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.Quantity)
                 </dt>
-                <dd class="col-7">
+                <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.Quantity)
                 </dd>
             </dl>
         </div>
+        <div class="col-sm-5">
+            <dl>
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.MagazineZoneName)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.MagazineZoneName)
+                </dd>
+            </dl>
+            <div class="col-sm-12">
+                @if (ViewBag.ImageData != "noImage")
+                {
+                    <img src="@ViewBag.ImageData" class="img-fluid" alt="Responsive image" />
+                }
+                else
+                {
+                    <a>brak zdjęcia</a>
+                }
+            </div>
+        </div>
     </div>
-    <h4>Structures</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var s in Model.StructuresForItemDetails)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.StructureId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.StructureName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.QuantityForStructure)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <h4>Check Ins</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    DateTime
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var s in Model.CheckIns)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.CheckInId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.ActionDateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.Quantity)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <h4>Check Outs</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    DateTime
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var s in Model.CheckOuts)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.CheckOutId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.ActionDateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => s.Quantity)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 </div>
+<h4>Structures</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.StructuresForItemDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => s.StructureId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.StructureName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.QuantityForStructure)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h4>Check Ins</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                DateTime
+            </th>
+            <th>
+                Done by:
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.CheckIns)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => s.CheckInId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.ActionDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.Quantity)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h4>Check Outs</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                DateTime
+            </th>
+            <th>
+                Done by:
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.CheckOuts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => s.CheckOutId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.ActionDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.Quantity)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <form asp-action="AssignItemToSupplier" asp-controller="Item" method="post">
     <div>

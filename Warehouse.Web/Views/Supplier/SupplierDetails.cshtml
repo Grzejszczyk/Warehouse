@@ -9,92 +9,128 @@
 <div>
     <h4>SupplierDetailsVM</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedById)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedById)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDateTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDateTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedById)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedById)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedDateTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedDateTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NIP)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NIP)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ZipCode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Street)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Street)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BuildingNo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BuildingNo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-6">
+            <dl class="row">
+                <dt class="col-md-5">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-md-5">
+                    @Html.DisplayNameFor(model => model.CreatedById)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.CreatedById)
+                </dd>
+                <dt class="col-md-5">
+                    @Html.DisplayNameFor(model => model.CreatedDateTime)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.CreatedDateTime)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.ModifiedById)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ModifiedById)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.ModifiedDateTime)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ModifiedDateTime)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.NIP)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.NIP)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.PhoneNo)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.PhoneNo)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ZipCode)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.Street)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.Street)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.BuildingNo)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.BuildingNo)
+                </dd>
+                <dt  class="col-md-5">
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.IsActive)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-6">
+            <dl class="row">
+                <dt  class="col-md-5">
+                    @*@Html.DisplayNameFor(model => model.ContactPersonName)*@
+                    Imię
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ContactPersonName)
+                </dd>
+                <dt  class="col-md-5">
+                    @*@Html.DisplayNameFor(model => model.ContactPersonSurname)*@
+                    Nazwisko
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ContactPersonSurname)
+                </dd>
+                <dt  class="col-md-5">
+                    @*@Html.DisplayNameFor(model => model.ContactPersonEmail)*@
+                    Email
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ContactPersonEmail)
+                </dd>
+                <dt  class="col-md-5">
+                    @*@Html.DisplayNameFor(model => model.ContactPersonPhoneNo)*@
+                    Telefon
+                </dt>
+                <dd class="col-md-7">
+                    @Html.DisplayFor(model => model.ContactPersonPhoneNo)
+                </dd>
+            </dl>
+        </div>
+    </div>
 </div>
 <div>
     @Html.ActionLink("Edit", "EditSupplier", new { id = Model.Id }, new { @class = "btn btn-primary" }) |

@@ -35,6 +35,11 @@ namespace Warehouse.Application.ViewModels.Item
         [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
 
+        public byte[] Thumbnail { get; set; }
+        public byte[] ImageFile { get; set; }
+        public int ItemImageId { get; set; }
+
+        public string MagazineZoneName { get; set; }
 
         public List<StructuresForItemDetails> StructuresForItemDetails { get; set; }
         public List<CheckInsForItemDetails> CheckIns { get; set; }
@@ -47,7 +52,11 @@ namespace Warehouse.Application.ViewModels.Item
                 .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name))
                 .ForMember(s => s.StructuresForItemDetails, opt => opt.Ignore())
                 .ForMember(s => s.CheckOuts, opt => opt.Ignore())
-                .ForMember(s => s.CheckIns, opt => opt.Ignore());
+                .ForMember(s => s.CheckIns, opt => opt.Ignore())
+                .ForMember(s => s.Thumbnail, opt => opt.MapFrom(d => d.Thumbnail))
+                .ForMember(s => s.ImageFile, opt => opt.MapFrom(d => d.ItemImage.Image))
+                .ForMember(s => s.ItemImageId, opt => opt.MapFrom(d => d.ItemImage.Id))
+                .ForMember(s=>s.MagazineZoneName, opt=>opt.MapFrom(d=>d.MagazineZone.Name));
         }
     }
 }

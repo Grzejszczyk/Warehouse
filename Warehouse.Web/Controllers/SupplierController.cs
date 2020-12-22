@@ -24,7 +24,7 @@ namespace Warehouse.Web.Controllers
             _supplierService = supplierService;
         }
 
-        [CheckPermissions("ViewSuppliers")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult SuppliersList(int pageSize = 5, int pageNo = 1)
         {
@@ -33,7 +33,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [CheckPermissions("ViewSuppliers")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SuppliersList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -47,7 +47,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanManageSuppliers")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult EditSupplier(int id = 0)
         {
@@ -62,7 +62,7 @@ namespace Warehouse.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "CanManageSuppliers")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditSupplier(SupplierDetailsVM model)
@@ -72,28 +72,28 @@ namespace Warehouse.Web.Controllers
             {
                 if (model.Id == 0)
                 {
-                    supplierId = _supplierService.AddSupplier(model, "testUserId");
+                    supplierId = _supplierService.AddSupplier(model, User.Identity.Name);
                 }
                 else
                 {
-                    supplierId = _supplierService.EditSupplier(model, "testUserId");
+                    supplierId = _supplierService.EditSupplier(model, User.Identity.Name);
                 }
                 return RedirectToAction("SupplierDetails", new { id = supplierId });
             }
             return View(model);
         }
 
-        [CheckPermissions("ViewSuppliers")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         public IActionResult SupplierDetails(int id)
         {
             var model = _supplierService.GetSupplierDetails(id);
             return View(model);
         }
 
-        [Authorize(Policy = "CanManageSuppliers")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         public IActionResult SetIsDeletedSupplier(int id)
         {
-            _supplierService.SetIsDeleted(id, "testUserId");
+            _supplierService.SetIsDeleted(id, User.Identity.Name);
             return RedirectToAction("SuppliersList");
         }
     }

@@ -27,6 +27,12 @@ namespace Warehouse.Application.ViewModels.Supplier
         public string BuildingNo { get; set; }
         public bool IsActive { get; set; }
 
+        //Contact person:
+        public string ContactPersonName { get; set; }
+        public string ContactPersonSurname { get; set; }
+        public string ContactPersonEmail { get; set; }
+        public string ContactPersonPhoneNo { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.Supplier, SupplierDetailsVM>().ReverseMap();

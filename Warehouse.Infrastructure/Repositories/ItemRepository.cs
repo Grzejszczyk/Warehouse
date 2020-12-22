@@ -53,6 +53,8 @@ namespace Warehouse.Infrastructure.Repositories
                 .Include(st => st.ItemStructures).ThenInclude(s => s.Structure)
                 .Include(c => c.CheckIns)
                 .Include(c => c.CheckOuts)
+                .Include(i => i.ItemImage)
+                .Include(m=>m.MagazineZone)
                 .FirstOrDefault(i => i.Id == id);
             return item;
         }

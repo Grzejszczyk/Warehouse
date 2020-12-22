@@ -10,6 +10,7 @@ namespace Warehouse.Application.ViewModels.Item
     {
         public int CheckOutId { get; set; }
         public DateTime ActionDateTime { get; set; }
+        public string UserName { get; set; }
         public int Quantity { get; set; }
 
         public void Mapping(Profile profile)
@@ -18,6 +19,7 @@ namespace Warehouse.Application.ViewModels.Item
                 .ForMember(s => s.CheckOutId, d => d.MapFrom(d => d.Id))
                 .ForMember(s => s.ActionDateTime, d => d.MapFrom(d => d.ModifiedDateTime))
                 .ForMember(s => s.Quantity, d => d.MapFrom(d => d.Quantity))
+                .ForMember(s => s.UserName, d => d.MapFrom(d => d.ModifiedById))
                 .ReverseMap();
         }
     }

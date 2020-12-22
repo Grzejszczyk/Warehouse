@@ -106,17 +106,18 @@ namespace Warehouse.Application.Services
             return itemVM;
         }
 
-        public int EditItem(EditItemVM ItemVM, string userId)
+        public int EditItem(EditItemVM itemVM, string userId)
         {
-            Item itemEntity = _itemRepository.GetItemById(ItemVM.Id);
+            Item itemEntity = _itemRepository.GetItemById(itemVM.Id);
 
-            itemEntity.LowQuantityValue = ItemVM.LowQuantityValue;
-            itemEntity.Quantity = ItemVM.Quantity;
-            itemEntity.Name = ItemVM.Name;
-            itemEntity.Description = ItemVM.Description;
+            itemEntity.LowQuantityValue = itemVM.LowQuantityValue;
+            itemEntity.Quantity = itemVM.Quantity;
+            itemEntity.Name = itemVM.Name;
+            itemEntity.Description = itemVM.Description;
             itemEntity.IsDeleted = false;
+            itemEntity.ItemImage = new ItemImage() { ItemId = itemVM.Id, Image = itemVM.ImageFile };
 
-            var supplierMapped = _itemRepository.UpdateItem(itemEntity, ItemVM.Id, userId);
+            var supplierMapped = _itemRepository.UpdateItem(itemEntity, itemVM.Id, userId);
             return supplierMapped;
         }
 

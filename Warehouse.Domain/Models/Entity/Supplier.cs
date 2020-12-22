@@ -18,7 +18,13 @@ namespace Warehouse.Domain.Models.Entity
         public string BuildingNo { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
-        public ContactPerson ContactPerson { get; set; }
+
+        //Contact person:
+        public string ContactPersonName { get; set; }
+        public string ContactPersonSurname { get; set; }
+        public string ContactPersonEmail { get; set; }
+        public string ContactPersonPhoneNo { get; set; }
+
         public ICollection<Item> Items { get; set; }
     }
 }

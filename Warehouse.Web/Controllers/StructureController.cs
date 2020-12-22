@@ -23,7 +23,7 @@ namespace Warehouse.Web.Controllers
             _structureService = structureService;
         }
 
-        [CheckPermissions("ViewStructures")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult StructuresList(int pageSize = 5, int pageNo = 1)
         {
@@ -32,7 +32,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [CheckPermissions("ViewStructures")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult StructuresList(int pageSize = 5, int pageNo = 1, string searchString = "")
@@ -46,7 +46,7 @@ namespace Warehouse.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "CanManageStructures")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpGet]
         public IActionResult EditStructure(int id = 0)
         {
@@ -61,7 +61,7 @@ namespace Warehouse.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "CanManageStructures")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditStructure(StructureDetailsVM model)
@@ -71,28 +71,28 @@ namespace Warehouse.Web.Controllers
             {
                 if (model.StructureId == 0)
                 {
-                    structureId = _structureService.AddStructure(model, "testUserId");
+                    structureId = _structureService.AddStructure(model, User.Identity.Name);
                 }
                 else
                 {
-                    structureId = _structureService.EditStructure(model, "testUserId");
+                    structureId = _structureService.EditStructure(model, User.Identity.Name);
                 }
                 return RedirectToAction("StructureDetails", new { id = structureId });
             }
             return View(model);
         }
 
-        [CheckPermissions("ViewStructures")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         public IActionResult StructureDetails(int id)
         {
             var model = _structureService.GetStructureDetails(id);
             return View(model);
         }
 
-        [Authorize(Policy = "CanManageStructures")]
+        [Authorize(Roles = "Admin, SuperUser, User, Operator, Viewer")]
         public IActionResult SetIsDeletedStructure(int id)
         {
-            _structureService.SetIsDeleted(id, "testUserId");
+            _structureService.SetIsDeleted(id, User.Identity.Name);
             return RedirectToAction("StructuresList");
         }
     }
