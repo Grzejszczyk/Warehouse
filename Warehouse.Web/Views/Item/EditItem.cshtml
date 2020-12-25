@@ -1,12 +1,11 @@
 ﻿@model Warehouse.Application.ViewModels.Item.EditItemVM
 
 @{
-    ViewData["Title"] = "AddItem";
+    ViewData["Title"] = "Dodawanie przedmiotu";
 }
 
-<h1>AddItem</h1>
+<h1>Dodaj przedmiot</h1>
 
-<h4>NewItemVM</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,50 +15,43 @@
                 <input type="hidden" asp-for="Id" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label @*asp-for="Name"*@ class="control-label">Nazwa:</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label @*asp-for="Description"*@ class="control-label">Opis:</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LowQuantityValue" class="control-label"></label>
+                <label @*asp-for="LowQuantityValue"*@ class="control-label">Ilość niska poniżej wartości:</label>
                 <input asp-for="LowQuantityValue" class="form-control" />
                 <span asp-validation-for="LowQuantityValue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
+                <label @*asp-for="Quantity"*@ class="control-label">Ilość:</label>
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
 
                 <div class="form-group">
-                    <label asp-for="ImageFormFile" class="control-label"></label>
-                    <input asp-for="ImageFormFile" class="form-control" />
+                    <label @*asp-for="ImageFormFile"*@ class="control-label">Dodaj ilustrację, zdjęcie:</label><br />
+                    <span class="text-danger">@Html.ValidationMessage("File")</span>
+                    <input asp-for="ImageFormFile" class="" accept="image/jpg"/><br />
+                    <small>Plik w formacie .jpg mniejszy niż 5MB.</small>
                     <span asp-validation-for="ImageFormFile" class="text-danger"></span>
                 </div>
 
-            @*<div class="form-group">
-                    <div class="col-4 custom-file">
-                        <input class="custom-file-input" name="Image" type="file" />
-                        <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                    </div>
-                    <div class="col-2">
-                        <input class="btn btn-primary" type="submit" value="Upload" />
-                    </div>
-                </div>*@
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="ItemsList">Back to List</a>
+    <a class="btn btn-secondary" asp-action="ItemsList">Wróć do listy przedmiotów (bez zapisania)</a>
 </div>
 
 @section Scripts {

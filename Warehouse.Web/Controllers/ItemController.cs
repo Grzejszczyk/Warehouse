@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Processing;
 using Warehouse.Application.Interfaces;
 using Warehouse.Application.ViewModels.Item;
 using Warehouse.Application.ViewModels.Supplier;
@@ -107,25 +110,6 @@ namespace Warehouse.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditItem(EditItemVM model)
         {
-            if (model.ImageFormFile != null)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    model.ImageFormFile.CopyTo(memoryStream);
-
-                    // Upload the file if less than 2 MB
-                    if (memoryStream.Length < 2097152)
-                    {
-                        var content = memoryStream.ToArray();
-                        model.ImageFile = content;
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("File", "The file is too large.");
-                    }
-                }
-            }
-
             int newItemId = 0;
             if (ModelState.IsValid)
             {
@@ -147,17 +131,6 @@ namespace Warehouse.Web.Controllers
         public IActionResult ItemDetails(int id)
         {
             var model = _itemService.GetItemDetails(id);
-            if (model.ImageFile.Length > 0)
-            {
-                string imreBase64Data = Convert.ToBase64String(model.ImageFile);
-                string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
-                ViewBag.ImageData = imgDataURL;
-            }
-            else
-            {
-                ViewBag.ImageData = "noImage";
-            }
-
             return View(model);
         }
 

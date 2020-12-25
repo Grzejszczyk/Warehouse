@@ -31,12 +31,25 @@ namespace Warehouse.Web.Infrastructure
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
 
+            TagBuilder navTag = new TagBuilder("nav");
+            navTag.Attributes["aria-label"] = "Page navigation";
+            result.InnerHtml.AppendHtml(navTag);
+
+            TagBuilder ulTag = new TagBuilder("ul");
+            ulTag.AddCssClass("pagination");
+            navTag.InnerHtml.AppendHtml(ulTag);
+
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {
-                TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new { pageNo = i, pageSize = PageModel.ItemsPerPage });
-                tag.InnerHtml.Append(i.ToString());
-                result.InnerHtml.AppendHtml(tag);
+                TagBuilder liTag = new TagBuilder("li");
+                liTag.AddCssClass("page-item");
+                ulTag.InnerHtml.AppendHtml(liTag);
+
+                TagBuilder aTag = new TagBuilder("a");
+                aTag.AddCssClass("page-link");
+                aTag.Attributes["href"] = urlHelper.Action(PageAction, new { pageNo = i, pageSize = PageModel.ItemsPerPage });
+                aTag.InnerHtml.Append(i.ToString());
+                liTag.InnerHtml.AppendHtml(aTag);
             }
             output.Content.AppendHtml(result.InnerHtml);
         }

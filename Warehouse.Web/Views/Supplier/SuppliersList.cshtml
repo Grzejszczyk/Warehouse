@@ -1,29 +1,29 @@
 ﻿@model Warehouse.Application.ViewModels.Supplier.SuppliersListForListVM
 
 @{
-    ViewData["Title"] = "SuppliersList";
+    ViewData["Title"] = "Dostawcy";
 }
 
-<h1>SuppliersList</h1>
+<h1>Lista dostawców</h1>
 @if (User.HasClaim(c => c.Value == "EditSupplier"))
 {
     <p>
-        <a asp-action="EditSupplier">Create New</a>
+        <a asp-action="EditSupplier">Utwórz nowego dostawcę</a>
     </p>
 }
     <form asp-action="SuppliersList" asp-controller="Supplier" method="post">
         <div class="row">
-            <input type="text" asp-for="SearchString" name="searchString" />
-            <input type="submit" value="Search" />
+            <input class="col-4 m-1 form-control-sm" type="text" asp-for="SearchString" name="searchString" />
+            <input class="col-2 m-1 btn btn-sm btn-primary" type="submit" value="Szukaj" />
         </div>
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        Id
+                        #
                     </th>
                     <th>
-                        Name
+                        Nazwa
                     </th>
                     <th>
                         NIP
@@ -32,7 +32,7 @@
                         Email
                     </th>
                     <th>
-                        IsActive
+                        Aktywny
                     </th>
                     <th></th>
                 </tr>
@@ -57,9 +57,9 @@
                             @Html.DisplayFor(modelItem => item.IsActive)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "EditSupplier", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "SupplierDetails", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "SetIsDeletedSupplier", new { id = item.Id })
+                            @Html.ActionLink("Edytuj", "EditSupplier", new { id = item.Id }) |
+                            @Html.ActionLink("Szczegóły", "SupplierDetails", new { id = item.Id }) |
+                            @Html.ActionLink("Usuń", "SetIsDeletedSupplier", new { id = item.Id })
                         </td>
                     </tr>
                 }

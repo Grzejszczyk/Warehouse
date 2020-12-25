@@ -1,37 +1,37 @@
 ﻿@model Warehouse.Application.ViewModels.Structure.StructuresListForListVM
 
 @{
-    ViewData["Title"] = "StructuresList";
+    ViewData["Title"] = "Lista struktur";
 }
 
-<h1>StructuresList</h1>
+<h1>Lista struktur</h1>
 
 @if (User.HasClaim(c => c.Value == "EditStructure"))
 {
     <p>
-        <a asp-action="EditStructure">Create New</a>
+        <a asp-action="EditStructure">Utwórz nową strukturę</a>
     </p>
 }
     <form asp-action="StructuresList" asp-controller="Structure" method="post">
         <div class="row">
-            <input type="text" asp-for="SearchString" name="searchString" />
-            <input type="submit" value="Search" />
+            <input class="col-4 m-1 form-control-sm" type="text" asp-for="SearchString" name="searchString" />
+            <input class="col-2 m-1 btn btn-sm btn-primary"  type="submit" value="Szukaj" />
         </div>
 
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        Structure Id
+                        #
                     </th>
                     <th>
-                        Name
+                        Nazwa
                     </th>
                     <th>
-                        Product
+                        Produkt
                     </th>
                     <th>
-                        Project
+                        Projekt
                     </th>
                     <th></th>
                 </tr>
@@ -53,9 +53,9 @@
                             @Html.DisplayFor(modelItem => s.Project)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "EditStructure", new { id = s.StructureId }) |
-                            @Html.ActionLink("Details", "StructureDetails", new { id = s.StructureId }) |
-                            @Html.ActionLink("Delete", "SetIsDeletedStructure", new { id = s.StructureId })
+                            @Html.ActionLink("Edytuj", "EditStructure", new { id = s.StructureId }) |
+                            @Html.ActionLink("Szczegóły", "StructureDetails", new { id = s.StructureId }) |
+                            @Html.ActionLink("Usuń", "SetIsDeletedStructure", new { id = s.StructureId })
                         </td>
                     </tr>
                 }

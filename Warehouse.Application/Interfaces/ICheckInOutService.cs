@@ -15,7 +15,7 @@ namespace Warehouse.Application.Interfaces
         int CheckOutByStructure(int structureId, string userId);
 
         ItemsListForCheckInOutListVM GetAllItemsForCheckInOutList(int pageSize, int pageNo, string searchString);
-        StrusturesListForCheckOutVM GetStructures(int pageSize, int pageNo, string searchString);
+        StructuresListForCheckOutVM GetStructures(int pageSize, int pageNo, string searchString);
         ItemsListForCheckInOutListVM GetItemsFromStructureForCheckInOutList(int structureId);
     }
 }

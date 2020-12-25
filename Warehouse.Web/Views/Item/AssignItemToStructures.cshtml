@@ -5,28 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Assign Item To Structure</h1>
+<h3>Przypisz przedmiot do Struktur</h3>
 
 <form asp-action="AssignItemToStructures" method="post">
     <input type="hidden" asp-for="@Model.ItemId" />
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
-
-                <th>
-                    Items quantity for Structure
+                <th scope="col">
+                    #
                 </th>
-                <th>
-                    Structure id
+                <th scope="col" style="max-width: 80px">
+                    Ilość przedmiotów dla tej struktury
                 </th>
-                <th>
-                    Structure name
+                <th scope="col">
+                    Nazwa struktury
                 </th>
-                <th>
-                    Project
+                <th scope="col">
+                    Projekt
                 </th>
-
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,12 +31,12 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(m => m.ItemStructures[i].StructureId)
+                    </td>
+                    <td  style="max-width: 80px">
                         <input asp-for="@Model.ItemStructures[i].ItemQty" class="form-control" />
                         <input type="hidden" asp-for="@Model.ItemStructures[i].ItemId" value="@Model.ItemId" class="form-control" />
                         <input type="hidden" asp-for="@Model.ItemStructures[i].StructureId" value="@Model.ItemStructures[i].StructureId" class="form-control" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => m.ItemStructures[i].StructureId)
                     </td>
                     <td>
                         @Html.DisplayFor(m => m.ItemStructures[i].StructureName)
@@ -52,5 +49,5 @@
             }
         </tbody>
     </table>
-    <input type="submit" value="Assign" class="btn btn-primary" />
+    <input type="submit" value="Przypisz" class="btn btn-primary" />
 </form>

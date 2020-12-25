@@ -12,10 +12,15 @@ namespace Warehouse.Application.ViewModels.Item
         public int Id { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
+        public byte[] Thumbnail { get; set; }
+
+        //For View img src, not mapped, assigned in service method.
+        public string ThumbnailData { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemForListVM>();
+            profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemForListVM>()
+                .ForMember(d => d.ThumbnailData, opt => opt.Ignore());
         }
     }
 }

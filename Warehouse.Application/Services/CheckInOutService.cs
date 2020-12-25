@@ -58,7 +58,7 @@ namespace Warehouse.Application.Services
             return itemsList;
         }
 
-        public StrusturesListForCheckOutVM GetStructures(int pageSize, int pageNo, string searchString)
+        public StructuresListForCheckOutVM GetStructures(int pageSize, int pageNo, string searchString)
         {
             var structuresVM = _checkInOutRepository.GetStructures()
                 .Where(s => s.Name.Contains(searchString))
@@ -75,7 +75,7 @@ namespace Warehouse.Application.Services
                 }
             }
             var structuresToShow = structuresVM.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var structuresList = new StrusturesListForCheckOutVM()
+            var structuresList = new StructuresListForCheckOutVM()
             {
                 PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = structuresVM.Count() },
                 Structures = structuresToShow.ToList()

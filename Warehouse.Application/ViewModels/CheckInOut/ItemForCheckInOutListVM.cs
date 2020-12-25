@@ -15,7 +15,6 @@ namespace Warehouse.Application.ViewModels.CheckInOut
         public string Description { get; set; }
         public int Quantity { get; set; }
         public int CheckInOutQty { get; set; }
-        public bool IsCheckInOutFromShopStore { get; set; }
 
         public void Mapping(Profile profile)
         {

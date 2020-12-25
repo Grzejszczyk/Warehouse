@@ -5,39 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Assign Item To Supplier</h1>
+<h1>Przypisz wybrany przedmiot do dostawcy</h1>
 
-<h4>Suppliers:</h4>
 <hr />
 <div class="row justify-content-between">
-    <div class="col-md-5">
+    <div class="col-md-5 mb-5">
         <dl class="row">
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.ItemDetails.Name)
+                @*@Html.DisplayNameFor(model => model.ItemDetails.Name)*@
+                Nazwa przedmiotu:
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.ItemDetails.Name)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.ItemDetails.Description)
+                @*@Html.DisplayNameFor(model => model.ItemDetails.Description)*@
+                Opis:
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.ItemDetails.Description)
             </dd>
         </dl>
         <div>
-            <a class="btn btn-secondary" asp-action="ItemDetails" asp-route-id="@Model.ItemDetails.Id">Back to Item Details</a>
+            <a class="btn btn-secondary" asp-action="ItemDetails" asp-route-id="@Model.ItemDetails.Id">Wróć do widoku szczegółów przdmiotu</a>
         </div>
     </div>
     <div class="col-md-7">
+        <h4>Lista dostawców</h4>
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        Supplier Id
+                        Id dostawcy
                     </th>
                     <th>
-                        Supplier Name
+                        Nazwa dostawcy
                     </th>
                     <th>
                         NIP
@@ -62,7 +64,7 @@
                             <form asp-action="AssignItemToSupplier" method="post">
                                 <input type="hidden" value="@Model.ItemDetails.Id" id="itemId" name="itemId" />
                                 <input type="hidden" value="@supplier.Id" id="supplierId" name="supplierId" />
-                                <input type="submit" value="Assign" class="btn btn-primary" />
+                                <input type="submit" value="Przypisz" class="btn btn-primary" />
                             </form>
                         </td>
                     </tr>

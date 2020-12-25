@@ -50,6 +50,7 @@ namespace Warehouse.Application.ViewModels.Item
             RuleFor(x => x.LowQuantityValue).GreaterThanOrEqualTo(1);
             RuleFor(x => x.Quantity).NotEmpty();
             RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
+            RuleFor(x => x.ImageFormFile.Length).LessThan(5242880).WithMessage("Plik za duży");
         }
     }
 }

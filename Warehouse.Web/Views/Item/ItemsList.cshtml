@@ -1,36 +1,34 @@
 ﻿@model Warehouse.Application.ViewModels.Item.ItemsListForListVM
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista części";
 }
 
-<h1>Item List</h1>
+<h1>Lista części</h1>
 @if (User.HasClaim(c=>c.Value == "EditItems"))
 {
     <p>
-        <a asp-action="EditItem">Create New</a>
+        <a asp-action="EditItem">Utwórz nową część</a>
     </p>
 }
 
 <form asp-action="ItemsList" asp-controller="Item" method="post">
     <div class="container">
-        <div class="row align-items-center p-3">
-            <input class="col-4 m-1 form-control" type="text" asp-for="SearchString" name="searchString" />
-            <input class="col-2 m-1 btn btn-primary" type="submit" value="Search" />
+        <div class="row align-items-center">
+            <input class="col-4 m-1 form-control-sm" type="text" asp-for="SearchString" name="searchString" placeholder="Nazwa części"/>
+            <input class="col-2 m-1 btn btn-sm btn-primary" type="submit" value="Szukaj" />
         </div>
     </div>
 
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>
-                    Id
+                    Nazwa
                 </th>
                 <th>
-                    Name
-                </th>
-                <th>
-                    Quantity
+                    Ilość w magazynie
                 </th>
                 <th></th>
             </tr>
@@ -40,7 +38,8 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
+                        <span hidden="hidden">@item.Id</span>
+                        <img src="@item.ThumbnailData" width="70" height="70"/>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -50,11 +49,11 @@
                     </td>
                     <td>
                         @if (User.HasClaim(c => c.Value == "EditItems"))
-                            @Html.ActionLink("Edit", "EditItem", new { id = item.Id }) |
+                            @Html.ActionLink("Edycja", "EditItem", new { id = item.Id }) |
 
-                        @Html.ActionLink("Details", "ItemDetails", new { id = item.Id }) |
+                        @Html.ActionLink("Szczegóły", "ItemDetails", new { id = item.Id }) |
                         @if (User.HasClaim(c => c.Value == "EditItems"))
-                            @Html.ActionLink("Delete", "SetIsDeletedItem", new { id = item.Id })
+                            @Html.ActionLink("Usuń", "SetIsDeletedItem", new { id = item.Id })
                     </td>
                 </tr>
             }

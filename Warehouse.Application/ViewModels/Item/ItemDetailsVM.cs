@@ -18,26 +18,18 @@ namespace Warehouse.Application.ViewModels.Item
         public string ModifiedById { get; set; }
         public DateTime ModifiedDateTime { get; set; }
 
-        [Required]
         public string Name { get; set; }
-
-        [Required]
         public string Description { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
+        public string CatalogNumber { get; set; }
+        public string DrawingNumber { get; set; }
         public int LowQuantityValue { get; set; }
-
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
-
-        [Required]
-        [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
 
-        public byte[] Thumbnail { get; set; }
         public byte[] ImageFile { get; set; }
-        public int ItemImageId { get; set; }
+        //For View img src, not mapped, assigned in service method.
+        public string ImageData { get; set; }
 
         public string MagazineZoneName { get; set; }
 
@@ -50,13 +42,12 @@ namespace Warehouse.Application.ViewModels.Item
             profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemDetailsVM>()
                 .ForMember(s => s.SupplierId, opt => opt.MapFrom(d => d.Supplier.Id))
                 .ForMember(s => s.SupplierName, opt => opt.MapFrom(d => d.Supplier.Name))
-                .ForMember(s => s.StructuresForItemDetails, opt => opt.Ignore())
-                .ForMember(s => s.CheckOuts, opt => opt.Ignore())
-                .ForMember(s => s.CheckIns, opt => opt.Ignore())
-                .ForMember(s => s.Thumbnail, opt => opt.MapFrom(d => d.Thumbnail))
                 .ForMember(s => s.ImageFile, opt => opt.MapFrom(d => d.ItemImage.Image))
-                .ForMember(s => s.ItemImageId, opt => opt.MapFrom(d => d.ItemImage.Id))
-                .ForMember(s=>s.MagazineZoneName, opt=>opt.MapFrom(d=>d.MagazineZone.Name));
+                .ForMember(s => s.ImageData, opt => opt.Ignore())
+                .ForMember(s => s.MagazineZoneName, opt => opt.MapFrom(d => d.MagazineZone.Name))
+                .ForMember(s => s.StructuresForItemDetails, opt => opt.Ignore())
+                .ForMember(s => s.CheckIns, opt => opt.Ignore())
+                .ForMember(s => s.CheckOuts, opt => opt.Ignore());
         }
     }
 }

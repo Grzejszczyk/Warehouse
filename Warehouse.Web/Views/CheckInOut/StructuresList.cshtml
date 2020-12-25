@@ -1,16 +1,16 @@
-﻿@model Warehouse.Application.ViewModels.CheckInOut.StrusturesListForCheckOutVM
+﻿@model Warehouse.Application.ViewModels.CheckInOut.StructuresListForCheckOutVM
 
 @{
     ViewData["Title"] = "View";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Structure List</h1>
+<h1>Lista struktur</h1>
 <form asp-action="StructuresList" asp-controller="CheckInOut" method="post">
     <div class="container">
         <div class="row align-items-center p-3">
             <input class="col-4 m-1 form-control" type="text" asp-for="SearchString" name="searchString" />
-            <input class="col-2 m-1 btn btn-primary" type="submit" value="Search" />
+            <input class="col-2 m-1 btn btn-primary" type="submit" value="Szukaj" />
         </div>
     </div>
 </form>
@@ -19,16 +19,16 @@
     <thead>
         <tr>
             <th>
-                Structure Name
+                Nazwa struktury
             </th>
             <th>
-                Product
+                Produkt
             </th>
             <th>
-                Project
+                Projekt
             </th>
             <th>
-                Items
+                Przedmiot
             </th>
             <th></th>
         </tr>
@@ -36,38 +36,34 @@
     <tbody>
         @foreach (var s in Model.Structures)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => s.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => s.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => s.Project)
-            </td>
-            <td>
-                <ul class="list-group">
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => s.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.Project)
+                </td>
+                <td>
                     @foreach (var i in s.Items)
                     {
-                        <li class="list-group-item">
-                            @Html.DisplayFor(modelItem => i.Name):
-                            <strong>
-                                @Html.DisplayFor(modelItem => i.CheckInOutQty) for structure
-                            </strong>
-                            | Total:
-                            @Html.DisplayFor(modelItem => i.Quantity)
-                        </li>
+                        <strong>@Html.DisplayFor(modelItem => i.CheckInOutQty) x </strong>
+                        <a>@Html.DisplayFor(modelItem => i.Name)</a>
+                        <small>
+                            <a> | Wszystkich:</a>
+                            <a>@Html.DisplayFor(modelItem => i.Quantity)</a>
+                        </small><br />
                     }
-                </ul>
-            </td>
-            <td>
-                <form asp-action="CheckOutStructureItems" asp-controller="CheckInOut" method="post">
-                    <input type="hidden" name="structureId" value="@s.StructureId"/>
-                    <input type="submit" value="Check-Out Structure Items" class="btn btn-primary" />
-                </form>
-            </td>
-        </tr>
+                </td>
+                <td>
+                    <form asp-action="CheckOutStructureItems" asp-controller="CheckInOut" method="post">
+                        <input type="hidden" name="structureId" value="@s.StructureId" />
+                        <input type="submit" value="Pobierz przedmioty struktury" class="btn btn-primary" />
+                    </form>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

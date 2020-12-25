@@ -4,14 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Item List</h1>
+<h3>Lista przedmiotów do wprowadzenia - zaewidencjonowanie</h3>
 
 
 <div class="container">
     <form asp-action="ItemsCheckInList" asp-controller="CheckInOut" method="post">
         <div class="row align-items-center p-3">
             <input class="col-4 m-1 form-control" type="text" asp-for="SearchString" name="searchString" />
-            <input class="col-2 m-1 btn btn-primary" type="submit" value="Search" />
+            <input class="col-2 m-1 btn btn-primary" type="submit" value="Szukaj" />
         </div>
     </form>
 </div>
@@ -20,20 +20,21 @@
     <thead>
         <tr>
             <th>
-                Id
+                #
             </th>
             <th>
-                Name
+                Nazwa
             </th>
             <th>
-                Description
+                Opis
             </th>
             <th>
-                Total Quantity
+                Ilość
             </th>
             <th>
-                Check Out Quantity
+                Ilość do zaewidencjonowania
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

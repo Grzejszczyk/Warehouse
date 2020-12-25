@@ -54,47 +54,7 @@ namespace Warehouse.Web
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminPolicy", policy =>
-                {
-                    //TODO: Admin managent: assigning: roles, claims to users.
-                    policy.RequireRole("Admin");
-                });
-
-                options.AddPolicy("SuperUserPolicy", policy =>
-                {
-                    policy.RequireRole("SuperUser");
-                });
-
-                options.AddPolicy("CanManageItems", policy =>
-                {
-                    policy.RequireClaim("ViewItems");
-                    policy.RequireClaim("EditItems");
-                });
-                options.AddPolicy("CanManageSuppliers", policy =>
-                {
-                    policy.RequireClaim("ViewSuppliers", "EditSuppliers");
-                    //policy.RequireClaim("EditSuppliers");
-                });
-                options.AddPolicy("CanManageStructures", policy =>
-                {
-                    policy.RequireClaim("ViewStrucures");
-                    policy.RequireClaim("EditStrucures");
-                });
-
-                options.AddPolicy("CanCheckInOut", policy =>
-                {
-                    policy.RequireClaim("RealizeCheckInOuts");
-                });
-
-                options.AddPolicy("CanView", policy =>
-                {
-                    policy.RequireClaim("ViewItems");
-                    policy.RequireClaim("ViewSuppliers");
-                    policy.RequireClaim("ViewStrucures");
-                });
-            });
+            //services.AddAuthorization(); //If need, add polices.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

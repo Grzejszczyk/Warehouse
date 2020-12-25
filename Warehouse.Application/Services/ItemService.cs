@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Warehouse.Application.Interfaces;
@@ -33,6 +36,17 @@ namespace Warehouse.Application.Services
             var items = _itemRepository.GetItems()
                 .Where(s => s.Name.Contains(searchString))
                 .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+
+            //Assign Thumbnail data:
+            foreach (var item in items)
+            {
+                if (item.Thumbnail != null)
+                {
+                    string imreBase64Data = Convert.ToBase64String(item.Thumbnail);
+                    string imgDataURL = string.Format("data:image/jpg;base64,{0}", imreBase64Data);
+                    item.ThumbnailData = imgDataURL;
+                }
+            }
 
             var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
             var itemsList = new ItemsListForListVM()
@@ -84,6 +98,11 @@ namespace Warehouse.Application.Services
             itemVM.CheckIns = _mapper.Map<ICollection<CheckIn>, List<CheckInsForItemDetails>>(item.CheckIns);
             itemVM.CheckOuts = _mapper.Map<ICollection<CheckOut>, List<CheckOutsForItemDetails>>(item.CheckOuts);
 
+            //Assign Image data:
+            string imreBase64Data = Convert.ToBase64String(itemVM.ImageFile);
+            string imgDataURL = string.Format("data:image/jpg;base64,{0}", imreBase64Data);
+            itemVM.ImageData = imgDataURL;
+
             return itemVM;
         }
 
@@ -92,6 +111,8 @@ namespace Warehouse.Application.Services
             Item newItem = new Item();
 
             newItem = _mapper.Map<Item>(ItemVM);
+
+
 
             var supplierMapped = _itemRepository.AddItem(newItem, userId);
             return supplierMapped;
@@ -110,20 +131,57 @@ namespace Warehouse.Application.Services
         {
             Item itemEntity = _itemRepository.GetItemById(itemVM.Id);
 
+            //Save Image and Thumbnail from IFileForm:
+            SaveImageAndMakeThumbnail(itemVM);
+
             itemEntity.LowQuantityValue = itemVM.LowQuantityValue;
             itemEntity.Quantity = itemVM.Quantity;
             itemEntity.Name = itemVM.Name;
             itemEntity.Description = itemVM.Description;
             itemEntity.IsDeleted = false;
             itemEntity.ItemImage = new ItemImage() { ItemId = itemVM.Id, Image = itemVM.ImageFile };
+            itemEntity.Thumbnail = itemVM.Thumbnail;
 
             var supplierMapped = _itemRepository.UpdateItem(itemEntity, itemVM.Id, userId);
             return supplierMapped;
         }
 
+        bool SaveImageAndMakeThumbnail(EditItemVM itemVM)
+        {
+            //Save Image and Thumbnail from IFileForm:
+            using (var memoryStream = new MemoryStream())
+            {
+                itemVM.ImageFormFile.CopyTo(memoryStream);
+                // Upload the file if less than 5 Mb
+                if (memoryStream.Length < 5242880)
+                {
+                    var imageContent = memoryStream.ToArray();
+
+                    using (Image itemImage = Image.Load(imageContent))
+                    {
+                        //Save normal size image:
+                        itemImage.SaveAsJpeg(memoryStream);
+                        itemVM.ImageFile = imageContent;
+
+                        //Save Thumbnail:
+                        using (var thumbnailMemoryStream = new MemoryStream())
+                        {
+                            memoryStream.CopyTo(thumbnailMemoryStream);
+                            itemImage.Mutate(x => x.Resize(new Size(100, 100)));
+                            itemImage.SaveAsJpeg(thumbnailMemoryStream);
+                            var thumbnailcontent = thumbnailMemoryStream.ToArray();
+                            itemVM.Thumbnail = thumbnailcontent;
+                        }
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public ItemToSupplierVM GetItemForSuppliersList(int itemId)
         {
-            var suppliers = _supplierRepository.GetAllSuppliers().Where(s=>s.IsActive==true)
+            var suppliers = _supplierRepository.GetAllSuppliers().Where(s => s.IsActive == true)
                 .ProjectTo<SupplierForListVM>(_mapper.ConfigurationProvider).ToList();
 
             var assignItemToSupplier = new ItemToSupplierVM();
