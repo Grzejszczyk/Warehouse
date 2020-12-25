@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "AssignItemToSupplier";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Przypisz wybrany przedmiot do dostawcy</h1>
@@ -12,14 +11,12 @@
     <div class="col-md-5 mb-5">
         <dl class="row">
             <dt class="col-sm-4">
-                @*@Html.DisplayNameFor(model => model.ItemDetails.Name)*@
                 Nazwa przedmiotu:
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.ItemDetails.Name)
             </dd>
             <dt class="col-sm-4">
-                @*@Html.DisplayNameFor(model => model.ItemDetails.Description)*@
                 Opis:
             </dt>
             <dd class="col-sm-8">

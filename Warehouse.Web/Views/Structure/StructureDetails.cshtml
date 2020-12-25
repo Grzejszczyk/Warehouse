@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Szczegóły struktury";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1 class="mb-2">Szczegóły struktury</h1>
@@ -11,56 +10,48 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.StructureId)*@
             Id struktury:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.StructureId)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.CreatedById)*@
             Utworzene przez:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.CreatedById)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.CreatedDateTime)*@
             Data utworzenia:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.CreatedDateTime)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.ModifiedById)*@
             Zmodyfikowane przez:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.ModifiedById)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.ModifiedDateTime)*@
             Data ostatniej modyfikacji:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.ModifiedDateTime)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.ProductName)*@
             Nazwa produktu:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.ProductName)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.StructureName)*@
             Nazwa struktury:
         </dt>
         <dd class = "col-sm-8">
             @Html.DisplayFor(model => model.StructureName)
         </dd>
         <dt class = "col-sm-4">
-            @*@Html.DisplayNameFor(model => model.Project)*@
             Projekt:
         </dt>
         <dd class = "col-sm-8">

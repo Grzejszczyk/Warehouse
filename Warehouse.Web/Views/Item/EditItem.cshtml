@@ -15,28 +15,28 @@
                 <input type="hidden" asp-for="Id" class="form-control" />
             </div>
             <div class="form-group">
-                <label @*asp-for="Name"*@ class="control-label">Nazwa:</label>
+                <label class="control-label">Nazwa:</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label @*asp-for="Description"*@ class="control-label">Opis:</label>
+                <label class="control-label">Opis:</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label @*asp-for="LowQuantityValue"*@ class="control-label">Ilość niska poniżej wartości:</label>
+                <label class="control-label">Ilość niska poniżej wartości:</label>
                 <input asp-for="LowQuantityValue" class="form-control" />
                 <span asp-validation-for="LowQuantityValue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label @*asp-for="Quantity"*@ class="control-label">Ilość:</label>
+                <label class="control-label">Ilość:</label>
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
 
                 <div class="form-group">
-                    <label @*asp-for="ImageFormFile"*@ class="control-label">Dodaj ilustrację, zdjęcie:</label><br />
+                    <label class="control-label">Dodaj ilustrację, zdjęcie:</label><br />
                     <span class="text-danger">@Html.ValidationMessage("File")</span>
                     <input asp-for="ImageFormFile" class="" accept="image/jpg"/><br />
                     <small>Plik w formacie .jpg mniejszy niż 5MB.</small>

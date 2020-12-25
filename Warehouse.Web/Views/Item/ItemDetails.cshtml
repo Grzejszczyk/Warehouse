@@ -12,77 +12,65 @@
         <div class="col-sm-7">
             <dl class="row">
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.Id)*@
-                    Nr id:
+                    #
                 </dt>
                 <dd class="col-sm-6">
-                    @Html.DisplayFor(model => model.Id)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.CreatedById)*@
                     Utworzony przez:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.CreatedById)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.CreatedDateTime)*@
                     Data utworzenia:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.CreatedDateTime)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.ModifiedById)*@
                     Ostatnio zmodyfikowane przez:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.ModifiedById)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.ModifiedDateTime)*@
                     Data ostatniej modyfikacji:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.ModifiedDateTime)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.Name)*@
                     Nazwa:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.Name)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.Description)*@
                     Opis:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.Description)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.CatalogNumber)*@
                     Numer katalogowy:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.CatalogNumber)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.DrawingNumber)*@
                     Numer rysunku:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.DrawingNumber)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.LowQuantityValue)*@
                     Niska ilość:
                 </dt>
                 <dd class="col-sm-6">
                     @Html.DisplayFor(model => model.LowQuantityValue)
                 </dd>
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.SupplierName)*@
                     Dostawca:
                 </dt>
                 @if (Model.SupplierName == null)
@@ -98,7 +86,6 @@
                     </dd>
                 }
                 <dt class="col-sm-6">
-                    @*@Html.DisplayNameFor(model => model.Quantity)*@
                     Ilość w magazynie:
                 </dt>
                 <dd class="col-sm-6">
@@ -109,7 +96,6 @@
         <div class="col-sm-5">
             <dl>
                 <dt class="col-sm-12">
-                    @*@Html.DisplayNameFor(model => model.MagazineZoneName)*@
                     Strefa magazynu:
                 </dt>
                 <dd class="col-sm-12">
@@ -135,7 +121,7 @@
     <thead>
         <tr>
             <th>
-                Id
+                #
             </th>
             <th>
                 Nazwa
@@ -169,7 +155,7 @@
     <thead>
         <tr>
             <th>
-                Id
+                #
             </th>
             <th>
                 Data
