@@ -6,7 +6,7 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class Supplier : BaseEntity
+    public class Supplier : AuditableModelForEntity
     {
         public string Name { get; set; }
         public string NIP { get; set; }

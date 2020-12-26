@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Warehouse.Domain.Models.Common
 {
-    public class AuditableModel
+    public class AuditableModelForEntity : BaseEntity
     {
-        public int Id { get; set; }
         public string CreatedById { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public string ModifiedById { get; set; }

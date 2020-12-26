@@ -5,7 +5,7 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class CheckIn : BaseEntity
+    public class CheckIn : AuditableModelForEntity
     {
         public Item Item { get; set; }
         public int Quantity { get; set; }

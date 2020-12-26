@@ -5,7 +5,7 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class Reservation : BaseEntity
+    public class Reservation : AuditableModelForEntity
     {
         public string ReservationNumber { get; set; }
 

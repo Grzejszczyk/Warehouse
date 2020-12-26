@@ -5,13 +5,8 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class ItemStructure
+    public class ItemStructure : AuditableModelForEntity
     {
-        public string CreatedById { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public string ModifiedById { get; set; }
-        public DateTime ModifiedDateTime { get; set; }
-
         public int ItemId { get; set; }
         public Item Item { get; set; }
         public int ItemQuantity { get; set; }

@@ -6,7 +6,7 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class Structure : BaseEntity
+    public class Structure : AuditableModelForEntity
     {
         public string ProductName { get; set; }
         public string Name { get; set; }

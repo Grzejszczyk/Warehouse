@@ -39,17 +39,17 @@ namespace Warehouse.Infrastructure
 
         public int SaveChanges(string userId)
         {
-            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+            var entries = ChangeTracker.Entries().Where(e => e.Entity is AuditableModelForEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entityEntry in entries)
             {
-                ((BaseEntity)entityEntry.Entity).ModifiedById = userId;
-                ((BaseEntity)entityEntry.Entity).ModifiedDateTime = DateTime.Now;
+                ((AuditableModelForEntity)entityEntry.Entity).ModifiedById = userId;
+                ((AuditableModelForEntity)entityEntry.Entity).ModifiedDateTime = DateTime.Now;
 
                 if (entityEntry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entityEntry.Entity).CreatedById = userId;
-                    ((BaseEntity)entityEntry.Entity).CreatedDateTime = DateTime.Now;
+                    ((AuditableModelForEntity)entityEntry.Entity).CreatedById = userId;
+                    ((AuditableModelForEntity)entityEntry.Entity).CreatedDateTime = DateTime.Now;
                 }
             }
             return base.SaveChanges();

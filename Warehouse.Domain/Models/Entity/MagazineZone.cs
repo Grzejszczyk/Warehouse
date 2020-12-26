@@ -5,7 +5,7 @@ using Warehouse.Domain.Models.Common;
 
 namespace Warehouse.Domain.Models.Entity
 {
-    public class MagazineZone : BaseEntity
+    public class MagazineZone : AuditableModelForEntity
     {
         public string Name { get; set; }
         public ICollection<Item> Items { get; set; }
