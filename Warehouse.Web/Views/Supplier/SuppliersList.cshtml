@@ -5,12 +5,11 @@
 }
 
 <h1>Lista dostawców</h1>
-@if (User.HasClaim(c => c.Value == "EditSupplier"))
-{
+
     <p>
         <a asp-action="EditSupplier">Utwórz nowego dostawcę</a>
     </p>
-}
+
     <form asp-action="SuppliersList" asp-controller="Supplier" method="post">
         <div class="row">
             <input class="col-4 m-1 form-control-sm" type="text" asp-for="SearchString" name="searchString" />

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Warehouse.Infrastructure
         public DbSet<CheckIn> CheckIns { get; set; }
         public DbSet<CheckOut> CheckOuts { get; set; }
         public DbSet<MagazineZone> MagazineZones { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

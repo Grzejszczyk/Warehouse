@@ -13,10 +13,10 @@ namespace Warehouse.Web.Controllers
     [Authorize]
     public class CheckInOutController : Controller
     {
-        private readonly ILogger<ItemController> _logger;
+        private readonly ILogger<CheckInOutController> _logger;
         private readonly ICheckInOutService _checkInOutService;
         private int pageSizeStd;
-        public CheckInOutController(ILogger<ItemController> logger, ICheckInOutService checkInOutService)
+        public CheckInOutController(ILogger<CheckInOutController> logger, ICheckInOutService checkInOutService)
         {
             _logger = logger;
             _checkInOutService = checkInOutService;

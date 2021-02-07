@@ -9,9 +9,8 @@ namespace Warehouse.Domain.Models.Entity
     {
         public string ReservationNumber { get; set; }
 
-        public ICollection<Item> Items { get; set; }
+        public ICollection<ItemReservation> ItemsReserved { get; set; }
 
         public string Comment { get; set; }
     }
 }
-//TODO: Implement Reservation

@@ -18,6 +18,8 @@ namespace Warehouse.Infrastructure
             services.AddTransient<IStructureRepository, StructureRepository>();
             services.AddTransient<IItemStructureRepository, ItemStructureRepository>();
             services.AddTransient<ICheckInOutRepository, CheckInOutRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
+
             return services;
         }
     }

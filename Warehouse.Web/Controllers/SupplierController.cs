@@ -14,11 +14,11 @@ namespace Warehouse.Web.Controllers
     [Authorize]
     public class SupplierController : Controller
     {
-        private readonly ILogger<ItemController> _logger;
+        private readonly ILogger<SupplierController> _logger;
         private readonly ISupplierService _supplierService;
         private int pageSizeStd;
 
-        public SupplierController(ILogger<ItemController> logger, ISupplierService supplierService)
+        public SupplierController(ILogger<SupplierController> logger, ISupplierService supplierService)
         {
             _logger = logger;
             _supplierService = supplierService;

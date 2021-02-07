@@ -17,7 +17,6 @@ namespace Warehouse.Application.ViewModels.Item
         public string ProductName { get; set; }
         public int ItemQty { get; set; }
 
-        //TODO: remove automapper
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Warehouse.Domain.Models.Entity.ItemStructure, ItemStructureVM>()

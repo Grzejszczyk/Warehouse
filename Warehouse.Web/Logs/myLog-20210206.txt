@@ -1,0 +1,190 @@
+2021-02-06T19:58:13.3818712+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2021-02-06T19:58:13.3977030+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2021-02-06T19:58:13.4008461+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2021-02-06T19:58:20.8148300+01:00 8000007a-0001-fb00-b63f-84710c7967bb [INF] User logged in. (fdce0db4)
+2021-02-06T19:58:21.1886499+01:00 8000004b-0002-f800-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T19:58:42.2325441+01:00 80000051-0002-f800-b63f-84710c7967bb [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at lambda_method(Closure , EditItemVM )
+   at FluentValidation.Internal.Extensions.<>c__DisplayClass9_0`2.<CoerceToNonGeneric>b__0(Object x) in C:\Projects\FluentValidation\src\FluentValidation\Internal\Extensions.cs:line 155
+   at FluentValidation.Internal.PropertyRule.GetPropertyValue(Object instanceToValidate) in C:\Projects\FluentValidation\src\FluentValidation\Internal\PropertyRule.cs:line 489
+   at FluentValidation.Internal.PropertyRule.<>c__DisplayClass66_0.<Validate>b__0() in C:\Projects\FluentValidation\src\FluentValidation\Internal\PropertyRule.cs:line 297
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+   at System.Lazy`1.CreateValue()
+   at System.Lazy`1.get_Value()
+   at FluentValidation.Validators.PropertyValidatorContext.get_PropertyValue() in C:\Projects\FluentValidation\src\FluentValidation\Validators\PropertyValidatorContext.cs:line 54
+   at FluentValidation.Validators.AbstractComparisonValidator.IsValid(PropertyValidatorContext context) in C:\Projects\FluentValidation\src\FluentValidation\Validators\AbstractComparisonValidator.cs:line 81
+   at FluentValidation.Validators.PropertyValidator.Validate(PropertyValidatorContext context) in C:\Projects\FluentValidation\src\FluentValidation\Validators\PropertyValidator.cs:line 76
+   at FluentValidation.Internal.PropertyRule.InvokePropertyValidator(IValidationContext context, IPropertyValidator validator, String propertyName) in C:\Projects\FluentValidation\src\FluentValidation\Internal\PropertyRule.cs:line 480
+   at FluentValidation.Internal.PropertyRule.Validate(IValidationContext context)+MoveNext() in C:\Projects\FluentValidation\src\FluentValidation\Internal\PropertyRule.cs:line 312
+   at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
+   at FluentValidation.AbstractValidator`1.Validate(ValidationContext`1 context) in C:\Projects\FluentValidation\src\FluentValidation\AbstractValidator.cs:line 95
+   at FluentValidation.AbstractValidator`1.FluentValidation.IValidator.Validate(IValidationContext context) in C:\Projects\FluentValidation\src\FluentValidation\AbstractValidator.cs:line 48
+   at FluentValidation.AspNetCore.FluentValidationModelValidator.Validate(ModelValidationContext mvContext) in C:\Projects\FluentValidation\src\FluentValidation.AspNetCore\FluentValidationModelValidatorProvider.cs:line 106
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.ValidateNode()
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.VisitComplexType(IValidationStrategy defaultStrategy)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Visit(ModelMetadata metadata, String key, Object model)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel)
+   at FluentValidation.AspNetCore.FluentValidationVisitor.<>n__0(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel)
+   at FluentValidation.AspNetCore.FluentValidationVisitor.<>c__DisplayClass1_0.<Validate>g__BaseValidate|0() in C:\Projects\FluentValidation\src\FluentValidation.AspNetCore\FluentValidationVisitor.cs:line 40
+   at FluentValidation.AspNetCore.FluentValidationVisitor.ValidateInternal(ModelMetadata metadata, String key, Object model, Func`1 continuation) in C:\Projects\FluentValidation\src\FluentValidation.AspNetCore\FluentValidationVisitor.cs:line 67
+   at FluentValidation.AspNetCore.FluentValidationVisitor.Validate(ModelMetadata metadata, String key, Object model, Boolean alwaysValidateAtTopLevel) in C:\Projects\FluentValidation\src\FluentValidation.AspNetCore\FluentValidationVisitor.cs:line 42
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ObjectModelValidator.Validate(ActionContext actionContext, ValidationStateDictionary validationState, String prefix, Object model, ModelMetadata metadata)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.EnforceBindRequiredAndValidate(ObjectModelValidator baseObjectValidator, ActionContext actionContext, ParameterDescriptor parameter, ModelMetadata metadata, ModelBindingContext modelBindingContext, ModelBindingResult modelBindingResult)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.MigrationsEndPointMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2021-02-06T19:59:10.2926837+01:00 80000055-0000-fd00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T19:59:12.3837953+01:00 80000059-0000-fd00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T19:59:13.9381575+01:00 80000007-0003-fb00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T19:59:17.4807523+01:00 80000009-0003-fb00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T19:59:19.4681424+01:00 8000005b-0000-fd00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T20:00:03.7760258+01:00 80000055-0002-f800-b63f-84710c7967bb [ERR] Failed executing DbCommand ("24"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CatalogNumber], [t].[CreatedById], [t].[CreatedDateTime], [t].[Description], [t].[DrawingNumber], [t].[IsDeleted], [t].[LowQuantityValue], [t].[MagazineZoneId], [t].[ModifiedById], [t].[ModifiedDateTime], [t].[Name], [t].[Quantity], [t].[SupplierId], [t].[Thumbnail], [t].[Id0], [t].[BuildingNo], [t].[City], [t].[ContactPersonEmail], [t].[ContactPersonName], [t].[ContactPersonPhoneNo], [t].[ContactPersonSurname], [t].[CreatedById0], [t].[CreatedDateTime0], [t].[Email], [t].[IsActive], [t].[IsDeleted0], [t].[ModifiedById0], [t].[ModifiedDateTime0], [t].[NIP], [t].[Name0], [t].[PhoneNo], [t].[Street], [t].[ZipCode], [t].[Id1], [t].[Image], [t].[ItemId], [t].[Id2], [t].[CreatedById1], [t].[CreatedDateTime1], [t].[ModifiedById1], [t].[ModifiedDateTime1], [t].[Name1], [t0].[ItemId], [t0].[StructureId], [t0].[CreatedById], [t0].[CreatedDateTime], [t0].[Id], [t0].[ItemQuantity], [t0].[ModifiedById], [t0].[ModifiedDateTime], [t0].[Id0], [t0].[CreatedById0], [t0].[CreatedDateTime0], [t0].[IsDeleted], [t0].[ModifiedById0], [t0].[ModifiedDateTime0], [t0].[Name], [t0].[ProductName], [t0].[Project], [c].[Id], [c].[CreatedById], [c].[CreatedDateTime], [c].[ItemId], [c].[ModifiedById], [c].[ModifiedDateTime], [c].[OrderNo], [c].[Quantity], [c0].[Id], [c0].[CreatedById], [c0].[CreatedDateTime], [c0].[ItemId], [c0].[ModifiedById], [c0].[ModifiedDateTime], [c0].[OrderNo], [c0].[Quantity]
+FROM (
+    SELECT TOP(1) [i].[Id], [i].[CatalogNumber], [i].[CreatedById], [i].[CreatedDateTime], [i].[Description], [i].[DrawingNumber], [i].[IsDeleted], [i].[LowQuantityValue], [i].[MagazineZoneId], [i].[ModifiedById], [i].[ModifiedDateTime], [i].[Name], [i].[Quantity], [i].[SupplierId], [i].[Thumbnail], [s].[Id] AS [Id0], [s].[BuildingNo], [s].[City], [s].[ContactPersonEmail], [s].[ContactPersonName], [s].[ContactPersonPhoneNo], [s].[ContactPersonSurname], [s].[CreatedById] AS [CreatedById0], [s].[CreatedDateTime] AS [CreatedDateTime0], [s].[Email], [s].[IsActive], [s].[IsDeleted] AS [IsDeleted0], [s].[ModifiedById] AS [ModifiedById0], [s].[ModifiedDateTime] AS [ModifiedDateTime0], [s].[NIP], [s].[Name] AS [Name0], [s].[PhoneNo], [s].[Street], [s].[ZipCode], [i0].[Id] AS [Id1], [i0].[Image], [i0].[ItemId], [m].[Id] AS [Id2], [m].[CreatedById] AS [CreatedById1], [m].[CreatedDateTime] AS [CreatedDateTime1], [m].[ModifiedById] AS [ModifiedById1], [m].[ModifiedDateTime] AS [ModifiedDateTime1], [m].[Name] AS [Name1]
+    FROM [Items] AS [i]
+    LEFT JOIN [Suppliers] AS [s] ON [i].[SupplierId] = [s].[Id]
+    LEFT JOIN [ItemImage] AS [i0] ON [i].[Id] = [i0].[ItemId]
+    LEFT JOIN [MagazineZones] AS [m] ON [i].[MagazineZoneId] = [m].[Id]
+    WHERE [i].[Id] = @__id_0
+) AS [t]
+LEFT JOIN (
+    SELECT [i1].[ItemId], [i1].[StructureId], [i1].[CreatedById], [i1].[CreatedDateTime], [i1].[Id], [i1].[ItemQuantity], [i1].[ModifiedById], [i1].[ModifiedDateTime], [s0].[Id] AS [Id0], [s0].[CreatedById] AS [CreatedById0], [s0].[CreatedDateTime] AS [CreatedDateTime0], [s0].[IsDeleted], [s0].[ModifiedById] AS [ModifiedById0], [s0].[ModifiedDateTime] AS [ModifiedDateTime0], [s0].[Name], [s0].[ProductName], [s0].[Project]
+    FROM [ItemStructure] AS [i1]
+    INNER JOIN [Structures] AS [s0] ON [i1].[StructureId] = [s0].[Id]
+) AS [t0] ON [t].[Id] = [t0].[ItemId]
+LEFT JOIN [CheckIns] AS [c] ON [t].[Id] = [c].[ItemId]
+LEFT JOIN [CheckOuts] AS [c0] ON [t].[Id] = [c0].[ItemId]
+ORDER BY [t].[Id], [t0].[ItemId], [t0].[StructureId], [t0].[Id0], [c].[Id], [c0].[Id]" (627a98df)
+2021-02-06T20:00:03.8124144+01:00 80000055-0002-f800-b63f-84710c7967bb [ERR] An exception occurred while iterating over the results of a query for context type '"Warehouse.Infrastructure.Context"'."
+""Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'OrderNo'.
+Invalid column name 'OrderNo'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.InitializeReader(DbContext _, Boolean result)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+ClientConnectionId:0bdb4caa-8771-456e-86ef-777feda514ee
+Error Number:207,State:1,Class:16" (f5c7ac34)
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'OrderNo'.
+Invalid column name 'OrderNo'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.InitializeReader(DbContext _, Boolean result)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+ClientConnectionId:0bdb4caa-8771-456e-86ef-777feda514ee
+Error Number:207,State:1,Class:16
+2021-02-06T20:39:27.9417018+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2021-02-06T20:39:27.9949985+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2021-02-06T20:39:28.0098636+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2021-02-06T20:39:34.0246864+01:00 80000088-0001-fb00-b63f-84710c7967bb [INF] User logged in. (fdce0db4)
+2021-02-06T20:39:34.3801156+01:00 80000074-0000-fa00-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T20:39:36.7020531+01:00 8000004b-0002-f700-b63f-84710c7967bb [ERR] Failed executing DbCommand ("12"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [t].[Id], [t].[CatalogNumber], [t].[CreatedById], [t].[CreatedDateTime], [t].[Description], [t].[DrawingNumber], [t].[IsDeleted], [t].[LowQuantityValue], [t].[MagazineZoneId], [t].[ModifiedById], [t].[ModifiedDateTime], [t].[Name], [t].[Quantity], [t].[SupplierId], [t].[Thumbnail], [t].[Id0], [t].[BuildingNo], [t].[City], [t].[ContactPersonEmail], [t].[ContactPersonName], [t].[ContactPersonPhoneNo], [t].[ContactPersonSurname], [t].[CreatedById0], [t].[CreatedDateTime0], [t].[Email], [t].[IsActive], [t].[IsDeleted0], [t].[ModifiedById0], [t].[ModifiedDateTime0], [t].[NIP], [t].[Name0], [t].[PhoneNo], [t].[Street], [t].[ZipCode], [t].[Id1], [t].[Image], [t].[ItemId], [t].[Id2], [t].[CreatedById1], [t].[CreatedDateTime1], [t].[ModifiedById1], [t].[ModifiedDateTime1], [t].[Name1], [t0].[ItemId], [t0].[StructureId], [t0].[CreatedById], [t0].[CreatedDateTime], [t0].[Id], [t0].[ItemQuantity], [t0].[ModifiedById], [t0].[ModifiedDateTime], [t0].[Id0], [t0].[CreatedById0], [t0].[CreatedDateTime0], [t0].[IsDeleted], [t0].[ModifiedById0], [t0].[ModifiedDateTime0], [t0].[Name], [t0].[ProductName], [t0].[Project], [c].[Id], [c].[CreatedById], [c].[CreatedDateTime], [c].[ItemId], [c].[ModifiedById], [c].[ModifiedDateTime], [c].[OrderNo], [c].[Quantity], [c0].[Id], [c0].[CreatedById], [c0].[CreatedDateTime], [c0].[ItemId], [c0].[ModifiedById], [c0].[ModifiedDateTime], [c0].[OrderNo], [c0].[Quantity]
+FROM (
+    SELECT TOP(1) [i].[Id], [i].[CatalogNumber], [i].[CreatedById], [i].[CreatedDateTime], [i].[Description], [i].[DrawingNumber], [i].[IsDeleted], [i].[LowQuantityValue], [i].[MagazineZoneId], [i].[ModifiedById], [i].[ModifiedDateTime], [i].[Name], [i].[Quantity], [i].[SupplierId], [i].[Thumbnail], [s].[Id] AS [Id0], [s].[BuildingNo], [s].[City], [s].[ContactPersonEmail], [s].[ContactPersonName], [s].[ContactPersonPhoneNo], [s].[ContactPersonSurname], [s].[CreatedById] AS [CreatedById0], [s].[CreatedDateTime] AS [CreatedDateTime0], [s].[Email], [s].[IsActive], [s].[IsDeleted] AS [IsDeleted0], [s].[ModifiedById] AS [ModifiedById0], [s].[ModifiedDateTime] AS [ModifiedDateTime0], [s].[NIP], [s].[Name] AS [Name0], [s].[PhoneNo], [s].[Street], [s].[ZipCode], [i0].[Id] AS [Id1], [i0].[Image], [i0].[ItemId], [m].[Id] AS [Id2], [m].[CreatedById] AS [CreatedById1], [m].[CreatedDateTime] AS [CreatedDateTime1], [m].[ModifiedById] AS [ModifiedById1], [m].[ModifiedDateTime] AS [ModifiedDateTime1], [m].[Name] AS [Name1]
+    FROM [Items] AS [i]
+    LEFT JOIN [Suppliers] AS [s] ON [i].[SupplierId] = [s].[Id]
+    LEFT JOIN [ItemImage] AS [i0] ON [i].[Id] = [i0].[ItemId]
+    LEFT JOIN [MagazineZones] AS [m] ON [i].[MagazineZoneId] = [m].[Id]
+    WHERE [i].[Id] = @__id_0
+) AS [t]
+LEFT JOIN (
+    SELECT [i1].[ItemId], [i1].[StructureId], [i1].[CreatedById], [i1].[CreatedDateTime], [i1].[Id], [i1].[ItemQuantity], [i1].[ModifiedById], [i1].[ModifiedDateTime], [s0].[Id] AS [Id0], [s0].[CreatedById] AS [CreatedById0], [s0].[CreatedDateTime] AS [CreatedDateTime0], [s0].[IsDeleted], [s0].[ModifiedById] AS [ModifiedById0], [s0].[ModifiedDateTime] AS [ModifiedDateTime0], [s0].[Name], [s0].[ProductName], [s0].[Project]
+    FROM [ItemStructure] AS [i1]
+    INNER JOIN [Structures] AS [s0] ON [i1].[StructureId] = [s0].[Id]
+) AS [t0] ON [t].[Id] = [t0].[ItemId]
+LEFT JOIN [CheckIns] AS [c] ON [t].[Id] = [c].[ItemId]
+LEFT JOIN [CheckOuts] AS [c0] ON [t].[Id] = [c0].[ItemId]
+ORDER BY [t].[Id], [t0].[ItemId], [t0].[StructureId], [t0].[Id0], [c].[Id], [c0].[Id]" (627a98df)
+2021-02-06T20:39:36.7919873+01:00 8000004b-0002-f700-b63f-84710c7967bb [ERR] An exception occurred while iterating over the results of a query for context type '"Warehouse.Infrastructure.Context"'."
+""Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'OrderNo'.
+Invalid column name 'OrderNo'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.InitializeReader(DbContext _, Boolean result)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+ClientConnectionId:6c46b684-e526-44b7-aec9-5ed1e81e4122
+Error Number:207,State:1,Class:16" (f5c7ac34)
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'OrderNo'.
+Invalid column name 'OrderNo'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.InitializeReader(DbContext _, Boolean result)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+ClientConnectionId:6c46b684-e526-44b7-aec9-5ed1e81e4122
+Error Number:207,State:1,Class:16
+2021-02-06T21:04:37.6088984+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2021-02-06T21:04:37.6219165+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2021-02-06T21:04:37.6241057+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)
+2021-02-06T21:04:44.6640975+01:00 80000024-0001-f900-b63f-84710c7967bb [INF] User logged in. (fdce0db4)
+2021-02-06T21:04:45.0474643+01:00 80000026-0001-f900-b63f-84710c7967bb [INF] Jestem w Warehousecontroller ItemsList - to logger. (118bd887)
+2021-02-06T22:40:41.1513075+01:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2021-02-06T22:40:41.1733695+01:00  [INF] Hosting environment: "Development" (c3307c92)
+2021-02-06T22:40:41.1758913+01:00  [INF] Content root path: "C:\Users\grzej\source\repos\Warehouse\Warehouse.Web" (b5d60022)

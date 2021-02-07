@@ -14,10 +14,10 @@ namespace Warehouse.Web.Controllers
     [Authorize]
     public class StructureController : Controller
     {
-        private readonly ILogger<ItemController> _logger;
+        private readonly ILogger<StructureController> _logger;
         private readonly IStructureService _structureService;
         private int pageSizeStd;
-        public StructureController(ILogger<ItemController> logger, IStructureService structureService)
+        public StructureController(ILogger<StructureController> logger, IStructureService structureService)
         {
             _logger = logger;
             _structureService = structureService;

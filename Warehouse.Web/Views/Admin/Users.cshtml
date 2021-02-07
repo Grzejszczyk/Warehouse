@@ -1,0 +1,37 @@
+﻿@model Warehouse.Application.ViewModels.Admin.UsersListVM
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Id
+            </th>
+            <th>
+                User Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var u in Model.Users) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => u.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => u.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=u.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "UserDetails", new { userId=u.UserId }) |
+                @Html.ActionLink("Assign roles", "EditUserRoles", new { userId=u.UserId }) |
+                @Html.ActionLink("Lock Account", "Lock", new { /* id=u.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

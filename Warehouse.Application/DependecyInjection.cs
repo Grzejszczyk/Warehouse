@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,9 @@ namespace Warehouse.Application
             services.AddTransient<ISupplierService, SupplierService>();
             services.AddTransient<IStructureService, StructureService>();
             services.AddTransient<ICheckInOutService, CheckInOutService>();
+
+            services.AddTransient<IAdminService, AdminService>();
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddTransient<IValidator<EditItemVM>, EditItemValidator>();
