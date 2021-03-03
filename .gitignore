@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Warehouse.Web/Logs/myLog-20210303.txt
+/WarehouseDB
