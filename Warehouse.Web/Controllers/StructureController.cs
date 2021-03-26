@@ -69,7 +69,7 @@ namespace Warehouse.Web.Controllers
             int structureId = 0;
             if (ModelState.IsValid)
             {
-                if (model.StructureId == 0)
+                if (model.Id == 0)
                 {
                     structureId = _structureService.AddStructure(model, User.Identity.Name);
                 }

@@ -15,13 +15,11 @@ namespace Warehouse.Infrastructure
         public Context(DbContextOptions options) : base(options) { }
 
         public DbSet<Item> Items { get; set; }
+        public DbSet<ItemStructure> ItemStructure { get; set; }
         public DbSet<Structure> Structures { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<ItemStructure> ItemStructure { get; set; }
         public DbSet<CheckIn> CheckIns { get; set; }
         public DbSet<CheckOut> CheckOuts { get; set; }
-        public DbSet<MagazineZone> MagazineZones { get; set; }
-        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -10,12 +10,10 @@ namespace Warehouse.Application.Interfaces
 {
     public interface ICheckInOutService
     {
-        int CheckIn(int itemId, int itemQty, string userId);
-        int CheckOut(int itemId, int itemQty, string userId);
-        int CheckOutByStructure(int structureId, string userId);
-
-        ItemsListForCheckInOutListVM GetAllItemsForCheckInOutList(int pageSize, int pageNo, string searchString);
-        StructuresListForCheckOutVM GetStructures(int pageSize, int pageNo, string searchString);
-        ItemsListForCheckInOutListVM GetItemsFromStructureForCheckInOutList(int structureId);
+        int CheckIn(CheckInOutVMForCreate checkInOutVMForCreate, string userName);
+        int CheckOut(CheckInOutVMForCreate checkInOutVMForCreate, string userName);
+        int CheckOutByStructure(int structureId, string userName);
+        List<CheckInOutForListVM> GetCheckIns(int itemId);
+        List<CheckInOutForListVM> GetCheckOuts(int itemId);
     }
 }

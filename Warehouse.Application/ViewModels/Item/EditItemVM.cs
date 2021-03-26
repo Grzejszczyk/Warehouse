@@ -10,34 +10,20 @@ using Warehouse.Application.ViewModels.Supplier;
 
 namespace Warehouse.Application.ViewModels.Item
 {
-    public class EditItemVM : IMapFrom<Warehouse.Domain.Models.Entity.Item>
+    public class EditItemVM
     {
         public int Id { get; set; }
 
-        public string CreatedById { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public string ModifiedById { get; set; }
-        public DateTime ModifiedDateTime { get; set; }
-
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CatalogNumber { get; set; }
+        public string DrawingNumber { get; set; }
         public int LowQuantityValue { get; set; }
         public int Quantity { get; set; }
 
         public byte[] Thumbnail { get; set; }
-        public byte[] ImageFile { get; set; }
-        public int ItemImageId { get; set; }
-        public IFormFile ImageFormFile { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Item, EditItemVM>()
-                .ForMember(s => s.Thumbnail, opt => opt.MapFrom(d => d.Thumbnail))
-                .ForMember(s => s.ItemImageId, opt => opt.MapFrom(d => d.ItemImage.Id))
-                .ForMember(s => s.ImageFile, opt => opt.MapFrom(d=>d.ItemImage.Image))
-                .ForMember(s => s.ImageFormFile, opt => opt.Ignore())
-                .ReverseMap();
-        }
+        public int SupplierId { get; set; }
+        public string SupplierName { get; set; }
     }
 
     public class EditItemValidator : AbstractValidator<EditItemVM>
@@ -50,7 +36,7 @@ namespace Warehouse.Application.ViewModels.Item
             RuleFor(x => x.LowQuantityValue).GreaterThanOrEqualTo(1);
             RuleFor(x => x.Quantity).NotEmpty();
             RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
-            RuleFor(x => x.ImageFormFile.Length).LessThan(5242880).WithMessage("Plik za duży");
+            RuleFor(x => x.Thumbnail.Length).LessThan(5242880).WithMessage("Plik za duży");
         }
     }
 }

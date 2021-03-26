@@ -8,14 +8,14 @@ namespace Warehouse.Domain.Interfaces
 {
     public interface IItemRepository
     {
-        int AddItem(Item item, string userId);
+        int AddItem(Item item, string userName);
 
         IQueryable<Item> GetItems();
         IQueryable<Item> GetItemsBySupplier(int supplierId);
         IQueryable<Item> GetItemsByStructure(int structureId);
 
-        Item GetItemById(int id);
+        Item GetItem(int id);
 
-        int UpdateItem(Item item, int id, string userId);
+        int EditItem(Item item, int id, string userName);
     }
 }

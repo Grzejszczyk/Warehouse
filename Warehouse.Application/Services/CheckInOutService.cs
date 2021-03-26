@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Warehouse.Application.Interfaces;
+using Warehouse.Application.Mapping;
 using Warehouse.Application.ViewModels.CheckInOut;
 using Warehouse.Application.ViewModels.Item;
 using Warehouse.Application.ViewModels.Pagination;
@@ -16,80 +17,61 @@ namespace Warehouse.Application.Services
 {
     public class CheckInOutService : ICheckInOutService
     {
-        private readonly IItemRepository _itemRepository;
-        private readonly IStructureRepository _structureRepository;
         private readonly ICheckInOutRepository _checkInOutRepository;
-        private readonly IMapper _mapper;
-        public CheckInOutService(IItemRepository itemRepo, IStructureRepository structureRepo, ICheckInOutRepository checkInOutRepo, IMapper mapper)
+        private CheckInOutMapping checkInOutMapping;
+        public CheckInOutService(ICheckInOutRepository checkInOutRepo)
         {
-            _itemRepository = itemRepo;
-            _structureRepository = structureRepo;
             _checkInOutRepository = checkInOutRepo;
-            _mapper = mapper;
-        }
-        public int CheckIn(int itemId, int itemQty, string userId)
-        {
-            _checkInOutRepository.CheckInItem(itemId, itemQty, userId);
-            return itemId;
+            checkInOutMapping = new CheckInOutMapping();
         }
 
-        public int CheckOut(int itemId, int itemQty, string userId)
+        public int CheckIn(CheckInOutVMForCreate checkInOutVMForCreate, string userName)
         {
-            _checkInOutRepository.CheckOutItem(itemId, itemQty, userId);
-            return itemId;
+            _checkInOutRepository.CheckInItem(checkInOutVMForCreate.ItemId, checkInOutVMForCreate.Quantity, userName);
+            return checkInOutVMForCreate.ItemId;
         }
 
-        public int CheckOutByStructure(int structureId, string userId)
+        public int CheckOut(CheckInOutVMForCreate checkInOutVMForCreate, string userName)
         {
-            _checkInOutRepository.CheckOutByStructure(structureId, userId);
+            _checkInOutRepository.CheckOutItem(checkInOutVMForCreate.ItemId, checkInOutVMForCreate.Quantity, userName);
+            return checkInOutVMForCreate.ItemId;
+        }
+
+        public int CheckOutByStructure(int structureId, string userName)
+        {
+            _checkInOutRepository.CheckOutByStructure(structureId, userName);
             return structureId;
         }
 
-        public ItemsListForCheckInOutListVM GetAllItemsForCheckInOutList(int pageSize, int pageNo, string searchString)
+        public List<CheckInOutForListVM> GetCheckIns(int itemId)
         {
-            var items = _checkInOutRepository.GetItems().Where(s => s.Name.Contains(searchString)).ProjectTo<ItemForCheckInOutListVM>(_mapper.ConfigurationProvider).ToList();
-            var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var itemsList = new ItemsListForCheckInOutListVM()
+            if (itemId == 0)
             {
-                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
-                Items = itemsToShow.ToList()
-            };
-
-            return itemsList;
-        }
-
-        public StructuresListForCheckOutVM GetStructures(int pageSize, int pageNo, string searchString)
-        {
-            var structuresVM = _checkInOutRepository.GetStructures()
-                .Where(s => s.Name.Contains(searchString))
-                .ProjectTo<StructureForCheckOutVM>(_mapper.ConfigurationProvider).ToList();
-
-            foreach (var s in structuresVM)
-            {
-                var its = _checkInOutRepository.GetItemsByStructure(s.StructureId);
-                s.Items = its.Where(s=>s.StructureId==s.StructureId).Select(i=>i.Item).ProjectTo<ItemForCheckInOutListVM>(_mapper.ConfigurationProvider).ToList();
-
-                foreach (var i in s.Items)
-                {
-                    i.CheckInOutQty = its.FirstOrDefault(it => it.ItemId == i.Id).ItemQuantity;
-                }
+                var checkIns = _checkInOutRepository.GetCheckIns();
+                var checkInsList = checkInOutMapping.CheckInOutList(checkIns);
+                return checkInsList;
             }
-            var structuresToShow = structuresVM.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var structuresList = new StructuresListForCheckOutVM()
+            else
             {
-                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = structuresVM.Count() },
-                Structures = structuresToShow.ToList()
-            };
-            return structuresList;
+                var checkIns = _checkInOutRepository.GetCheckIns().Where(i => i.Item.Id == itemId);
+                var checkInsList = checkInOutMapping.CheckInOutList(checkIns);
+                return checkInsList;
+            }
         }
-
-        public ItemsListForCheckInOutListVM GetItemsFromStructureForCheckInOutList(int structureId)
+        public List<CheckInOutForListVM> GetCheckOuts(int itemId)
         {
-            var items = _checkInOutRepository.GetItemsByStructure(structureId).ProjectTo<ItemForCheckInOutListVM>(_mapper.ConfigurationProvider).ToList();
-
-            var itemsForStructure = new ItemsListForCheckInOutListVM() { Items = items };
-
-            return itemsForStructure;
+            if (itemId == 0)
+            {
+                var checkOuts = _checkInOutRepository.GetCheckOuts();
+                var checkOutsList = checkInOutMapping.CheckInOutList(checkOuts);
+                return checkOutsList;
+            }
+            else
+            {
+                var checkOuts = _checkInOutRepository.GetCheckOuts().Where(i => i.Item.Id == itemId);
+                var checkOutsList = checkInOutMapping.CheckInOutList(checkOuts);
+                return checkOutsList;
+            }
         }
     }
 }

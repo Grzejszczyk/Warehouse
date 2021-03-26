@@ -17,20 +17,19 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
 
-        public IQueryable<Structure> GetAllStructures()
+        public IQueryable<ItemStructure> GetAllStructures()
         {
-            var itemStructures = _context.ItemStructure.Where(i => i.ItemId == 1);
-            var structures = _context.Structures;
+            var structures = _context.ItemStructure;
             return structures;
         }
 
-        public IQueryable<ItemStructure> GetAllItemStructuresForItem(int itemId)
+        public IQueryable<ItemStructure> GetAllItemStructuresByItemId(int itemId)
         {
             var itemStructures = _context.ItemStructure.Where(i => i.ItemId == itemId);
             return itemStructures;
         }
 
-        public int AddItemToManyStructures(List<ItemStructure> itemStructures, int itemId, string userId)
+        public int AddItemToStructures(List<ItemStructure> itemStructures, int itemId, string userId)
         {
 
             var item = _context.Items.Where(i => i.Id == itemId).Include(s => s.ItemStructures).ThenInclude(s => s.Structure).First();
@@ -65,7 +64,8 @@ namespace Warehouse.Infrastructure.Repositories
                         itemStructure.CreatedDateTime = DateTime.Now;
                         itemStructure.ModifiedDateTime = DateTime.Now;
                     }
-                } else
+                }
+                else
                 {
                     item.ItemStructures.Remove(itemStructure);
                 }

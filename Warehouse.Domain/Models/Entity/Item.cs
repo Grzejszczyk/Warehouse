@@ -14,12 +14,12 @@ namespace Warehouse.Domain.Models.Entity
         public string DrawingNumber { get; set; }
         public int Quantity { get; set; }
         public int LowQuantityValue { get; set; }
-        public int ReservedQuantity { get; set; }
-        public MagazineZone MagazineZone { get; set; }
         public byte[] Thumbnail { get; set; }
-        public ItemImage ItemImage { get; set; }
-        public Supplier Supplier { get; set; }
         public bool IsDeleted { get; set; }
+
+        public int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
+
         public ICollection<ItemStructure> ItemStructures { get; set; }
         public ICollection<CheckIn> CheckIns { get; set; }
         public ICollection<CheckOut> CheckOuts { get; set; }

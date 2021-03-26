@@ -7,11 +7,10 @@ namespace Warehouse.Application.Interfaces
 {
     public interface ISupplierService
     {
-        SuppliersListForListVM GetAllSuppliersForList(int pageSize, int pageNo, string searchString);
+        SuppliersListForListVM GetSuppliers(int pageSize, int pageNo, string searchString);
         SupplierDetailsVM GetSupplierDetails(int supplierId);
         int AddSupplier(SupplierDetailsVM newSupplierVM, string userId);
         int EditSupplier(SupplierDetailsVM newItemVM, string userId);
         int SetIsDeleted(int supplierId, string userId);
-        void DeleteSupplier(int supplierid);
     }
 }

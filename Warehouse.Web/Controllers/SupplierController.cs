@@ -29,7 +29,7 @@ namespace Warehouse.Web.Controllers
         public IActionResult SuppliersList(int pageSize = 5, int pageNo = 1)
         {
             pageSizeStd = pageSize;
-            var model = _supplierService.GetAllSuppliersForList(pageSizeStd, pageNo, "");
+            var model = _supplierService.GetAllSuppliers(pageSizeStd, pageNo, "");
             return View(model);
         }
 
@@ -43,7 +43,7 @@ namespace Warehouse.Web.Controllers
             {
                 searchString = String.Empty;
             }
-            var model = _supplierService.GetAllSuppliersForList(pageSizeStd, pageNo, searchString);
+            var model = _supplierService.GetAllSuppliers(pageSizeStd, pageNo, searchString);
             return View(model);
         }
 

@@ -7,15 +7,15 @@ namespace Warehouse.Application.Interfaces
 {
     public interface IItemService
     {
-        ItemsListForListVM GetAllItemsForList(int pageSize, int pageNo, string searchString);
-        ItemsListForListVM GetItemsBySupplier(int supplierId, int pageSize, int pageNo, string searchString);
-        ItemsListForListVM GetItemsByStructure(int structureId, int pageSize, int pageNo, string searchString);
+        ItemsListVM GetAllItemsForList(int pageSize, int pageNo, string searchString);
+        ItemsListVM GetItemsBySupplier(int supplierId, int pageSize, int pageNo, string searchString);
+        ItemsStructuresListVM GetItemsByStructure(int structureId, int pageSize, int pageNo, string searchString);
 
         ItemDetailsVM GetItemDetails(int itemId);
+
         int AddItem(EditItemVM newItemVM, string userId);
-        int EditItem(EditItemVM newItemVM, string userId);
         EditItemVM GetItemDetailsForEdit(int itemId);
-        ItemToSupplierVM GetItemForSuppliersList(int itemId);
+        int EditItem(EditItemVM newItemVM, string userId);
 
         int SetIsDeleted(int itemId, string userId);
 

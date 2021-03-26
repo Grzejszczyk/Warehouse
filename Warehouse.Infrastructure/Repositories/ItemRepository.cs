@@ -19,10 +19,12 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
 
-        public int AddItem(Item item, string userId)
+        public int AddItem(Item item, string userName)
         {
+            //TODO: Remove fake user
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             _context.Items.Add(item);
-            _context.SaveChanges(userId);
+            _context.SaveChanges("API Test User"/*userId*/);
             return item.Id;
         }
 
@@ -46,27 +48,26 @@ namespace Warehouse.Infrastructure.Repositories
             return items;
         }
 
-        public Item GetItemById(int id)
+        public Item GetItem(int id)
         {
             var item = _context.Items
                 .Include(s => s.Supplier)
                 .Include(st => st.ItemStructures).ThenInclude(s => s.Structure)
                 .Include(c => c.CheckIns)
                 .Include(c => c.CheckOuts)
-                .Include(i => i.ItemImage)
-                .Include(m=>m.MagazineZone)
                 .FirstOrDefault(i => i.Id == id);
             return item;
         }
-        public int UpdateItem(Item item, int itemId, string userId)
+        public int EditItem(Item item, int itemId, string userName)
         {
-            var i = _context.Items.Find(itemId);
-            if (i != null)
+            //TODO: Remove fake user
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            if (_context.Items.Any(i => i.Id == itemId))
             {
                 _context.Items.Update(item);
-                _context.SaveChanges(userId);
+                _context.SaveChanges("API Test User"/*userId*/);
             }
-            return i.Id;
+            return itemId;
         }
     }
 }

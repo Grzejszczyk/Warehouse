@@ -12,7 +12,6 @@ using Warehouse.Application.ViewModels.Item;
 using Warehouse.Application.ViewModels.Structure;
 using Warehouse.Application.ViewModels.Supplier;
 using Warehouse.Domain.Interfaces;
-using static Warehouse.Application.ViewModels.Structure.EditStructureVM;
 
 namespace Warehouse.Application
 {
@@ -31,7 +30,7 @@ namespace Warehouse.Application
 
             services.AddTransient<IValidator<EditItemVM>, EditItemValidator>();
             services.AddTransient<IValidator<SupplierDetailsVM>, SupplierDetailsValidator>();
-            services.AddTransient<IValidator<EditStructureVM>, EditStructureValidator>();
+            services.AddTransient<IValidator<StructureDetailsVM>, StructureDetailsValidator>();
             services.AddTransient<IValidator<StructureDetailsVM>, StructureDetailsValidator>();
 
             return services;

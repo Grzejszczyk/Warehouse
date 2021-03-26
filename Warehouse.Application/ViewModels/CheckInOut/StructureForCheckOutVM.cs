@@ -7,7 +7,7 @@ using Warehouse.Application.ViewModels.Item;
 
 namespace Warehouse.Application.ViewModels.CheckInOut
 {
-    public class StructureForCheckOutVM : IMapFrom<Warehouse.Domain.Models.Entity.Structure>
+    public class StructureForCheckOutVM
     {
         public int StructureId { get; set; }
         public string Name { get; set; }
@@ -15,11 +15,5 @@ namespace Warehouse.Application.ViewModels.CheckInOut
         public string Project { get; set; }
 
         public List<ItemForCheckInOutListVM> Items { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Structure, StructureForCheckOutVM>()
-                .ForMember(d => d.StructureId, opt => opt.MapFrom(s => s.Id));
-        }
     }
 }

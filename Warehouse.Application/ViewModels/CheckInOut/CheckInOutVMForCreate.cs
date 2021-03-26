@@ -4,12 +4,9 @@ using System.Text;
 
 namespace Warehouse.Application.ViewModels.CheckInOut
 {
-    public class CheckInOutForListVM
+    public class CheckInOutVMForCreate
     {
-        public int CheckInOutId { get; set; }
         public int ItemId { get; set; }
         public int Quantity { get; set; }
-        public string CreatedById { get; set; }
-        public DateTime CreatedDateTime { get; set; }
     }
 }

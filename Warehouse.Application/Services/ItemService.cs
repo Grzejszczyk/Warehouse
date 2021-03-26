@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Warehouse.Application.Interfaces;
+using Warehouse.Application.Mapping;
 using Warehouse.Application.ViewModels.Item;
 using Warehouse.Application.ViewModels.Pagination;
 using Warehouse.Application.ViewModels.Structure;
@@ -21,35 +22,29 @@ namespace Warehouse.Application.Services
     {
         private readonly IItemRepository _itemRepository;
         private readonly ISupplierRepository _supplierRepository;
+        private readonly IStructureRepository _structureRepository;
         private readonly IItemStructureRepository _itemStructureRepository;
-        private readonly IMapper _mapper;
-        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IItemStructureRepository itemStructureRepo, IMapper mapper)
+        private ItemMapping itemMapping;
+
+        public ItemService(IItemRepository itemRepo, ISupplierRepository supplierRepo, IItemStructureRepository itemStructureRepo, IStructureRepository structureRepository)
         {
             _itemRepository = itemRepo;
             _supplierRepository = supplierRepo;
+            _structureRepository = structureRepository;
             _itemStructureRepository = itemStructureRepo;
-            _mapper = mapper;
+            itemMapping = new ItemMapping();
         }
 
-        public ItemsListForListVM GetAllItemsForList(int pageSize, int pageNo, string searchString)
+
+        public ItemsListVM GetAllItemsForList(int pageSize, int pageNo, string searchString)
         {
             var items = _itemRepository.GetItems()
-                .Where(s => s.Name.Contains(searchString))
-                .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+                .Where(s => s.Name.Contains(searchString));
 
-            //Assign Thumbnail data:
-            foreach (var item in items)
-            {
-                if (item.Thumbnail != null)
-                {
-                    string imreBase64Data = Convert.ToBase64String(item.Thumbnail);
-                    string imgDataURL = string.Format("data:image/jpg;base64,{0}", imreBase64Data);
-                    item.ThumbnailData = imgDataURL;
-                }
-            }
+            var itemsListVM = itemMapping.MapItems(items);
 
-            var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var itemsList = new ItemsListForListVM()
+            var itemsToShow = itemsListVM.Skip(pageSize * (pageNo - 1)).Take(pageSize);
+            var itemsList = new ItemsListVM()
             {
                 PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
                 Items = itemsToShow.ToList()
@@ -57,14 +52,15 @@ namespace Warehouse.Application.Services
 
             return itemsList;
         }
-        public ItemsListForListVM GetItemsBySupplier(int supplierId, int pageSize, int pageNo, string searchString)
+        public ItemsListVM GetItemsBySupplier(int supplierId, int pageSize, int pageNo, string searchString)
         {
             var items = _itemRepository.GetItemsBySupplier(supplierId)
-                .Where(s => s.Name.Contains(searchString))
-                .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+                .Where(s => s.Name.Contains(searchString));
 
-            var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var itemsList = new ItemsListForListVM()
+            var itemsListVM = itemMapping.MapItems(items);
+
+            var itemsToShow = itemsListVM.Skip(pageSize * (pageNo - 1)).Take(pageSize);
+            var itemsList = new ItemsListVM()
             {
                 PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
                 Items = itemsToShow.ToList()
@@ -72,17 +68,18 @@ namespace Warehouse.Application.Services
 
             return itemsList;
         }
-        public ItemsListForListVM GetItemsByStructure(int structureId, int pageSize, int pageNo, string searchString)
+        public ItemsStructuresListVM GetItemsByStructure(int structureId, int pageSize, int pageNo, string searchString)
         {
-            var items = _itemRepository.GetItemsByStructure(structureId)
-                .Where(s => s.Name.Contains(searchString))
-                .ProjectTo<ItemForListVM>(_mapper.ConfigurationProvider).ToList();
+            var itemsForStructure = _itemStructureRepository.GetAllStructures()
+                .Where(s => s.StructureId == structureId);
 
-            var itemsToShow = items.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var itemsList = new ItemsListForListVM()
+            var itemsListVM = itemMapping.MapItemStructure(itemsForStructure);
+
+            var itemsToShow = itemsListVM.Skip(pageSize * (pageNo - 1)).Take(pageSize);
+            var itemsList = new ItemsStructuresListVM()
             {
-                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = items.Count() },
-                Items = itemsToShow.ToList()
+                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = itemsForStructure.Count() },
+                ItemStructures = itemsToShow.ToList()
             };
 
             return itemsList;
@@ -90,167 +87,92 @@ namespace Warehouse.Application.Services
 
         public ItemDetailsVM GetItemDetails(int itemId)
         {
-            var item = _itemRepository.GetItemById(itemId);
-
-            var itemVM = _mapper.Map<ItemDetailsVM>(item);
-
-            itemVM.StructuresForItemDetails = _mapper.Map<ICollection<ItemStructure>, List<StructuresForItemDetails>>(item.ItemStructures);
-            itemVM.CheckIns = _mapper.Map<ICollection<CheckIn>, List<CheckInsForItemDetails>>(item.CheckIns);
-            itemVM.CheckOuts = _mapper.Map<ICollection<CheckOut>, List<CheckOutsForItemDetails>>(item.CheckOuts);
-
-            //Assign Image data:
-            string imreBase64Data = Convert.ToBase64String(itemVM.ImageFile);
-            string imgDataURL = string.Format("data:image/jpg;base64,{0}", imreBase64Data);
-            itemVM.ImageData = imgDataURL;
-
+            var itemVM = itemMapping.MapItemDetails(_itemRepository.GetItem(itemId));
             return itemVM;
         }
 
-        public int AddItem(EditItemVM ItemVM, string userId)
+        public int AddItem(EditItemVM ItemVM, string userName)
         {
             Item newItem = new Item();
-
-            newItem = _mapper.Map<Item>(ItemVM);
-
-
-
-            var supplierMapped = _itemRepository.AddItem(newItem, userId);
-            return supplierMapped;
+            itemMapping.MapItemEntityFromVM(ItemVM, newItem);
+            int itemId = _itemRepository.AddItem(newItem, userName);
+            return itemId;
         }
 
         public EditItemVM GetItemDetailsForEdit(int itemId)
         {
-            var item = _itemRepository.GetItemById(itemId);
+            var item = _itemRepository.GetItem(itemId);
             var itemVM = new EditItemVM();
-            itemVM = _mapper.Map<EditItemVM>(item);
+            itemVM = itemMapping.MapItemForEditVM(_itemRepository.GetItem(itemId));
 
             return itemVM;
         }
 
-        public int EditItem(EditItemVM itemVM, string userId)
+        public int EditItem(EditItemVM itemVM, string userName)
         {
-            Item itemEntity = _itemRepository.GetItemById(itemVM.Id);
+            Item itemEntity = _itemRepository.GetItem(itemVM.Id);
+            itemMapping.MapItemEntityFromVM(itemVM, itemEntity);
+            itemEntity.IsDeleted = false;
 
             //Save Image and Thumbnail from IFileForm:
-            SaveImageAndMakeThumbnail(itemVM);
+            itemMapping.SaveImageAsThumbnail(itemVM);
 
-            itemEntity.LowQuantityValue = itemVM.LowQuantityValue;
-            itemEntity.Quantity = itemVM.Quantity;
-            itemEntity.Name = itemVM.Name;
-            itemEntity.Description = itemVM.Description;
-            itemEntity.IsDeleted = false;
-            itemEntity.ItemImage = new ItemImage() { ItemId = itemVM.Id, Image = itemVM.ImageFile };
-            itemEntity.Thumbnail = itemVM.Thumbnail;
-
-            var supplierMapped = _itemRepository.UpdateItem(itemEntity, itemVM.Id, userId);
+            var supplierMapped = _itemRepository.EditItem(itemEntity, itemVM.Id, userName);
             return supplierMapped;
         }
 
-        bool SaveImageAndMakeThumbnail(EditItemVM itemVM)
+        public int AssignItemToSupplier(int itemId, int supplierId, string userName)
         {
-            //Save Image and Thumbnail from IFileForm:
-            using (var memoryStream = new MemoryStream())
-            {
-                itemVM.ImageFormFile.CopyTo(memoryStream);
-                // Upload the file if less than 5 Mb
-                if (memoryStream.Length < 5242880)
-                {
-                    var imageContent = memoryStream.ToArray();
-
-                    using (Image itemImage = Image.Load(imageContent))
-                    {
-                        //Save normal size image:
-                        itemImage.SaveAsJpeg(memoryStream);
-                        itemVM.ImageFile = imageContent;
-
-                        //Save Thumbnail:
-                        using (var thumbnailMemoryStream = new MemoryStream())
-                        {
-                            memoryStream.CopyTo(thumbnailMemoryStream);
-                            itemImage.Mutate(x => x.Resize(new Size(100, 100)));
-                            itemImage.SaveAsJpeg(thumbnailMemoryStream);
-                            var thumbnailcontent = thumbnailMemoryStream.ToArray();
-                            itemVM.Thumbnail = thumbnailcontent;
-                        }
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public ItemToSupplierVM GetItemForSuppliersList(int itemId)
-        {
-            var suppliers = _supplierRepository.GetAllSuppliers().Where(s => s.IsActive == true)
-                .ProjectTo<SupplierForListVM>(_mapper.ConfigurationProvider).ToList();
-
-            var assignItemToSupplier = new ItemToSupplierVM();
-            assignItemToSupplier.SuppliersList = suppliers;
-
-            var item = _itemRepository.GetItemById(itemId);
-            assignItemToSupplier.ItemDetails = _mapper.Map<ItemDetailsVM>(item);
-
-            return assignItemToSupplier;
-        }
-
-        public int AssignItemToSupplier(int itemId, int supplierId, string userId)
-        {
-            var item = _itemRepository.GetItemById(itemId);
+            var item = _itemRepository.GetItem(itemId);
             var supplier = _supplierRepository.GetSupplierById(supplierId);
             item.Supplier = supplier;
-            itemId = _itemRepository.UpdateItem(item, itemId, userId);
+            itemId = _itemRepository.EditItem(item, itemId, userName);
             return itemId;
         }
 
         public ItemsStructuresListVM GetItemStructuresForAssign(int itemId)
         {
+            var itemStructures = _itemStructureRepository.GetAllStructures();
             var itemStructuresListVM = new ItemsStructuresListVM();
             itemStructuresListVM.ItemId = itemId;
-            itemStructuresListVM.ItemStructures = new List<ItemStructureVM>();
+            itemStructuresListVM.ItemStructures = itemMapping.MapItemStructure(itemStructures);
+            var itemStustureQty = _itemStructureRepository.GetAllItemStructuresByItemId(itemId);
 
-            var allStructures = _itemStructureRepository.GetAllStructures();
-            var itemStustureForItem = _itemStructureRepository.GetAllItemStructuresForItem(itemId);
-
-            foreach (var s in allStructures)
-            {
-                itemStructuresListVM.ItemStructures.Add(new ItemStructureVM()
-                {
-                    StructureId = s.Id,
-                    StructureName = s.Name,
-                    ProductName = s.ProductName,
-                    ProjectName = s.Project,
-                    ItemId = itemId
-                });
-            };
-            foreach (var istr in itemStustureForItem)
+            foreach (var istr in itemStustureQty)
             {
                 if (istr.ItemQuantity > 0)
                 {
                     itemStructuresListVM.ItemStructures
                         .FirstOrDefault(x => x.StructureId == istr.StructureId && x.ItemId == istr.ItemId)
-                        .ItemQty = istr.ItemQuantity;
+                        .ItemQtyForStructure = istr.ItemQuantity;
                 }
             }
             return itemStructuresListVM;
         }
-        public int AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, string userId)
+
+        public int AssignItemToStructures(ItemsStructuresListVM itemsStructuresListVM, string userName)
         {
             var itemStructures = new List<ItemStructure>();
 
             foreach (var i in itemsStructuresListVM.ItemStructures)
             {
-                itemStructures.Add(new ItemStructure() { ItemId = i.ItemId, StructureId = i.StructureId, ItemQuantity = i.ItemQty });
+                itemStructures.Add(new ItemStructure()
+                {
+                    ItemId = i.ItemId,
+                    StructureId = i.StructureId,
+                    ItemQuantity = i.ItemQtyForStructure
+                });
             }
 
-            var itemStructure = _itemStructureRepository.AddItemToManyStructures(itemStructures, itemsStructuresListVM.ItemId, userId);
+            var itemStructure = _itemStructureRepository.AddItemToStructures(itemStructures, itemsStructuresListVM.ItemId, userName);
             return itemStructure;
         }
 
-        public int SetIsDeleted(int itemId, string userId)
+        public int SetIsDeleted(int itemId, string userName)
         {
-            Item itemEntity = _itemRepository.GetItemById(itemId);
+            Item itemEntity = _itemRepository.GetItem(itemId);
             itemEntity.IsDeleted = true;
-            _itemRepository.UpdateItem(itemEntity, itemEntity.Id, userId);
+            _itemRepository.EditItem(itemEntity, itemEntity.Id, userName);
             return itemEntity.Id;
         }
     }

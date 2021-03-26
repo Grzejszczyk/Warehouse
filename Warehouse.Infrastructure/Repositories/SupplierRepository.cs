@@ -15,15 +15,17 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
 
-        public int AddSupplier(Supplier supplier, string userId)
+        public int AddSupplier(Supplier supplier, string userName)
         {
+            //TODO: Remove fake user
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             _context.Suppliers.Add(supplier);
-            _context.SaveChanges(userId);
+            _context.SaveChanges("API Test User"/*userId*/);
             return supplier.Id;
         }
         public IQueryable<Supplier> GetAllSuppliers()
         {
-            var suppliers = _context.Suppliers.Where(i => i.IsDeleted == false).AsQueryable();
+            var suppliers = _context.Suppliers.Where(i => i.IsDeleted == false);
             return suppliers;
         }
         public Supplier GetSupplierById(int id)
@@ -31,26 +33,16 @@ namespace Warehouse.Infrastructure.Repositories
             var supplier = _context.Suppliers.FirstOrDefault(s => s.Id == id);
             return supplier;
         }
-        public int UpdateSupplier(Supplier updatedSupplier, int supplierId, string userId)
+        public int EditSupplier(Supplier updatedSupplier, int supplierId, string userName)
         {
-            var s = _context.Suppliers.Find(supplierId);
-            if (s != null)
+            //TODO: Remove fake user
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            if (_context.Suppliers.Any(s => s.Id == supplierId))
             {
                 _context.Suppliers.Update(updatedSupplier);
-                _context.SaveChanges(userId);
+                _context.SaveChanges("API Test User"/*userId*/);
             }
-            return s.Id;
-        }
-
-        public void DeleteSupplier(int supplierId)
-        {
-            var supplier = _context.Suppliers.Find(supplierId);
-            if (supplier != null)
-            {
-                _context.Suppliers.Remove(supplier);
-                _context.SaveChanges();
-            }
-            //Supplier cannot be removed if items exist from this supplier. In use IsDeleted.
+            return supplierId;
         }
     }
 }

@@ -8,11 +8,10 @@ namespace Warehouse.Domain.Interfaces
 {
     public interface ICheckInOutRepository
     {
-        int CheckInItem(int idemId, int itemQty, string userId);
-        int CheckOutItem(int idemId, int itemQty, string userId);
-        int CheckOutByStructure(int structureId, string userId);
-        IQueryable<Structure> GetStructures();
-        IQueryable<Item> GetItems();
-        IQueryable<ItemStructure> GetItemsByStructure(int structureId);
+        int CheckInItem(int idemId, int itemQty, string userName);
+        int CheckOutItem(int idemId, int itemQty, string userName);
+        int CheckOutByStructure(int structureId, string userName);
+        IQueryable<CheckIn> GetCheckIns();
+        IQueryable<CheckOut> GetCheckOuts();
     }
 }

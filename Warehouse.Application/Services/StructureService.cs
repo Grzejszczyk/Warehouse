@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Warehouse.Application.Interfaces;
+using Warehouse.Application.Mapping;
 using Warehouse.Application.ViewModels.Pagination;
 using Warehouse.Application.ViewModels.Structure;
 using Warehouse.Domain.Interfaces;
@@ -15,67 +16,64 @@ namespace Warehouse.Application.Services
     public class StructureService : IStructureService
     {
         private readonly IStructureRepository _structureRepository;
-        private readonly IMapper _mapper;
+        private StructureMapping structureMapping;
         public StructureService(IStructureRepository structureRepo, IMapper mapper)
         {
             _structureRepository = structureRepo;
-            _mapper = mapper;
+            structureMapping = new StructureMapping();
         }
+
         public StructuresListForListVM StructuresList(int pageSize, int pageNo, string searchString)
         {
-            var suppliers = _structureRepository.GetStructures().Where(s => s.Name.StartsWith(searchString)).ProjectTo<StructureForListVM>(_mapper.ConfigurationProvider).ToList();
+            var structure = _structureRepository.GetStructures()
+                .Where(s => s.IsDeleted == false)
+                .Where(s => s.Name.StartsWith(searchString))
+                .Skip(pageSize * (pageNo - 1)).Take(pageSize);
 
-            var suppliersToShow = suppliers.Skip(pageSize * (pageNo - 1)).Take(pageSize);
-            var suppliersList = new StructuresListForListVM()
+            var structuresToShow = structureMapping.MapStructureToListVM(structure);
+
+            var structureList = new StructuresListForListVM()
             {
-                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = suppliers.Count() },
-                Structures = suppliersToShow.ToList()
+                PaggingInfo = new PagingInfo() { CurrentPage = pageNo, ItemsPerPage = pageSize, TotalItems = structure.Count() },
+                Structures = structuresToShow.ToList()
             };
-            return suppliersList;
+            return structureList;
         }
         public StructureDetailsVM GetStructureDetails(int strucureId)
         {
             var structure = _structureRepository.GetStructure(strucureId);
-            var supplierVM = _mapper.Map<StructureDetailsVM>(structure);
+            var supplierVM = structureMapping.MapStructureVM(structure);
             return supplierVM;
         }
+
+        public StructureDetailsVM GetStructureDetailsForEdit(int structureId)
+        {
+            var structure = _structureRepository.GetStructure(structureId);
+            var structureVM = structureMapping.MapStructureVM(structure);
+            return structureVM;
+        }
+
         public int AddStructure(StructureDetailsVM newStructureVM, string userId)
         {
             Structure structure = new Structure();
-            structure.Id = 0;
-            structure.IsDeleted = false;
-            structure.Name = newStructureVM.StructureName;
-            structure.ProductName = newStructureVM.ProductName;
-            structure.Project = newStructureVM.Project;
-
+            structureMapping.MapStructureEntityFromVM(newStructureVM, structure);
             var s = _structureRepository.AddStructure(structure, userId);
             return s;
         }
 
-        public EditStructureVM GetStructureDetailsForEdit(int structureId)
+        public int EditStructure(StructureDetailsVM structuteVM, string userId)
         {
-            var structure = _structureRepository.GetStructure(structureId);
-            var structureVM = new EditStructureVM();
-            structureVM = _mapper.Map<EditStructureVM>(structure);
-            return structureVM;
-        }
-
-        public int EditStructure(StructureDetailsVM strucuteVM, string userId)
-        {
-            Structure structure = _structureRepository.GetStructure(strucuteVM.StructureId);
-            structure.Name = strucuteVM.StructureName;
-            structure.ProductName = strucuteVM.ProductName;
-            structure.Project = strucuteVM.Project;
-            
-            var s = _structureRepository.UpdateStructure(structure, strucuteVM.StructureId, userId);
-            return s;
+            Structure structure = _structureRepository.GetStructure(structuteVM.Id);
+            structureMapping.MapStructureEntityFromVM(structuteVM, structure);
+            var structureMapped = _structureRepository.EditStructure(structure, structuteVM.Id, userId);
+            return structureMapped;
         }
 
         public int SetIsDeleted(int structureId, string userId)
         {
             Structure structureEntity = _structureRepository.GetStructure(structureId);
             structureEntity.IsDeleted = true;
-            _structureRepository.UpdateStructure(structureEntity, structureId, userId);
+            _structureRepository.EditStructure(structureEntity, structureId, userId);
             return structureEntity.Id;
         }
     }

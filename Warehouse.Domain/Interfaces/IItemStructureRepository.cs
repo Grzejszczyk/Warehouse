@@ -8,8 +8,8 @@ namespace Warehouse.Domain.Interfaces
 {
     public interface IItemStructureRepository
     {
-        int AddItemToManyStructures(List<ItemStructure> itemStructures, int itemId, string userId);
-        IQueryable<Structure> GetAllStructures();
-        IQueryable<ItemStructure> GetAllItemStructuresForItem(int itemId);
+        int AddItemToStructures(List<ItemStructure> itemStructures, int itemId, string userId);
+        IQueryable<ItemStructure> GetAllStructures();
+        IQueryable<ItemStructure> GetAllItemStructuresByItemId(int itemId);
     }
 }

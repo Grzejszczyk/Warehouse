@@ -7,7 +7,7 @@ using Warehouse.Application.Mapping;
 
 namespace Warehouse.Application.ViewModels.Item
 {
-    public class ItemForListVM : IMapFrom<Warehouse.Domain.Models.Entity.Item>
+    public class ItemForItemsListVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,11 +16,5 @@ namespace Warehouse.Application.ViewModels.Item
 
         //For View img src, not mapped, assigned in service method.
         public string ThumbnailData { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Item, ItemForListVM>()
-                .ForMember(d => d.ThumbnailData, opt => opt.Ignore());
-        }
     }
 }

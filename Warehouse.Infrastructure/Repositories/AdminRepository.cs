@@ -37,7 +37,9 @@ namespace Warehouse.Infrastructure.Repositories
         }
         public IQueryable<string> GetUserRoles(string userId)
         {
-            var roles = _context.UserRoles.Where(u => u.UserId == userId).Select(u => u.RoleId);
+            var roles = _context.UserRoles
+                .Where(u => u.UserId == userId)
+                .Select(u => u.RoleId);
             return roles;
         }
 

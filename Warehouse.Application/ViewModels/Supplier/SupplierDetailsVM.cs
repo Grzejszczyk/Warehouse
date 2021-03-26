@@ -8,14 +8,14 @@ using Warehouse.Application.Mapping;
 
 namespace Warehouse.Application.ViewModels.Supplier
 {
-    public class SupplierDetailsVM : IMapFrom<Warehouse.Domain.Models.Entity.Supplier>
+    public class SupplierDetailsVM
     {
         public int Id { get; set; }
 
         public string CreatedById { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public string ModifiedById { get; set; }
-        public DateTime? ModifiedDateTime { get; set; }
+        public DateTime ModifiedDateTime { get; set; }
 
         public string Name { get; set; }
         public string NIP { get; set; }
@@ -32,12 +32,8 @@ namespace Warehouse.Application.ViewModels.Supplier
         public string ContactPersonSurname { get; set; }
         public string ContactPersonEmail { get; set; }
         public string ContactPersonPhoneNo { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Warehouse.Domain.Models.Entity.Supplier, SupplierDetailsVM>().ReverseMap();
-        }
     }
+
     public class SupplierDetailsValidator : AbstractValidator<SupplierDetailsVM>
     {
         public SupplierDetailsValidator()

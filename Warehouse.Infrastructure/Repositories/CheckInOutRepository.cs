@@ -16,8 +16,10 @@ namespace Warehouse.Infrastructure.Repositories
             _context = context;
         }
 
-        public int CheckInItem(int itemId, int itemQty, string userId)
+        public int CheckInItem(int itemId, int itemQty, string userName)
         {
+            //TODO: Remove fake user.
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             Item item = _context.Items.FirstOrDefault(i => i.Id == itemId);
             CheckIn checkIn = new CheckIn()
             {
@@ -29,13 +31,36 @@ namespace Warehouse.Infrastructure.Repositories
                 item.Quantity = item.Quantity + itemQty;
                 _context.Items.Update(item);
                 _context.CheckIns.Add(checkIn);
-                _context.SaveChanges(userId);
+                _context.SaveChanges("Test user API"/*userId*/);
             }
             return item.Id;
         }
-
-        public int CheckOutByStructure(int structureId, string userId)
+        public int CheckOutItem(int itemId, int itemQty, string userName)
         {
+            //TODO: Remove fake user.
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            Item item = _context.Items.FirstOrDefault(i => i.Id == itemId);
+            CheckOut checkOut = new CheckOut()
+            {
+                Item = item,
+                Quantity = itemQty
+            };
+            if (item != null)
+            {
+                if (item.Quantity >= itemQty)
+                {
+                    item.Quantity = item.Quantity - itemQty;
+                }
+                _context.Items.Update(item);
+                _context.CheckOuts.Add(checkOut);
+                _context.SaveChanges("Fake user!"/*userId*/);
+            }
+            return item.Id;
+        }
+        public int CheckOutByStructure(int structureId, string userName)
+        {
+            //TODO: Remove fake user.
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             var itemStructures = _context.ItemStructure.Where(s => s.StructureId == structureId).Include(i=>i.Item);
             List<Item> items = new List<Item>();
             List<CheckOut> checkOuts = new List<CheckOut>();
@@ -53,47 +78,20 @@ namespace Warehouse.Infrastructure.Repositories
             }
             _context.CheckOuts.UpdateRange(checkOuts);
             _context.Items.UpdateRange(items);
-            _context.SaveChanges(userId);
+            _context.SaveChanges("Fake user"/*userId*/);
             return structureId;
         }
 
-        public int CheckOutItem(int itemId, int itemQty, string userId)
+        public IQueryable<CheckIn> GetCheckIns()
         {
-            Item item = _context.Items.FirstOrDefault(i => i.Id == itemId);
-            CheckOut checkOut = new CheckOut()
-            {
-                Item = item,
-                Quantity = itemQty
-            };
-            if (item != null)
-            {
-                if (item.Quantity >= itemQty)
-                {
-                    item.Quantity = item.Quantity - itemQty;
-                }
-                _context.Items.Update(item);
-                _context.CheckOuts.Add(checkOut);
-                _context.SaveChanges(userId);
-            }
-            return item.Id;
+            var checkIns = _context.CheckIns.AsQueryable();
+            return checkIns;
         }
 
-        public IQueryable<Item> GetItems()
+        public IQueryable<CheckOut> GetCheckOuts()
         {
-            var items = _context.Items.Where(i => i.IsDeleted == false);
-            return items;
-        }
-
-        public IQueryable<ItemStructure> GetItemsByStructure(int structureId)
-        {
-            var its = _context.ItemStructure.Where(s => s.StructureId == structureId);
-            return its;
-        }
-
-        public IQueryable<Structure> GetStructures()
-        {
-            var structures = _context.Structures.Where(s => s.IsDeleted == false).Include(i => i.ItemStructures).ThenInclude(i => i.Item);
-            return structures;
+            var checkOuts = _context.CheckOuts.AsQueryable();
+            return checkOuts;
         }
     }
 }
