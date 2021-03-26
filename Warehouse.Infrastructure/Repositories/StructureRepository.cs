@@ -38,27 +38,30 @@ namespace Warehouse.Infrastructure.Repositories
 
         public int AddStructure(Structure structure, string userName)
         {
-            var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            //TODO: Remove fake user.
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             _context.Structures.Add(structure);
-            _context.SaveChanges(userId);
+            _context.SaveChanges("Api fake user"/*userId*/);
             return structure.Id;
         }
 
         public int EditStructure(Structure structure, int structureId, string userName)
         {
-            var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            //TODO: Remove fake user.
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             var s = _context.Structures.Find(structureId);
             if (s != null)
             {
                 _context.Structures.Update(structure);
-                _context.SaveChanges(userId);
+                _context.SaveChanges("Api fake user edit"/*userId*/);
             }
             return s.Id;
         }
 
         public int EditItemsStructure(int structureId, List<ItemStructure> itemStructureList, string userName)
         {
-            var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
+            //TODO: Remove fake user.
+            //var userId = _context.Users.FirstOrDefault(u => u.UserName == userName).Id;
             var structure = _context.Structures.Find(structureId);
             
             if (structure != null)
@@ -71,7 +74,7 @@ namespace Warehouse.Infrastructure.Repositories
                 structure.ItemStructures = itemStructureList;
 
                 _context.Structures.Update(structure);
-                _context.SaveChanges(userId);
+                _context.SaveChanges("Api fake user add items"/*userId*/);
             }
 
             return structureId;
